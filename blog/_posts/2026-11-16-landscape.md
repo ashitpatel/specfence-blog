@@ -1,6 +1,6 @@
 ---
 title: "The landscape: where specforge fits"
-description: "Specforge against its neighbors: Specula's bug-hunting agents, vericoding's proven code, Axiom Math's Lean proofs, Imandra's neurosymbolic reasoning, AI code review (Qodo, CodeRabbit, Claude Code Review), and more."
+description: "Specforge against its neighbors: Specula's bug-hunting agents, vericoding's proven code, Axiom Math's Lean proofs, Imandra's neurosymbolic reasoning, Google's Elephant-Goldfish Model, AI code review (Qodo, CodeRabbit, Claude Code Review), and more."
 layout: post
 series: specforge
 date: 2026-11-11
@@ -8,7 +8,7 @@ date: 2026-11-11
 
 *Part 8 of 18 in a series on [specforge](https://github.com/ashitpatel/specforge). The previous seven posts built the case from the inside: [the gap]({% post_url 2026-11-09-what-tests-cannot-see %}), [the machinery]({% post_url 2026-11-10-how-it-works %}), and five worked examples. This one steps outside and places the tool among its neighbors — all characterizations as of November 2026, from the linked sources.*
 
-*Level L2 · Needs: parts 1–2. Twelve neighbors, one map.*
+*Level L2 · Needs: parts 1–2. Thirteen neighbors, one map.*
 
 Everyone in this post agrees on the premise: AI now writes code faster than humans can check it, and "trust me, the AI wrote it" is not a verification strategy. They differ on what checking means. That difference is the landscape. But first, where the landscape came from.
 
@@ -52,6 +52,41 @@ Specforge is that route, 28 years later, with one change the survey couldn't for
 That phrase marks the boundary. SDD specs are prose or structured markdown written to be *consumed by an LLM* — they steer generation. Nothing checks them exhaustively; a contradictory or incomplete spec steers the agent into building the wrong thing, with no check to flag the contradiction. Specforge specs are formal models written to be *consumed by solvers* — they verify behavior. SDD answers "what should the agent build?"; specforge answers "does what was planned or built actually hold, in every interleaving and every state?"
 
 They stack rather than compete: SDD upstream (intent → plan → code), specforge as the verification stage and the guardrails afterward. The narrow overlap sits inside Kiro itself, whose workflow includes an [automated-reasoning pass](https://aws.amazon.com/blogs/machine-learning/trust-in-depth-giving-agents-more-autonomy-without-losing-control/) checking plans for contradictions and gaps, plus generated property-based tests — consistency-checking a plan: adjacent to exhaustive property verification, without demonstrated reproductions. Same "specs as artifacts" lineage, opposite ends of the rigor spectrum.
+
+## The Elephant-Goldfish Model: a fresh reader as the referee
+
+[The Elephant-Goldfish Model](https://github.com/google/elephant-goldfish-model) (EGM; Google, open-sourced in
+[October 2026](https://opensource.googleblog.com/2026/10/introducing-elephant-goldfish-model-plugin.html), Apache 2.0)
+grew out of Dave Rensin's essay
+[*Elephants, Goldfish and the New Golden Age of Software Engineering*](https://research.google/pubs/elephants-goldfish-and-the-new-golden-age-of-software-engineering/).
+Its tagline is *"Design with an elephant. Review with a goldfish."* It is a plugin for coding agents:
+- **The Elephant** is a long conversation in which the person and an agent build up context and write a design doc
+  before any code.
+- **The Goldfish** are fresh subagents that see only the doc. If they cannot follow the plan from the page, the doc is
+  missing something its author knows.
+- **The review** runs several Goldfish against rubrics (comprehension, design critique, implementation readiness,
+  YAGNI). A synthesizer gathers their findings; the person triages them and approves, and then code is written.
+
+EGM's own architecture doc calls it an implementation of spec-driven development, so it belongs beside the SDD tools
+above, at their careful end: it is the one that tests the spec before anyone builds from it. Its test is a reader's.
+Google's launch post says thousands of its engineers use the plugin daily; the repository publishes no measurement of
+how many defects its reviews catch, and its test suite checks that the workflow runs on each host. (Compared from its
+documentation, 2026-11-14, not from runs.)
+
+The overlap with specforge is the instinct: neither trusts the context that wrote the artifact. The difference is the
+referee. A fresh reader removes the author's bias but keeps a model's; a checker removes both but covers only what can
+be formalized. EGM asks *can a stranger build from this?*; specforge asks *does what it says hold in every state?*
+
+Specforge had the Elephant's problem without the Goldfish. In its requirements mode, the agent that runs the interview
+writes the requirements document and also the spec built from it, so an assumption it never wrote down reaches both,
+and no checker can see it. Round [EG1](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-14-EG1.md)
+borrows the Goldfish, with the checker kept as referee. Two fresh agents each write the requirements as Alloy facts
+from the document alone, and Alloy compares their readings with the drafting agent's model, one requirement at a
+time. On "the approver of an expense is not its owner", the drafting agent's model took the approvers and the owner as
+sets that differ, and both readers took it as "the owner is never an approver". Alloy found the situation between
+them, an owner who is one of three approvers, and that became a question for the person. The same round lets specforge
+start from an EGM design doc and write its checked constraints back for EGM's reviewers. These fresh readers are new
+and not yet measured on seeded defects.
 
 ## Imandra: the neurosymbolic kin
 
@@ -121,6 +156,7 @@ One picture for the whole landscape. The rows are what each neighbor contributes
 | Axiom Math (deductive) | functional correctness | specs → Lean | checked proofs |
 | Lightweight methods (both) | scoped properties | engineer-written models | counterexamples |
 | SDD (prompts) | steering, not proving | prose specs | agent-built code |
+| EGM (reader review) | a design a stranger can follow | design docs + fresh readers | approved designs |
 | Imandra (neurosymbolic) | program-logic questions | code → formal models | answers + proofs |
 | Qodo (review) | standards, review coverage | PRs + repo knowledge | governed merges |
 | Intent Lab (model checking) | infra correctness | intent → systems | verified systems |

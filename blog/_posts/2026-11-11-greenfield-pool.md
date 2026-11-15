@@ -31,6 +31,8 @@ The settled text lives in [`requirements.md`](https://github.com/ashitpatel/spec
 
 Notice what happened: the user never saw a temporal operator. They answered plain questions — *FIFO or any-waiter?* — and the answers became the spec's content. The formality is behind the scenes; the judgment stays with the human.
 
+One gap remains in this design: the agent that ran the interview also wrote the specs, so an assumption it never put into the text would reach both. Since this run, specforge can close that gap on request. Fresh agents that never saw the interview read the settled requirements, and Alloy shows where their reading and the drafting agent's differ. The idea is borrowed from Google's [Elephant-Goldfish Model](https://github.com/google/elephant-goldfish-model) ([part 8]({% post_url 2026-11-16-landscape %}) has the story). This pool run predates it and did not use it.
+
 ## The two specs
 
 **Behavior** is a TLA+ model of acquire, release, the idle-connection reaper, shutdown, and restart. The checker config is deliberately small:
