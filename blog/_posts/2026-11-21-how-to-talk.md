@@ -48,6 +48,28 @@ The same rule applies when the one answering is a bot. In a bot team, a driver b
 
 A disclosure: the envelope's first version checked signatures only on the tool path. Two forgeries got through it: appending acceptance lines to the scenario record, and hand-writing the other decision records. We found both while planning the first bot-team run, before any run, and pinning the key closed both. In that run, the pinned engine stopped all six scripted forgeries ([results](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-11-BT1-results.md)).
 
+Signatures stop forgery. They don't stop shortcuts that need no lie. So we audited every reason the done-gates give,
+and for each one asked: can the agent make it go away with only what it writes itself
+([EH1](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-EH1-results.md))? Four
+could. Each is now closed or labelled:
+- **A requirement the agent deletes** used to take every warning about it along with it. Now the person is asked "Should it go?",
+  with the sentence quoted, and done waits for "Yes, remove it"
+  ([RL1](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-RL1.md)).
+- **An answers file** the agent writes mid-run no longer settles NFR assumptions: only the file the run began with
+  counts. Scenario acceptances still go through it, for clients without forms, but the done report lists every one
+  for you to check ([RF1](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-RF1.md)).
+- **Removing a `@req` tag** used to hide a step's unstated-guard question. Guards are now checked on any step that
+  writes what a tagged property reads
+  ([GU1](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-GU1.md)).
+- **Fresh readings** count only from readers specforge started itself, once you set a reader command
+  ([FR3](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-FR3.md)).
+
+One hole stays open, and it is yours: the gate that needs your yes. In the last outside-input trial, a driver bot
+played the person. The question reached it twice, and both times it confirmed a wrong "nothing comes from outside"
+([results](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-FC1-M-agent3-results.md)).
+No code can check that answer for you. specforge quotes the claim in the question, so read the quote before you
+answer.
+
 The general version, worth memorizing: an `@req` gap means a requirement is modeled nowhere — point at its behavior. A `breaks:` verdict means read the counterexample before touching code. Owed debt is named, not hidden. And "no open questions" is a gate, not a suggestion — skipped questions return, they don't evaporate.
 
 ## The series, in one paragraph

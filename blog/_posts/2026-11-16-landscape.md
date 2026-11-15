@@ -85,8 +85,22 @@ from the document alone, and Alloy compares their readings with the drafting age
 time. On "the approver of an expense is not its owner", the drafting agent's model took the approvers and the owner as
 sets that differ, and both readers took it as "the owner is never an approver". Alloy found the situation between
 them, an owner who is one of three approvers, and that became a question for the person. The same round lets specforge
-start from an EGM design doc and write its checked constraints back for EGM's reviewers. These fresh readers are new
-and not yet measured on seeded defects.
+start from an EGM design doc and write its checked constraints back for EGM's reviewers.
+
+A fresh reader is only fresh if nobody can hand you a reading it didn't write. An audit of specforge's own gates
+([EH1](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-EH1-results.md)) found
+exactly that hole: the drafting agent could restate its own model as "a reading", and the gate cleared. The fix
+([FR3](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-FR3.md)) moves the readers
+out of the agent's hands. When the person names a reader command, such as `claude -p`, `codex exec` or `gemini -p`,
+specforge starts each reader itself in an empty folder with nothing but its instructions, and counts only those
+readings. Without one, the readings still count, labelled "recorded, not proven fresh". On the approver example above,
+two `claude -p` readers found the same difference in 22 seconds. That is one seeded example: these fresh readers are
+still not measured on seeded defects.
+
+We also tried EGM's own review on specforge's agent instructions, where agent trials had already found two defects
+([EG2](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-EG2-egm-trial.md)). It found
+real problems of form, such as undefined terms and contradicting limits, but missed both defects. That was expected:
+EGM is built to review designs, not to predict what an agent will skip.
 
 ## Imandra: the neurosymbolic kin
 
