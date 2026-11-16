@@ -10,6 +10,8 @@ The structural story, regenerated for this series (see the posts of 2026-11-14 a
   `code/kombu/.specverify/Resource.als`; `base.run.log` is its clean check.
 - `head/` — base plus the constructed `release()` regression (marked `BLOG-DEMO` in
   `code/kombu/resource.py`) and the model updated to track it; `head.run.log` is its violated check.
+- `implications.json` — the same review re-run on 2026-11-16 with the engine's IM1 `implications` block: the
+  claim, the head-side instance and the three cited code sites for `NoDoubleHold`. Paths relativized; nothing else edited.
 - `review.json` — `review_diff` over base/head: `breaks: ["NoDoubleHold"]`. The `base`/`head`
   fields were relativized to this directory (checker output carries absolute paths); verdicts untouched.
 

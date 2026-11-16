@@ -53,6 +53,31 @@ The model is updated to track the head code, and the review runs over both trees
 
 Plain-words spec diff, both sides checked, one conclusion: the change **breaks `NoDoubleHold`**. The released resource sits in both sets at once — the exact shape the golden forbids. Base and head trees, both models, and the complete [`review.json`](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/kombu/review.json) are in [`evidence/kombu/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/kombu), reproducible with the engine.
 
+### What the review says about it (added 16 November 2026)
+
+A property name is a verdict, not an explanation. Since 16 November the review also returns an `implications` entry for every property a change breaks or restores. Everything in it comes from the spec, the checker's own run and the code index, so it can't drift from the verdict. For this change ([`implications.json`](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/kombu/implications.json), trimmed):
+
+```json
+"property": "NoDoubleHold", "effect": "breaks", "origin": "introduced",
+"claim": "Claim: a resource is never both queued and checked out at once.",
+"counterexample": { "side": "head", "steps": [
+  "State$2: _closed = {0}; _resource = {}; _dirty = {Elem$0}",
+  "State$3: _closed = {0}; _resource = {Elem$0}; _dirty = {Elem$0}", ... ] },
+"code": [ "code/kombu/resource.py:234 acquire",
+          "code/kombu/resource.py:58 _add_when_empty",
+          "code/kombu/resource.py:246 release" ],
+"test_outline_reason": "an Alloy counterexample is a snapshot, not a schedule: no test outline"
+```
+
+Each part answers a reviewer's question:
+- **What did it promise?** The claim, quoted from the comment its author wrote above the property. If there is none, the entry says `claim_missing` rather than inventing one.
+- **What goes wrong?** The counterexample comes from the side that fails: the head for a break (what the change now allows), the base for a restore (what the change stops). Here, at `State$3` the same resource is in the queue and checked out at once.
+- **Where in the code?** The functions the model cites, at `file:line`.
+
+For a temporal property the entry also carries a Start / Steps / Result scenario in plain words, and a test outline in the project's own language (Python, Java or Go). The outline is marked *not executed* and says plainly that the counterexample is the model's, not yet confirmed against the code.
+
+One part stays with the agent: a sentence in the user's own terms. For this break it would read something like *"after a release, the pool can hand out a connection that a caller still holds"*. The skill requires that sentence for every entry, citing the scenario. Nothing checks it yet, because the review keeps no record of the agent's report; the skill says so. Two smaller gaps remain: an Alloy break gets instance lines, not a plain-words scenario, and a Node project gets no test outline.
+
 ## The honest half
 
 Two labels, kept visible:
