@@ -6,7 +6,7 @@ series: specforge
 date: 2026-11-11
 ---
 
-*Part 19 of 20 in a series on [specforge](https://github.com/ashitpatel/specforge). [Part 13]({% post_url 2026-11-21-how-to-talk %}) showed the conversation that produces a verdict. This post asks what happens when the agent in that conversation skips a step, and what can stop it. Evidence: the round records linked below, in the specforge repository.*
+*Part 19 of 21 in a series on [specforge](https://github.com/ashitpatel/specforge). [Part 13]({% post_url 2026-11-21-how-to-talk %}) showed the conversation that produces a verdict. This post asks what happens when the agent in that conversation skips a step, and what can stop it. Evidence: the round records linked below, in the specforge repository.*
 
 *Level L2 · Needs: the requirements mode from [part 3]({% post_url 2026-11-11-greenfield-pool %}). No formal methods.*
 
@@ -59,6 +59,8 @@ Then a real reader run. The example from [part 8]({% post_url 2026-11-16-landsca
 ## What this does not show
 
 The fixes are tested by mutation, not by agents. No trial has yet shown that agents behave differently because a removed requirement now asks, or because the answers file is frozen. The fresh readers are not measured on seeded defects; the 22-second run is one example with a defect we planted. Each claim in this post links to its record, and those records say the same.
+
+[Part 21]({% post_url 2026-11-29-code-mode-closes %}) runs the same audit on the code mode, and closes eight more routes.
 
 And one hole stays open, by design: the gate that needs the person. In the third outside-input trial, a bot played the person, and twice it confirmed a claim it should have caught. specforge now quotes the claim in every such question, so the person reads exactly what they are agreeing to. Reading it is still the person's job. Every other gate holds until a checker agrees or the person does. That one holds until the person reads.
 
