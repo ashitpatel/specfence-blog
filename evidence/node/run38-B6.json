@@ -1,0 +1,32 @@
+{
+ "claim": "B6",
+ "run": 38,
+ "subclaims": [
+  {
+   "id": "B6.1",
+   "finding": "bull/pkt-c#0",
+   "text": "In this tree: Concurrent jobs cancel each other's lock renewal (shared 'lockRenewer' timer name) (code: lib.queue.Queue.processJob lock renewal). Is it real? If it needs two workers or threads to interleave at a particular point, say whether the code as written lets them interleave there: separate heaps except explicitly shared memory, and no Atomics ordering that rules the interleaving out. If it needs two loop callbacks to interleave, say which await, timer or message arrival separates the two sides. Name the workers, threads or callers that can reach each side.",
+   "verdict": "real",
+   "kind": "race",
+   "reason": "Each Queue owns one TimerManager (R7 lib/queue.js:114) and run() launches one processJobs loop per concurrency slot (lines 379-388), so two processJob calls can overlap on the same loop. Each arms its renewer under the single shared name 'lockRenewer' (lines 516-519) and clears that name when it finishes (lines 556-558), while TimerManager.set overwrites the stored handle without clearTimeout (R7 lib/timer-manager.js:47-50). The second job's set therefore orphans the first job's pending timeout, and whichever job finishes first clears the survivor's handle while that job is still running. The surviving job then stops renewing (its renewLock at line 517 never fires again), so its Redis lock (R7 lib/job.js:78-87, PX LOCK_RENEW_TIME) can expire mid-processing and the job can be retaken as stalled (R7 lib/queue.js:477-493). The two sides are loop callbacks of two processJob invocations, interleaved at promise yields (getNextJob reply, handler promise) and timer firings.",
+   "caveats": [
+    "Requires one Queue instance processing two jobs concurrently (process() with concurrency >= 2, R7 lib/queue.js:379-388), or a stalled-job processJob overlapping a normal one \u2014 usage is unconfirmed for this library.",
+    "Single-threaded event-loop interleaving at promise/timer boundaries; no separate workers or threads needed.",
+    "Relies on platform setTimeout/clearTimeout semantics and Redis SET PX semantics, both outside the tree."
+   ]
+  },
+  {
+   "id": "B6.2",
+   "finding": "bull/pkt-c#1",
+   "text": "In this tree: Orphaned lock-renewer timeout renews a finished job's lock and re-arms itself (code: lib.timer-manager.TimerManager.set overwrite without clearTimeout). Is it real? If it needs two workers or threads to interleave at a particular point, say whether the code as written lets them interleave there: separate heaps except explicitly shared memory, and no Atomics ordering that rules the interleaving out. If it needs two loop callbacks to interleave, say which await, timer or message arrival separates the two sides. Name the workers, threads or callers that can reach each side.",
+   "verdict": "real",
+   "kind": "race",
+   "reason": "Because TimerManager.set overwrites without clearTimeout (R7 lib/timer-manager.js:47-50), a 'lockRenewer' handle displaced by a concurrent job's set stays pending in the event loop, and the finishing job's clear (R7 lib/queue.js:556-558) removes only the currently stored handle, never the orphan. When the orphan fires, its lockRenewer closure unconditionally renews its own (possibly finished) job's lock via job.renewLock (line 517), which is SET PX with no NX flag and no ownership check (R7 lib/job.js:78-94), then re-arms itself under the same name (line 518) with no finished-job guard. Each firing therefore renews the dead lock and schedules the next firing, a self-perpetuating loop that also clobbers any live job's renewer entry and keeps the TimerManager non-idle (whenIdle/close at R7 lib/queue.js:173-181, R7 lib/timer-manager.js:80-86). The two sides are the orphan timer callback and the live job's set/clear callbacks, interleaved at timer firings.",
+   "caveats": [
+    "Requires two overlapping processJob calls on one Queue instance (concurrency >= 2), as in B6.1 \u2014 usage unconfirmed.",
+    "Single-threaded event-loop interleaving; no separate workers or threads needed.",
+    "Relies on platform setTimeout semantics (an overwritten-but-uncleared handle still fires) and Redis SET PX semantics, both outside the tree."
+   ]
+  }
+ ]
+}

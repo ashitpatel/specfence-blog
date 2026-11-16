@@ -1,0 +1,96 @@
+{
+ "run38 bull/pkt-a": {
+  "open": [],
+  "own": {
+   "findings": [],
+   "fix": "c8e8ceeef0",
+   "is_concurrency": true,
+   "match": "none",
+   "reason": "Fix changes moveToCompleted to require lock ownership (else -1) and adds atomic removeOnComplete; findings cover execScript NOSCRIPT-retry args, whenCurrentJobsFinished lost wakeup, and bclient-error loop growth -- different code regions and causes."
+  }
+ },
+ "run38 bull/pkt-b": {
+  "open": [],
+  "own": {
+   "findings": [],
+   "fix": "c056cb2a00",
+   "is_concurrency": true,
+   "match": "none",
+   "reason": "Fix defers close() until TimerManager idle (close/disconnect split, timers tracked) to stop close-vs-timer hangs; findings cover pause/resume and reconnect processing-loop multiplication plus priority pass order/budgets -- different mechanisms and regions."
+  }
+ },
+ "run38 bull/pkt-c": {
+  "open": [],
+  "own": {
+   "findings": [
+    0,
+    1
+   ],
+   "fix": "8212cdde5f",
+   "is_concurrency": true,
+   "match": "exact",
+   "reason": "Finding 0 is exact: same shared-'lockRenewer'-timer-name collision across concurrent jobs with the same effect (renewals overwrite/cancel each other), which the fix addresses with per-timer uuid ids. Finding 1 is partial: same TimerManager.set overwrite-without-clearTimeout flaw, but a different effect (orphaned timeout renews a finished job's lock and re-arms). Findings 2 (close vs in-flight delay-timer redis work -- flaw persists post-fix, different mechanism) and 3 (pause/resume loops) do not match."
+  }
+ },
+ "run38 bull/pkt-d": {
+  "open": [],
+  "own": {
+   "findings": [],
+   "fix": "456b13d1b9",
+   "is_concurrency": true,
+   "match": "none",
+   "reason": "Fix adds ensureActive to takeLock so a worker cannot lock/process a job no longer in active (double-processing race); findings cover whenCurrentJobsFinished lost wakeup, global-pause bypass, and NOSCRIPT-retry arg loss -- different code and causes."
+  }
+ },
+ "run41 bull/pkt-a": {
+  "open": [],
+  "own": {
+   "findings": [
+    0
+   ],
+   "fix": "d42e60c9bc",
+   "is_concurrency": true,
+   "match": "exact",
+   "reason": "Fix re-acquires the job lock before moveToCompleted/moveToFailed; finding 0 describes a stale (lock-lost) worker corrupting a finished job (failed-after-completed), same cause (terminal move without holding lock) and effect (corrupt terminal state). Finding 1 is a pause/close wait hang, unrelated. Open 0c611 timer fix matches neither. Concurrency: distributed-lock race."
+  }
+ },
+ "run41 bull/pkt-b": {
+  "open": [
+   {
+    "findings": [
+     2
+    ],
+    "fix": "c1b42a022f",
+    "match": "exact",
+    "reason": "Fix clears the lock-renewal timer before moveToCompleted/moveToFailed+release so an already-released lock is not renewed; finding 2 describes the timer re-arming after finalize, leaking forever and resurrecting the lock, same cause and effect."
+   }
+  ],
+  "own": {
+   "findings": [],
+   "fix": "6ccb8608a2",
+   "is_concurrency": true,
+   "match": "none",
+   "reason": "Fix replaces token locks with redlock distributed locks; no finding describes distributed-lock unsafety. Finding 2 is timer lifecycle (re-arm after finalize), not lock-algorithm correctness; findings 0/1 are run-loop and pause-wait. Opens d42e (stale terminal move) and 0c61 (timer-vs-close) match no finding. Concurrency: distributed locking."
+  }
+ },
+ "run41 bull/pkt-c": {
+  "open": [],
+  "own": {
+   "findings": [],
+   "fix": "c1b42a022f",
+   "is_concurrency": true,
+   "match": "none",
+   "reason": "No findings reported, nothing to match. Fix itself stops renewing an already-released lock (timer vs release race). Concurrency: timer-vs-release race."
+  }
+ },
+ "run41 bull/pkt-d": {
+  "open": [],
+  "own": {
+   "findings": [],
+   "fix": "0c611de963",
+   "is_concurrency": true,
+   "match": "none",
+   "reason": "Fix moves stopTimer() before the closed check in handleCompleted so the lock-renewal timer stops even when closed. Finding 0 is the delayTimer, a different timer/region; findings 1/2/3 are pause/close wait-count and sweeper issues, different mechanism. Concurrency: timer-vs-close race."
+  }
+ }
+}

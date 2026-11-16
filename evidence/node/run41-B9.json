@@ -1,0 +1,47 @@
+{
+ "claim": "B9",
+ "run": 41,
+ "subclaims": [
+  {
+   "id": "B9.1",
+   "finding": "bull/pkt-a#1",
+   "text": "In this tree: pause(true)/close hang when a completion lands between the active-count read and the event subscribe (code: PauseWait). Is it real? If it needs two workers or threads to interleave at a particular point, say whether the code as written lets them interleave there: separate heaps except explicitly shared memory, and no Atomics ordering that rules the interleaving out. If it needs two loop callbacks to interleave, say which await, timer or message arrival separates the two sides. Name the workers, threads or callers that can reach each side.",
+   "verdict": "real",
+   "kind": "race",
+   "reason": "whenCurrentJobsFinished (lib/queue.js:937-961) reads the active count via async Redis llen (lib/queue.js:812-814) and only in .then subscribes .on('stalled'/'completed'/'failed') with _.after(count, resolve) (lib/queue.js:945-955). Job completions are signalled from ordinary event-loop callbacks via distEmit('completed'/'failed') in handleCompleted/handleFailed (lib/queue.js:681,692), which can run during the llen round-trip await. A completion signalled after llen executes on Redis (job still counted) but before the .on calls runs is missed, leaving at most count-1 events for _.after(count). pause(true) sets this.paused first (lib/queue.js:466-473), which blocks processJobs from fetching new jobs (lib/queue.js:612), so no fresh completions make up the deficit and the promise from pause(true) (lib/queue.js:475) or close() (lib/queue.js:311) never resolves. No second worker or thread is needed: both sides are loop callbacks of the single local process, separated by the llen I/O await.",
+   "caveats": [
+    "Usage: the queue must be locally processing at least one job when local pause(true)/close() is called without the do-not-wait flag.",
+    "Assumes events signalled before .on subscribes are not delivered to that subscriber (Disturbed base-class/pub-sub semantics, outside the tree).",
+    "Assumes lodash _.after(count, fn) fires only after count invocations (platform behaviour outside the tree).",
+    "An unrelated 'stalled' event could in principle supply the missing count and resolve early; the hang needs no such make-up event."
+   ]
+  },
+  {
+   "id": "B9.2",
+   "finding": "bull/pkt-b#1",
+   "text": "In this tree: Local pause()/close() can hang: completion missed between count read and subscribe (code: lib/queue.js whenCurrentJobsFinished). Is it real? If it needs two workers or threads to interleave at a particular point, say whether the code as written lets them interleave there: separate heaps except explicitly shared memory, and no Atomics ordering that rules the interleaving out. If it needs two loop callbacks to interleave, say which await, timer or message arrival separates the two sides. Name the workers, threads or callers that can reach each side.",
+   "verdict": "real",
+   "kind": "race",
+   "reason": "whenCurrentJobsFinished (lib/queue.js:908-927) reads the active count via async Redis llen (lib/queue.js:787-789) and only in .then subscribes .on('completed'/'failed') with _.after(count, resolve) (lib/queue.js:916-923). Job completions are signalled from ordinary event-loop callbacks via distEmit('completed'/'failed') in handleCompleted/handleFailed (lib/queue.js:658,668), which can run during the llen round-trip await. A completion signalled after llen executes on Redis (job still counted) but before the .on calls runs is missed, leaving at most count-1 events for _.after(count). pause(true) sets this.paused first (lib/queue.js:445-456), which blocks processJobs from fetching new jobs (lib/queue.js:592), so no fresh completions make up the deficit and the promise from pause() (lib/queue.js:458) or close() (lib/queue.js:294) never resolves. No second worker or thread is needed: both sides are loop callbacks of the single local process, separated by the llen I/O await.",
+   "caveats": [
+    "Usage: the queue must be locally processing at least one job when local pause()/close() is called without the do-not-wait flag.",
+    "Assumes events signalled before .on subscribes are not delivered to that subscriber (Disturbed base-class/pub-sub semantics, outside the tree).",
+    "Assumes lodash _.after(count, fn) fires only after count invocations (platform behaviour outside the tree)."
+   ]
+  },
+  {
+   "id": "B9.3",
+   "finding": "bull/pkt-d#1",
+   "text": "In this tree: Missed completion hangs pause()/close() forever (code: WaitCount). Is it real? If it needs two workers or threads to interleave at a particular point, say whether the code as written lets them interleave there: separate heaps except explicitly shared memory, and no Atomics ordering that rules the interleaving out. If it needs two loop callbacks to interleave, say which await, timer or message arrival separates the two sides. Name the workers, threads or callers that can reach each side.",
+   "verdict": "real",
+   "kind": "race",
+   "reason": "whenCurrentJobsFinished (lib/queue.js:947-971) reads the active count via async Redis llen (lib/queue.js:822-824) and only in .then subscribes .on('stalled'/'completed'/'failed') with _.after(count, resolve) (lib/queue.js:955-965). Job completions are signalled from ordinary event-loop callbacks via distEmit('completed'/'failed') in handleCompleted/handleFailed (lib/queue.js:683,695), which can run during the llen round-trip await. A completion signalled after llen executes on Redis (job still counted) but before the .on calls runs is missed, leaving at most count-1 events for _.after(count). pause(true) sets this.paused first (lib/queue.js:466-473), which blocks processJobs from fetching new jobs (lib/queue.js:612), so no fresh completions make up the deficit and the promise from pause() (lib/queue.js:475) or close() (lib/queue.js:311) never resolves. No second worker or thread is needed: both sides are loop callbacks of the single local process, separated by the llen I/O await.",
+   "caveats": [
+    "Usage: the queue must be locally processing at least one job when local pause()/close() is called without the do-not-wait flag.",
+    "Assumes events signalled before .on subscribes are not delivered to that subscriber (Disturbed base-class/pub-sub semantics, outside the tree).",
+    "Assumes lodash _.after(count, fn) fires only after count invocations (platform behaviour outside the tree).",
+    "An unrelated 'stalled' event could in principle supply the missing count and resolve early; the hang needs no such make-up event."
+   ]
+  }
+ ]
+}

@@ -1,0 +1,30 @@
+{
+ "claim": "B1",
+ "run": 38,
+ "subclaims": [
+  {
+   "id": "B1.1",
+   "finding": "bull/pkt-a#0",
+   "text": "In this tree: NOSCRIPT retry re-sends the error object as the script arguments (code: lib.scripts.execScript). Is it real? If it needs two workers or threads to interleave at a particular point, say whether the code as written lets them interleave there: separate heaps except explicitly shared memory, and no Atomics ordering that rules the interleaving out. If it needs two loop callbacks to interleave, say which await, timer or message arrival separates the two sides. Name the workers, threads or callers that can reach each side.",
+   "verdict": "real",
+   "kind": "deterministic",
+   "reason": "In R5 lib/scripts.js, execScript stores variadic script args via _.drop(arguments,3) at line 18, but the NOSCRIPT handler at lines 30-36 runs inside the nested catch callback function(err), whose own `arguments` is [err], not execScript's arguments. Line 35 pushes that `arguments` onto [client,hash,script], so the recursive call at line 36 is execScript(client,hash,script,err). The retry's line 18 therefore yields [err] and its evalsha call sends the error object as the script argument. Any caller of any scripts.* entry (e.g. addJob line 135, moveToCompleted line 180) reaches this deterministically on a NOSCRIPT reply; no workers, threads, or loop interleaving are needed.",
+   "caveats": [
+    "Requires Redis to reply NOSCRIPT to evalsha (scripts evicted from the server cache, e.g. SCRIPT FLUSH or server restart) \u2014 platform behaviour outside the tree.",
+    "Requires the promise library to invoke the catch callback with the error as its single argument (standard promise behaviour; bluebird is outside the tree)."
+   ]
+  },
+  {
+   "id": "B1.2",
+   "finding": "bull/pkt-d#4",
+   "text": "In this tree: NOSCRIPT retry drops the original script arguments (code: RetryArgs). Is it real? If it needs two workers or threads to interleave at a particular point, say whether the code as written lets them interleave there: separate heaps except explicitly shared memory, and no Atomics ordering that rules the interleaving out. If it needs two loop callbacks to interleave, say which await, timer or message arrival separates the two sides. Name the workers, threads or callers that can reach each side.",
+   "verdict": "real",
+   "kind": "deterministic",
+   "reason": "In R8 lib/scripts.js, whose execScript (lines 16-42) is byte-identical to R5's, the original script args captured at line 18 (numkeys, keys, argv) are discarded when the NOSCRIPT branch reassigns args to [client,hash,script] at lines 32-34. Line 35 pushes the catch callback's own `arguments` ([err]) rather than the saved args, so the recursive execScript call at line 36 carries none of the original arguments. The retry therefore issues evalsha with only [newSha, err]. Any scripts.* caller (e.g. addJob line 135, move line 189) hits this deterministically on NOSCRIPT; no concurrency is involved.",
+   "caveats": [
+    "Requires Redis to reply NOSCRIPT to evalsha (scripts evicted from the server cache, e.g. SCRIPT FLUSH or server restart) \u2014 platform behaviour outside the tree.",
+    "Requires the promise library to invoke the catch callback with the error as its single argument (standard promise behaviour; bluebird is outside the tree)."
+   ]
+  }
+ ]
+}

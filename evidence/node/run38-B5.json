@@ -1,0 +1,30 @@
+{
+ "claim": "B5",
+ "run": 38,
+ "subclaims": [
+  {
+   "id": "B5.1",
+   "finding": "bull/pkt-b#2",
+   "text": "In this tree: PriorityQueue visits queues low-first every other pass (code: lib.priority-queue run pass order). Is it real? If it needs two workers or threads to interleave at a particular point, say whether the code as written lets them interleave there: separate heaps except explicitly shared memory, and no Atomics ordering that rules the interleaving out. If it needs two loop callbacks to interleave, say which await, timer or message arrival separates the two sides. Name the workers, threads or callers that can reach each side.",
+   "verdict": "real",
+   "kind": "deterministic",
+   "reason": "lib/priority-queue.js:100 calls _this.queues.reverse() at the top of every loop pass, and Array#reverse reverses in place, so successive passes alternate between [critical..low] and [low..critical] (initial order low..critical is set at lib/priority-queue.js:24-27). Every second pass therefore visits low first. The loop is a single sequential Promise.each chain re-entered via .then(loop) (lib/priority-queue.js:100-125), reached by any caller of process() (lib/priority-queue.js:84-91); no workers, threads, or second-callback interleave is needed.",
+   "caveats": [
+    "Relies on standard JS semantics: Array.prototype.reverse sorts in place and returns the same array.",
+    "Assumes the normal single run loop from process(); resume() can start a second loop sharing this.queues (lib/priority-queue.js:157-167)."
+   ]
+  },
+  {
+   "id": "B5.2",
+   "finding": "bull/pkt-b#3",
+   "text": "In this tree: PriorityQueue gives critical the smallest job budget on odd passes (code: lib.priority-queue run strategy budgets). Is it real? If it needs two workers or threads to interleave at a particular point, say whether the code as written lets them interleave there: separate heaps except explicitly shared memory, and no Atomics ordering that rules the interleaving out. If it needs two loop callbacks to interleave, say which await, timer or message arrival separates the two sides. Name the workers, threads or callers that can reach each side.",
+   "verdict": "real",
+   "kind": "deterministic",
+   "reason": "On the reversed (critical-first, 1st/odd) pass, critical sits at index 0, so lib/priority-queue.js:101 assigns it Strategy.exponential(0) = Math.pow(0,0)*2 = 2 (lib/priority-queue.js:229-231), the minimum budget on that pass (tied with index 1; index 4 gets 512). Critical thus gets the smallest per-pass job budget on odd passes. Same single-sequential-loop path as B5.1 (lib/priority-queue.js:94-129); no interleaving across workers, threads, or loop callbacks is needed.",
+   "caveats": [
+    "Relies on standard JS semantics: Math.pow(0,0) === 1, so Strategy.exponential(0) is 2.",
+    "Budgets follow the per-pass index, so they alternate along with the pass order; same single-loop assumption as B5.1."
+   ]
+  }
+ ]
+}

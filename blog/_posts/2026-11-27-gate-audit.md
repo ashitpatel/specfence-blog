@@ -6,7 +6,7 @@ series: specforge
 date: 2026-11-11
 ---
 
-*Part 19 of 19 in a series on [specforge](https://github.com/ashitpatel/specforge). [Part 13]({% post_url 2026-11-21-how-to-talk %}) showed the conversation that produces a verdict. This post asks what happens when the agent in that conversation skips a step, and what can stop it. Evidence: the round records linked below, in the specforge repository.*
+*Part 19 of 20 in a series on [specforge](https://github.com/ashitpatel/specforge). [Part 13]({% post_url 2026-11-21-how-to-talk %}) showed the conversation that produces a verdict. This post asks what happens when the agent in that conversation skips a step, and what can stop it. Evidence: the round records linked below, in the specforge repository.*
 
 *Level L2 · Needs: the requirements mode from [part 3]({% post_url 2026-11-11-greenfield-pool %}). No formal methods.*
 
