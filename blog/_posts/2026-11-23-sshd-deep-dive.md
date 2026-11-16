@@ -2,11 +2,11 @@
 title: "sshd, examined: the KEX match and the agent that stayed racy"
 description: "Twelve blind first-looks at Apache MINA SSHD: a KEX race matched exactly to its upstream fix, a timeout cluster matched in part, agent and process races still present at HEAD — and the fixes depth never reached."
 layout: post
-series: specforge
+series: specfence
 date: 2026-11-11
 ---
 
-*Part 15 of 21 in a series on [specforge](https://github.com/ashitpatel/specforge). [Part 14]({% post_url 2026-11-22-evidence-overview %}) opened the file drawer. This post reads one drawer all the way through: the Java half. Evidence: [`evidence/sshd/`](https://github.com/ashitpatel/specforge-blog/tree/main/evidence/sshd).*
+*Part 15 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). [Part 14]({% post_url 2026-11-22-evidence-overview %}) opened the file drawer. This post reads one drawer all the way through: the Java half. Evidence: [`evidence/sshd/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/sshd).*
 
 *Level L2 · Needs: comfort reading short Java excerpts. One project, file by file.*
 
@@ -65,7 +65,7 @@ protected void stopSessionTimeoutListener(AbstractSessionFactory<?, ?> sessionFa
 }
 ```
 
-All three adjudicated real (the [reschedule verdict](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/sshd/fr2-S28.json), the [leak verdict](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/sshd/fr2-S26.json), the [wrong-cancel verdict](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/sshd/fr2-S27.json)). Partial means what it says: the scheduling half, not the AtomicReference half.
+All three adjudicated real (the [reschedule verdict](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/sshd/fr2-S28.json), the [leak verdict](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/sshd/fr2-S26.json), the [wrong-cancel verdict](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/sshd/fr2-S27.json)). Partial means what it says: the scheduling half, not the AtomicReference half.
 
 A fourth near-miss belongs in this section, framed as what it is. In FR3, one packet, on the 2021 parent of the KEX fix [`c425`](https://github.com/apache/mina-sshd/commit/c425ac53e8df95684563d297cde6101b4db77255), filed a rekey-vs-encode torn read: the IO thread swaps the outbound cipher and size without the encode lock while another thread reads them in two non-atomic steps — new cipher with old size. Adjudicated a real race. The matcher scored it partial on `c425` but wrote the gap plainly: same KEX family, different defect (torn encode read vs. negotiation on a missing proposal). Count it as a same-family catch, not as the fix predicted.
 

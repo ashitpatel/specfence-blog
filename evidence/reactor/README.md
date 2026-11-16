@@ -23,8 +23,8 @@ arms); a packet is one tester's sealed session on one tree; a claim file
   - Engine record (the v1 OOM and the v2 bounds that unblocked the run):
     `docs/project/rounds/2026-11-12-R34-OOM-build.md`
 
-Paths are relative to the specforge repository
-(https://github.com/ashitpatel/specforge, `main`); the files below are
+Paths are relative to the specfence repository
+(https://github.com/ashitpatel/specfence, `main`); the files below are
 vendored here because packet workdirs and adjudication dirs are not in
 version control.
 

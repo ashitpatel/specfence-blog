@@ -2,11 +2,11 @@
 title: "The pool that overfilled"
 description: "Kombu's resource pool through the structural lens: a limit check at line 59, the add at line 99, no lock between — and an Alloy counterexample that reads as five snapshots ending in #dirty = 2 > limit 1."
 layout: post
-series: specforge
+series: specfence
 date: 2026-11-11
 ---
 
-*Part 6 of 21 in a series on [specforge](https://github.com/ashitpatel/specforge). [Part 5]({% post_url 2026-11-13-temporal-stomp %}) traced a race through time. This post reads one as a snapshot. Evidence: [`evidence/kombu/Resource-full.als`](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/kombu/Resource-full.als) and its [run log](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/kombu/Resource-full.run.log).*
+*Part 6 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). [Part 5]({% post_url 2026-11-13-temporal-stomp %}) traced a race through time. This post reads one as a snapshot. Evidence: [`evidence/kombu/Resource-full.als`](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/kombu/Resource-full.als) and its [run log](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/kombu/Resource-full.run.log).*
 
 *Level L2 · Needs: part 5 or equal comfort with code. Snapshots, not traces.*
 
@@ -39,7 +39,7 @@ State$2: _resource = {Elem$0, Elem$1};   _dirty = {}
 State$3: _resource = {Elem$0};           _dirty = {Elem$1}
 State$4: _resource = {};                 _dirty = {Elem$0, Elem$1}
 ```
-(per-state `_closed` values and the trailing signature lines omitted; the [run log](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/kombu/Resource-full.run.log) has the complete instance at `5 State, 2 Thread, 3 Elem`)
+(per-state `_closed` values and the trailing signature lines omitted; the [run log](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/kombu/Resource-full.run.log) has the complete instance at `5 State, 2 Thread, 3 Elem`)
 
 Two checks pass while `_dirty` is empty (states 1–2), then two takes land (states 3–4): `#dirty = 2 > limit 1`. No thread schedule to replay, no timing to squint at — the violation is a *shape*, and you can see it sitting there in state 4.
 

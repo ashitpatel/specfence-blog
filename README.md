@@ -1,6 +1,6 @@
-# specforge-blog
+# specfence-blog
 
-A seventeen-part blog series on [specforge](https://github.com/ashitpatel/specforge): what it is, why exhaustive checking earns its keep next to testing, five worked examples, the landscape and trust point, three deep comparisons, the conversation — and an evidence arc (overview + sshd + celery deep-dives) with the file drawer open, plus one adversarial drawer (reactor-core). Written in the style of the author's [ai4sgfinder](https://ashitpatel.github.io/ai4sgfinder/) and [lesson-scaffold-builder](https://ashitpatel.github.io/lesson-scaffold-builder/) series.
+A seventeen-part blog series on [specfence](https://github.com/ashitpatel/specfence): what it is, why exhaustive checking earns its keep next to testing, five worked examples, the landscape and trust point, three deep comparisons, the conversation — and an evidence arc (overview + sshd + celery deep-dives) with the file drawer open, plus one adversarial drawer (reactor-core). Written in the style of the author's [ai4sgfinder](https://ashitpatel.github.io/ai4sgfinder/) and [lesson-scaffold-builder](https://ashitpatel.github.io/lesson-scaffold-builder/) series.
 
 ## Layout
 
@@ -26,8 +26,8 @@ bundle exec jekyll serve   # or: jekyll serve
 
 ## Publish
 
-Push this directory as a GitHub repository with Pages enabled (Jekyll, `blog/` as the source or the repo root — adjust accordingly). If the repository is not named `specforge-blog`, update `baseurl` in `blog/_config.yml` (one line) to match.
+Push this directory as a GitHub repository with Pages enabled (Jekyll, `blog/` as the source or the repo root — adjust accordingly). If the repository is not named `specfence-blog`, update `baseurl` in `blog/_config.yml` (one line) to match.
 
 ## License
 
-Apache 2.0 (`LICENSE`). Vendored evidence keeps its sources' provenance: benchmark records from the specforge repository, code trees from the named upstream projects (kombu: BSD-3-Clause).
+Apache 2.0 (`LICENSE`). Vendored evidence keeps its sources' provenance: benchmark records from the specfence repository, code trees from the named upstream projects (kombu: BSD-3-Clause).

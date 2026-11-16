@@ -3,7 +3,7 @@ layout: page
 title: About
 ---
 
-[specforge](https://github.com/ashitpatel/specforge) is a tool that turns requirements or existing code into Alloy and TLA+ models, checks them exhaustively at small scope, reproduces what it finds on the real code, and then guards later changes against the models. It works on two kinds of defect: temporal (races, deadlocks, lost wake-ups, ordering violations) and structural (broken shape invariants in data and APIs).
+[specfence](https://github.com/ashitpatel/specfence) is a tool that turns requirements or existing code into Alloy and TLA+ models, checks them exhaustively at small scope, reproduces what it finds on the real code, and then guards later changes against the models. It works on two kinds of defect: temporal (races, deadlocks, lost wake-ups, ordering violations) and structural (broken shape invariants in data and APIs).
 
 Stage: proof of concept / pilot. The tool has not been deployed to any production system; the evidence in this series comes from benchmark runs on open-source code, a constructed greenfield run, and the tool guarding its own repository.
 
@@ -16,11 +16,11 @@ This series walks through the idea, five worked examples, the landscape, the tru
 5. The lost wake-up — a latent race in stomp, found blind and demonstrated.
 6. The pool that overfilled — the same defect as a structural counterexample in kombu.
 7. The guard that fires — catching drift during a change, twice.
-8. The landscape — where specforge fits among its neighbors.
+8. The landscape — where specfence fits among its neighbors.
 9. Slices — what gets checked, what might not, and how to watch the gaps.
-10. Specula vs specforge — the same loop, different answers to its critics.
-11. Imandra vs specforge — ask the logician, or set the tripwire.
-12. Harness² vs specforge — improve the agent, or check the work.
+10. Specula vs specfence — the same loop, different answers to its critics.
+11. Imandra vs specfence — ask the logician, or set the tripwire.
+12. Harness² vs specfence — improve the agent, or check the work.
 13. How to talk to the tool — the conversation behind the verdicts.
 14. The evidence file — every run behind the claims, calibrated.
 15. sshd, examined — a KEX race matched, an agent left racy (Java).

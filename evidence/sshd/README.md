@@ -27,8 +27,8 @@ style) holds one finding-cluster with its blind verdict.
   - `evals/cleanroom/fr3/ANALYSIS.md`
   - Round record: `docs/project/rounds/2026-11-04-FR3-results.md`
 
-Paths are relative to the specforge repository
-(https://github.com/ashitpatel/specforge, `main` branch).
+Paths are relative to the specfence repository
+(https://github.com/ashitpatel/specfence, `main` branch).
 
 ## Packet trees quoted (pre-fix exports, git checkouts)
 

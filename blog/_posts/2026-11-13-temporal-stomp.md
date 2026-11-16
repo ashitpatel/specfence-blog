@@ -2,11 +2,11 @@
 title: "The lost wake-up"
 description: "A latent race in the stomp messaging library, found blind from a 2013 tree, matched exactly to the upstream fix, and demonstrated hanging real code — forced, and 10 times in 3,000 unforced trials."
 layout: post
-series: specforge
+series: specfence
 date: 2026-11-11
 ---
 
-*Part 5 of 21 in a series on [specforge](https://github.com/ashitpatel/specforge). [Part 4]({% post_url 2026-11-12-feature-log4j %}) flagged a bug at introduction. This one was already there — sitting in dormant code since 2013. Evidence: [`evidence/stomp/`](https://github.com/ashitpatel/specforge-blog/tree/main/evidence/stomp).*
+*Part 5 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). [Part 4]({% post_url 2026-11-12-feature-log4j %}) flagged a bug at introduction. This one was already there — sitting in dormant code since 2013. Evidence: [`evidence/stomp/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/stomp).*
 
 *Level L2 · Needs: comfort reading short code excerpts. The race, line by line.*
 
@@ -42,7 +42,7 @@ A model-level finding is a hypothesis. The adjudicator — an independent pass t
 
 Ten in three thousand. A test suite passes that. A user with a frozen `send()` does not care that it passes. The adjudication verdict: *real race, GIL-reachable, demonstrated*. Caveats: it needs `wait_on_receipt=True` and a receipt header on `send()`, and the hang lasts only until another receipt frame arrives. Precision about the trigger is part of the verdict, not fine print.
 
-The full adjudication — import stand-ins, simulation setup (a local socket pair, the receiver thread calling what `__receiver_loop` calls) — is in [`S1.json`](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/stomp/S1.json). The match table is in [`MATCHES-stomp.json`](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/stomp/MATCHES-stomp.json); the run's predictions, committed before any tester ran, in [`PREREGISTRATION.md`](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/stomp/PREREGISTRATION.md).
+The full adjudication — import stand-ins, simulation setup (a local socket pair, the receiver thread calling what `__receiver_loop` calls) — is in [`S1.json`](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/stomp/S1.json). The match table is in [`MATCHES-stomp.json`](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/stomp/MATCHES-stomp.json); the run's predictions, committed before any tester ran, in [`PREREGISTRATION.md`](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/stomp/PREREGISTRATION.md).
 
 ## Why this one matters
 

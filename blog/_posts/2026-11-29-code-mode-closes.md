@@ -2,23 +2,23 @@
 title: "Eight more gates: what an agent could close alone in the code mode"
 description: "The gate audit from part 19, run again on the code mode: eight ways an agent alone could hide a bug, an owed slice or a guard property from the person. Each now waits for the person's yes or says what it holds back. Three cheaper checks of the skill text found two of the problems too."
 layout: post
-series: specforge
+series: specfence
 date: 2026-11-11
 ---
 
-*Part 21 of 21 in a series on [specforge](https://github.com/ashitpatel/specforge). [Part 19]({% post_url 2026-11-27-gate-audit %}) audited the requirements mode's gates and closed four routes an agent could take alone. This post asks the same question of the code mode, where the stakes are bugs in someone's existing code. Evidence: the round records linked below, in the specforge repository.*
+*Part 21 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). [Part 19]({% post_url 2026-11-27-gate-audit %}) audited the requirements mode's gates and closed four routes an agent could take alone. This post asks the same question of the code mode, where the stakes are bugs in someone's existing code. Evidence: the round records linked below, in the specfence repository.*
 
 *Level L2 · Needs: the code mode from [part 2]({% post_url 2026-11-10-how-it-works %}) and the gate audit in [part 19]({% post_url 2026-11-27-gate-audit %}). No formal methods.*
 
 ## The question, again
 
-In the code mode, specforge reads existing code, models the risky parts in TLA+, and reports what it finds. The report the person reads has a fixed shape:
+In the code mode, specfence reads existing code, models the risky parts in TLA+, and reports what it finds. The report the person reads has a fixed shape:
 - **bugs**, which a checker confirmed;
 - **model-level findings**, which it did not;
 - **owed slices**, the parts it has not modelled yet;
 - **approvals waiting on the person.**
 
-Part 19's lesson was that a rule in the skill text moves an agent less than a gate in the engine does. So the code-mode audit ([CM1](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-CM1-results.md)) asked the same question of every line in that report: can the agent remove it, weaken it, or move it out of sight with only what it writes itself? That means no checker's verdict and no answer from the person.
+Part 19's lesson was that a rule in the skill text moves an agent less than a gate in the engine does. So the code-mode audit ([CM1](https://github.com/ashitpatel/specfence/blob/main/docs/project/rounds/2026-11-15-CM1-results.md)) asked the same question of every line in that report: can the agent remove it, weaken it, or move it out of sight with only what it writes itself? That means no checker's verdict and no answer from the person.
 
 The audit first listed every place in the code that produces one of those lines, 89 in all. That list was committed before any test asserted a verdict. Then each route got a test that takes only the agent's path and calls the report again. Six seeded engine bugs checked the tests themselves, and all six were caught, with a clean control run first.
 
@@ -44,7 +44,7 @@ Part 19 found that checks of the skill text could not have predicted what agents
 - **A load measure:** an agent on the first-look path reads about 24,000 tokens of skill text before its first tool call. Almost half of model-slice belongs to a single tool step.
 - **A check for facts in two homes:** 11 passages appear in both a skill and a tool description. One pair disagreed about which proposals may share a spec.
 
-The contradiction and the disagreement were fixed in the text ([SR1](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-SR1.md)). Moving step text into tool results would change behaviour, so it waits for its own trial.
+The contradiction and the disagreement were fixed in the text ([SR1](https://github.com/ashitpatel/specfence/blob/main/docs/project/rounds/2026-11-15-SR1.md)). Moving step text into tool results would change behaviour, so it waits for its own trial.
 
 ## Eight closes, each chosen by the owner
 
@@ -52,13 +52,13 @@ The owner chose each close from two or three options.
 
 | route | the rule now | record |
 |---|---|---|
-| answers file | counts only if the run began with it, frozen by `begin_run` or the person's own freeze command; the report lists every answer it gave | [AF1](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-AF1.md) |
-| withdraw or weaken a bug | asks the person, quoting the bug and the reason; until yes, the bug stays, marked "withdrawal proposed"; every withdrawal is listed | [WD1](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-WD1.md) |
-| `@control` | explains a failure only when a real check sits beside it; a lone control stays a finding | [CT1](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-CT1.md) |
-| owed slice | stays owed until a check gives a real verdict: a violation, or a property shown able to fail | [OW1](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-OW1.md) |
-| scan settings | a setting that reads less than the default counts only with the person's yes | [SP1](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-SP1.md) |
-| guard property | dropped only with the person's yes; every drop is logged and listed | [GD1](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-GD1.md) |
-| intent item | "accepted" counts only with the person's recorded yes; otherwise the gate blocks | [IN1](https://github.com/ashitpatel/specforge/blob/main/docs/project/rounds/2026-11-15-IN1.md) |
+| answers file | counts only if the run began with it, frozen by `begin_run` or the person's own freeze command; the report lists every answer it gave | [AF1](https://github.com/ashitpatel/specfence/blob/main/docs/project/rounds/2026-11-15-AF1.md) |
+| withdraw or weaken a bug | asks the person, quoting the bug and the reason; until yes, the bug stays, marked "withdrawal proposed"; every withdrawal is listed | [WD1](https://github.com/ashitpatel/specfence/blob/main/docs/project/rounds/2026-11-15-WD1.md) |
+| `@control` | explains a failure only when a real check sits beside it; a lone control stays a finding | [CT1](https://github.com/ashitpatel/specfence/blob/main/docs/project/rounds/2026-11-15-CT1.md) |
+| owed slice | stays owed until a check gives a real verdict: a violation, or a property shown able to fail | [OW1](https://github.com/ashitpatel/specfence/blob/main/docs/project/rounds/2026-11-15-OW1.md) |
+| scan settings | a setting that reads less than the default counts only with the person's yes | [SP1](https://github.com/ashitpatel/specfence/blob/main/docs/project/rounds/2026-11-15-SP1.md) |
+| guard property | dropped only with the person's yes; every drop is logged and listed | [GD1](https://github.com/ashitpatel/specfence/blob/main/docs/project/rounds/2026-11-15-GD1.md) |
+| intent item | "accepted" counts only with the person's recorded yes; otherwise the gate blocks | [IN1](https://github.com/ashitpatel/specfence/blob/main/docs/project/rounds/2026-11-15-IN1.md) |
 
 Most closes have the same shape. Where the agent used to decide, the person now answers by elicitation, and their answer is recorded beside the setting it decides. When the person cannot be asked, the stricter state holds, and the question waits. That happens when the client shows no forms, or the run is a shell, or a bot drives the run. The bug stays in section 1, the default scan applies, and the property keeps guarding. Each close was checked by its own seeded engine bugs: 7 for AF1, 8 for WD1, 6 for CT1, 6 for OW1, 8 for SP1, 8 for GD1 and 6 for IN1. All were caught, each with a clean control.
 

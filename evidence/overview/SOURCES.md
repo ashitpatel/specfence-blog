@@ -3,7 +3,7 @@
 Every quantitative claim in
 [`2026-11-22-evidence-overview.md`](../../blog/_posts/2026-11-22-evidence-overview.md),
 with the record that carries it. `specforge:` paths are relative to
-https://github.com/ashitpatel/specforge (`main`); `blog:` paths to this
+https://github.com/ashitpatel/specfence (`main`); `blog:` paths to this
 repository.
 
 ## Demonstrated rung

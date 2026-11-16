@@ -3,7 +3,7 @@
 The structural story, regenerated for this series (see the posts of 2026-11-14 and 2026-11-15).
 
 - `Resource-full.als` — the full R154-style Alloy model of kombu `Resource` (skeleton by
-  `specforge_engine.skeleton.alloy` from the packet tree, operation semantics and asserts completed by hand).
+  `specfence_engine.skeleton.alloy` from the packet tree, operation semantics and asserts completed by hand).
 - `Resource-full.run.log` — the checker's verdict: witness satisfiable, `NoOverLimit` counterexample
   (`#dirty = 2 > limit 1`), `NoDoubleHold` holds.
 - `base/` — the packet's `kombu/` tree plus the golden model (`NoDoubleHold` only) under
@@ -13,5 +13,5 @@ The structural story, regenerated for this series (see the posts of 2026-11-14 a
 - `review.json` — `review_diff` over base/head: `breaks: ["NoDoubleHold"]`. The `base`/`head`
   fields were relativized to this directory (checker output carries absolute paths); verdicts untouched.
 
-Reproduce with the specforge engine: `check_alloy` on the `.als` files (mode `code`), `review(base, head)`
+Reproduce with the specfence engine: `check_alloy` on the `.als` files (mode `code`), `review(base, head)`
 for the verdict.

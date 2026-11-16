@@ -1,12 +1,12 @@
 ---
 title: "How it works: two checkers and the loop around them"
-description: "Specforge's capabilities in one tour: three doors in, an Alloy model for shapes and a TLA+ model for interleavings, a reproduce-or-it-isn't-a-bug rule, and change guards that put the models to work."
+description: "Specfence's capabilities in one tour: three doors in, an Alloy model for shapes and a TLA+ model for interleavings, a reproduce-or-it-isn't-a-bug rule, and change guards that put the models to work."
 layout: post
-series: specforge
+series: specfence
 date: 2026-11-10
 ---
 
-*Part 2 of 21 in a series on [specforge](https://github.com/ashitpatel/specforge). [Part 1]({% post_url 2026-11-09-what-tests-cannot-see %}) named the gap: tests sample instances, while concurrency and structure bugs hide in interleavings and shapes no test constructs.*
+*Part 2 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). [Part 1]({% post_url 2026-11-09-what-tests-cannot-see %}) named the gap: tests sample instances, while concurrency and structure bugs hide in interleavings and shapes no test constructs.*
 
 *Level L1 · Needs: part 1 (or nothing, at a skim). The machinery tour.*
 

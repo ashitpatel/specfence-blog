@@ -2,11 +2,11 @@
 title: "caddy, examined: a logger race matched to its fix, and a fatal race upstream fixed later"
 description: "Four blind first-looks at the Caddy web server in Go: a passive-logger race matched exactly to its own upstream fix, an admin-server family found three times but stuck below confirmation, a fatal session-ticket race upstream fixed years later — and the two fixes depth never reached."
 layout: post
-series: specforge
+series: specfence
 date: 2026-11-11
 ---
 
-*Part 18 of 21 in a series on [specforge](https://github.com/ashitpatel/specforge). [Part 14]({% post_url 2026-11-22-evidence-overview %}) opened the file drawer. This post reads the Go drawer all the way through: the first project in a third language. Evidence: [`evidence/go/`](https://github.com/ashitpatel/specforge-blog/tree/main/evidence/go).*
+*Part 18 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). [Part 14]({% post_url 2026-11-22-evidence-overview %}) opened the file drawer. This post reads the Go drawer all the way through: the first project in a third language. Evidence: [`evidence/go/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/go).*
 
 *Level L2 · Needs: comfort reading short Go excerpts. One project, file by file.*
 
@@ -25,7 +25,7 @@ if h.HealthChecks != nil && h.HealthChecks.Passive != nil {
     h.HealthChecks.Passive.logger = h.logger.Named("health_checker.passive")
 ```
 
-One reverseproxy `Handler` serves all requests (`ServeHTTP` has a pointer receiver, line 403; requests run on separate goroutines), so two concurrent requests execute that store with no ordering between them — and the `countFailure` path concurrently loads the same field (`healthchecks.go:462,472,487`). The blind matcher — shown the finding and the upstream fix, never the tree — ruled it **exact** on [`936ee918ee`](https://github.com/caddyserver/caddy/commit/936ee918ee00bcdf05d2f44a7fa292c054d64700) ("reverseproxy: Always return new upstreams", August 2023): the commit's second hunk, titled "Fix healthcheck logger race", moves exactly that assignment from per-request `provisionUpstream` to one-time `Provision`. The tester, blind, suggested exactly that direction: *"assign the logger once at provision time instead of per upstream."* The adjudicator judged it real ([verdict](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/go/run35-C2.json)). Keep the tester's own honesty label: the race is genuine but benign-valued — every store writes a fresh, equivalent logger — so it fails `go run -race` without a crash path. The fix landed three days after the packet's tree.
+One reverseproxy `Handler` serves all requests (`ServeHTTP` has a pointer receiver, line 403; requests run on separate goroutines), so two concurrent requests execute that store with no ordering between them — and the `countFailure` path concurrently loads the same field (`healthchecks.go:462,472,487`). The blind matcher — shown the finding and the upstream fix, never the tree — ruled it **exact** on [`936ee918ee`](https://github.com/caddyserver/caddy/commit/936ee918ee00bcdf05d2f44a7fa292c054d64700) ("reverseproxy: Always return new upstreams", August 2023): the commit's second hunk, titled "Fix healthcheck logger race", moves exactly that assignment from per-request `provisionUpstream` to one-time `Provision`. The tester, blind, suggested exactly that direction: *"assign the logger once at provision time instead of per upstream."* The adjudicator judged it real ([verdict](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/go/run35-C2.json)). Keep the tester's own honesty label: the race is genuine but benign-valued — every store writes a fresh, equivalent logger — so it fails `go run -race` without a crash path. The fix landed three days after the packet's tree.
 
 ## The open family: an admin race found three times, confirmed zero
 
@@ -41,13 +41,13 @@ go func() {
     if err := localAdminServer.Serve(ln); !errors.Is(err, http.ErrServerClosed) {
 ```
 
-Reloads serialize against each other (`currentCfgMu`), but nothing stops a second reload's store from landing between the first replace's spawn and its goroutine's read: the first goroutine serves the *second* load's server on the *first* load's listener — one server Served twice concurrently, the older never served. The remote (mutual-TLS) endpoint is the exact twin (`remoteAdminServer`, lines 478/496-497). Three packets on three trees (2021-06, 2021-02, 2021-08) filed it independently — five findings, all adjudicated real ([local](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/go/run35-C3.json), [remote](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/go/run35-C4.json)) — and the matcher scored all five exact on [`a10910f398`](https://github.com/caddyserver/caddy/commit/a10910f3981908424493c043d26dfcb4e5f8dc25) ("admin: Sync server variables", August 2021), which adds the `serverMu` the code now holds. For pkt-d it was the packet's own fix.
+Reloads serialize against each other (`currentCfgMu`), but nothing stops a second reload's store from landing between the first replace's spawn and its goroutine's read: the first goroutine serves the *second* load's server on the *first* load's listener — one server Served twice concurrently, the older never served. The remote (mutual-TLS) endpoint is the exact twin (`remoteAdminServer`, lines 478/496-497). Three packets on three trees (2021-06, 2021-02, 2021-08) filed it independently — five findings, all adjudicated real ([local](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/go/run35-C3.json), [remote](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/go/run35-C4.json)) — and the matcher scored all five exact on [`a10910f398`](https://github.com/caddyserver/caddy/commit/a10910f3981908424493c043d26dfcb4e5f8dc25) ("admin: Sync server variables", August 2021), which adds the `serverMu` the code now holds. For pkt-d it was the packet's own fix.
 
 Here is the honest limit: all five stayed model-level. The raced state is a Go package global, and the engine index resolves no package-global `@code` symbol, so the confirmations stall at `uncertain` with a documented reason. Found three times, matched exactly, confirmed zero — by a named engine gap, not by doubt about the code. The gap is filed as run 35's load-bearing follow-up; the post counts the matches and the gap together.
 
 ## The race upstream fixed years later
 
-The pkt-a tester's second bug, confirmed and adjudicated real with its twin on pkt-b ([verdicts](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/go/run35-C1.json)), is a session-ticket rotation that copies the `configs` map header under `mu` and then iterates the live map *after* unlocking (`sessiontickets.go:140-144`), while `register`/`unregister` add and delete under `mu` (lines 171, 184):
+The pkt-a tester's second bug, confirmed and adjudicated real with its twin on pkt-b ([verdicts](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/go/run35-C1.json)), is a session-ticket rotation that copies the `configs` map header under `mu` and then iterates the live map *after* unlocking (`sessiontickets.go:140-144`), while `register`/`unregister` add and delete under `mu` (lines 171, 184):
 
 ```go
 s.mu.Lock()

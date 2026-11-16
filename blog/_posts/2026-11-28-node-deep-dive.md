@@ -2,11 +2,11 @@
 title: "bull, examined: a shared timer name matched to its fix, and the same wait-gap found three times"
 description: "Eight blind first-looks at the bull job queue in Node.js: a shared lock-renewal timer matched exactly to its own upstream fix, a count-then-listen wait gap found independently on three trees, two fixes that live in Lua where no JS tool can see them — and the misses."
 layout: post
-series: specforge
+series: specfence
 date: 2026-11-11
 ---
 
-*Part 20 of 21 in a series on [specforge](https://github.com/ashitpatel/specforge). [Part 14]({% post_url 2026-11-22-evidence-overview %}) opened the file drawer. This post reads the Node drawer all the way through: the first project in a fourth language. Evidence: [`evidence/node/`](https://github.com/ashitpatel/specforge-blog/tree/main/evidence/node).*
+*Part 20 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). [Part 14]({% post_url 2026-11-22-evidence-overview %}) opened the file drawer. This post reads the Node drawer all the way through: the first project in a fourth language. Evidence: [`evidence/node/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/node).*
 
 *Level L2 · Needs: comfort reading short JavaScript excerpts. One project, file by file.*
 
@@ -42,7 +42,7 @@ TimerManager.prototype.set = function(name, delay, fn){
 };
 ```
 
-So B's arm orphans A's live timer (which keeps renewing a finished job's lock), and A's completion clears the name out from under B (whose lock then expires mid-processing and whose job gets reprocessed). The blind matcher — shown the finding and the upstream fix, never the tree — ruled it **exact** on [`8212cdde5f`](https://github.com/OptimalBits/bull/commit/8212cdde5fb6899215dbb21dcb9590fd196a9da0) ("Fix failing tests", August 2015): the fix replaces the single-name manager with uuid-identified timers, exactly the collision the finding names. The adjudicator judged both subclaims real ([verdict](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/node/run38-B6.json)). The packet's engine proposed nothing — zero slices on every track — so the tester read `lib/` by hand, wrote three TLA+ specs with controls, and filed from those. The full report is in evidence ([REPORT](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/node/pkt-c-REPORT.md)).
+So B's arm orphans A's live timer (which keeps renewing a finished job's lock), and A's completion clears the name out from under B (whose lock then expires mid-processing and whose job gets reprocessed). The blind matcher — shown the finding and the upstream fix, never the tree — ruled it **exact** on [`8212cdde5f`](https://github.com/OptimalBits/bull/commit/8212cdde5fb6899215dbb21dcb9590fd196a9da0) ("Fix failing tests", August 2015): the fix replaces the single-name manager with uuid-identified timers, exactly the collision the finding names. The adjudicator judged both subclaims real ([verdict](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/node/run38-B6.json)). The packet's engine proposed nothing — zero slices on every track — so the tester read `lib/` by hand, wrote three TLA+ specs with controls, and filed from those. The full report is in evidence ([REPORT](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/node/pkt-c-REPORT.md)).
 
 ## The thrice-found wait gap
 
@@ -65,13 +65,13 @@ Queue.prototype.whenCurrentJobsFinished = function(){
         _this.on('failed', resolver);
 ```
 
-A job completing inside the count-then-listen gap emits before the listeners attach, so the count is never reached and `pause(true)`/`close()` hang. Three packets on three trees (December 2016, November 2016, February 2017) filed it independently — all adjudicated real ([verdict](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/node/run41-B9.json)) — and none of the three trees' labels is this defect. It is the strongest signal in the Node runs that tester-authored slices converge on real defects without proposer guidance: same mechanism, three blind sessions, zero proposals to point at it.
+A job completing inside the count-then-listen gap emits before the listeners attach, so the count is never reached and `pause(true)`/`close()` hang. Three packets on three trees (December 2016, November 2016, February 2017) filed it independently — all adjudicated real ([verdict](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/node/run41-B9.json)) — and none of the three trees' labels is this defect. It is the strongest signal in the Node runs that tester-authored slices converge on real defects without proposer guidance: same mechanism, three blind sessions, zero proposals to point at it.
 
 ## The boundary the tool cannot cross
 
 Two of run38's four bull fixes live where no JavaScript tool can see them. `c8e8ceeef0` ("atomically remove a job") adds a lock-ownership check inside the `moveToCompleted` *Lua script*, and `456b13d1b9` (double-processing) adds an `ensureActive` guard inside the `takeLock` *Lua script* — both defects and both fixes in Lua string literals executed by Redis. The JS wrappers the extractor reads are unchanged in the relevant sense. These packets are unfindable-by-construction for a JS-static tool, and the run counts them as misses honestly rather than excluding them.
 
-What the testers found instead, on those same trees, verified too. pkt-a's NOSCRIPT retry re-sends the caught error as the script arguments (`scripts.js:32-36`), breaking recovery after any Redis flush — filed twice, on two packets, both real ([verdict](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/node/run38-B1.json)). pkt-b's `PriorityQueue.run` inverts priority order every other pass by reversing the queue list in place — real, deterministic ([verdict](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/node/run38-B5.json)). And run41's pkt-a matched its own fix exactly: a stale worker's lockless failure path corrupting a finished job, the defect [`d42e60c9bc`](https://github.com/OptimalBits/bull/commit/d42e60c9bc7e5f5717046c17a86e374ce0a7adf9) ("check for lock before marking complete/failed") fixes by re-obtaining the lock first.
+What the testers found instead, on those same trees, verified too. pkt-a's NOSCRIPT retry re-sends the caught error as the script arguments (`scripts.js:32-36`), breaking recovery after any Redis flush — filed twice, on two packets, both real ([verdict](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/node/run38-B1.json)). pkt-b's `PriorityQueue.run` inverts priority order every other pass by reversing the queue list in place — real, deterministic ([verdict](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/node/run38-B5.json)). And run41's pkt-a matched its own fix exactly: a stale worker's lockless failure path corrupting a finished job, the defect [`d42e60c9bc`](https://github.com/OptimalBits/bull/commit/d42e60c9bc7e5f5717046c17a86e374ce0a7adf9) ("check for lock before marking complete/failed") fixes by re-obtaining the lock first.
 
 ## The misses
 
@@ -79,4 +79,4 @@ Five bull packets missed their labels, all the same way: the tester filed real b
 
 ## Numbers
 
-Eight packets, 25 findings filed (2 withdrawn), 23 live subclaims in 15 groups, 23 judged real — 14 races, 9 deterministic. Three label matches (2 own exact, 1 open exact), all blind-matcher verdicts ([MATCHES](https://github.com/ashitpatel/specforge-blog/blob/main/evidence/node/MATCHES-bull.json)). Zero wrong-direction verdicts, zero isolation violations. Wall time 0.22–0.39 h per packet. Frozen scores: run38 [`9388ddbb…`](https://github.com/ashitpatel/specforge/blob/main/evals/cleanroom/run38/SCORES.json), run41 [`44b16beb…`](https://github.com/ashitpatel/specforge/blob/main/evals/cleanroom/run41/SCORES.json).
+Eight packets, 25 findings filed (2 withdrawn), 23 live subclaims in 15 groups, 23 judged real — 14 races, 9 deterministic. Three label matches (2 own exact, 1 open exact), all blind-matcher verdicts ([MATCHES](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/node/MATCHES-bull.json)). Zero wrong-direction verdicts, zero isolation violations. Wall time 0.22–0.39 h per packet. Frozen scores: run38 [`9388ddbb…`](https://github.com/ashitpatel/specfence/blob/main/evals/cleanroom/run38/SCORES.json), run41 [`44b16beb…`](https://github.com/ashitpatel/specfence/blob/main/evals/cleanroom/run41/SCORES.json).

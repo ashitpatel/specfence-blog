@@ -23,7 +23,7 @@ for p in POSTS:
         fail(f"{p.name}: missing front matter")
         continue
     fm = t.split("---")[1]
-    for k in ("title:", "description:", "layout: post", "series: specforge", "date:"):
+    for k in ("title:", "description:", "layout: post", "series: specfence", "date:"):
         if k not in fm:
             fail(f"{p.name}: front matter lacks {k}")
     if "{% include series.html %}" not in t:
@@ -45,7 +45,7 @@ if 'sort: "path"' not in nav:
          " so date order is not series order)")
 
 for p in POSTS:
-    for m in re.findall(r"specforge-blog/(?:tree|blob)/main/([^)]*)", p.read_text()):
+    for m in re.findall(r"specfence-blog/(?:tree|blob)/main/([^)]*)", p.read_text()):
         if not (ROOT / m).exists():
             fail(f"{p.name}: evidence link {m} missing")
 

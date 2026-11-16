@@ -23,8 +23,8 @@ style) holds one finding-cluster with its blind verdict.
   `SCORES.json` (sha256 `6282aa3d…`), `ANALYSIS.md`,
   `docs/project/rounds/2026-11-04-FR3-results.md`.
 
-Paths are relative to the specforge repository
-(https://github.com/ashitpatel/specforge, `main` branch).
+Paths are relative to the specfence repository
+(https://github.com/ashitpatel/specfence, `main` branch).
 
 ## Packet trees quoted (pre-fix exports, git checkouts)
 

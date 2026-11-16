@@ -26,8 +26,8 @@ a packet is one tester's sealed session on one tree; a claim file
   - Program record: `docs/project/rounds/2026-11-15-NRUN-program.md`
     (+ amendment A1), results: `docs/project/rounds/2026-11-16-NRUN-results.md`
 
-Paths are relative to the specforge repository
-(https://github.com/ashitpatel/specforge, `main` branch).
+Paths are relative to the specfence repository
+(https://github.com/ashitpatel/specfence, `main` branch).
 
 ## Packet trees quoted (pre-fix exports, git checkouts)
 

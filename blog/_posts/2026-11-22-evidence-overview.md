@@ -2,11 +2,11 @@
 title: "The evidence file: what the runs actually showed"
 description: "Every number behind the series' claims, in one place: blinded cleanroom runs on Java, Python and Go projects, directed runs, what matched upstream fixes, what stayed potential, and what the tool demonstrably misses."
 layout: post
-series: specforge
+series: specfence
 date: 2026-11-11
 ---
 
-*Part 14 of 21 in a series on [specforge](https://github.com/ashitpatel/specforge). The first thirteen posts told stories. This one opens the file drawer: every run behind them, with the numbers that keep the stories honest. Evidence: [`evidence/overview/`](https://github.com/ashitpatel/specforge-blog/tree/main/evidence/overview), [`evidence/sshd/`](https://github.com/ashitpatel/specforge-blog/tree/main/evidence/sshd), [`evidence/celery/`](https://github.com/ashitpatel/specforge-blog/tree/main/evidence/celery), [`evidence/go/`](https://github.com/ashitpatel/specforge-blog/tree/main/evidence/go), [`evidence/node/`](https://github.com/ashitpatel/specforge-blog/tree/main/evidence/node).*
+*Part 14 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). The first thirteen posts told stories. This one opens the file drawer: every run behind them, with the numbers that keep the stories honest. Evidence: [`evidence/overview/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/overview), [`evidence/sshd/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/sshd), [`evidence/celery/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/celery), [`evidence/go/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/go), [`evidence/node/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/node).*
 
 *Level L1 · Needs: part 1. The calibrated whole.*
 
