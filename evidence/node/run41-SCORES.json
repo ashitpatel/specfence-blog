@@ -1,0 +1,927 @@
+{
+ "summary": {
+  "packets": 8,
+  "recall@10": 0,
+  "recall@3": 0,
+  "chosen_covers": 7,
+  "chosen_covers_open": 1,
+  "findings_parsed": 14,
+  "findings_after_dedup": 14,
+  "own_recall": 2,
+  "own_or_open_recall": 3,
+  "tool_errors": [
+   2,
+   2,
+   3,
+   5,
+   5,
+   5,
+   5,
+   6
+  ],
+  "reports": 8,
+  "median_tool_errors": 5,
+  "findings": 14,
+  "touching_findings": null,
+  "tool_errors_note": "transcript tool results mentioning error/refusal/traceback (2-6 per packet, median 5): headless elicitation refusals and quoted lint/skill diagnostics dominate; no packet blocked",
+  "real_unlabelled_findings": 11,
+  "distinct_claims_real": "11/11 groups (14/14 sub-claims) adjudicated real"
+ },
+ "packets": {
+  "bull/pkt-a": {
+   "fix": "d42e60c9bc",
+   "mode": "static",
+   "targets": [
+    "lib.queue.$init.processJob.handleCompleted",
+    "lib.queue.$init.processJob.handleCompleted$1",
+    "lib.queue.$init.processJob.handleFailed",
+    "lib.queue.$init.processJob.handleFailed$1"
+   ],
+   "proposals": 0,
+   "first_hit_rank": null,
+   "chosen": [],
+   "own": 2,
+   "skipped": 0,
+   "choice_records": 1,
+   "covered": [
+    "own:Stale worker failure handling corrupts a job another worker ",
+    "own:whenCurrentJobsFinished reads the active count, then subscri"
+   ],
+   "findings": [
+    {
+     "title": "Stale worker failure handling corrupts a finished job (failed-after-completed / requeue-after-completed)",
+     "status": "model-level finding",
+     "subject": "StaleFail",
+     "property": "TerminalExclusion",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "pause(true)/close hang when a completion lands between the active-count read and the event subscribe",
+     "status": "model-level finding",
+     "subject": "PauseWait",
+     "property": "NoStrand",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "mismatch": 1,
+    "uncertain": 1
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 9,
+   "tool_results": 157,
+   "tool_errors": 5,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-12733-1\",\n  \"command\": \"PK=~/projects/benchmarks/cleanroom/bull-run41/pkt-a; R=$PK/code\\nfor t in bug_patterns usage_questions temporal_questions option_checklist",
+    "{\n  \"chunk_id\": \"exec-12838-1\",\n  \"command\": \"PK=~/projects/benchmarks/cleanroom/bull-run41/pkt-a; R=$PK/code; $PK/engine/sv generate_skeleton \\\"{\\\\\\\"root\\\\\\\": \\\\\\\"$R\\\\\\\", \\\\\\\"bundle\\\\",
+    "{\n  \"chunk_id\": \"exec-12989-1\",\n  \"command\": \"PK=~/projects/benchmarks/cleanroom/bull-run41/pkt-a; R=$PK/code; $PK/engine/sv module_check \\\"{\\\\\\\"root\\\\\\\": \\\\\\\"$R\\\\\\\", \\\\\\\"bundle\\\\\\\": \\",
+    "{\n  \"chunk_id\": \"exec-13088-1\",\n  \"command\": \"PK=~/projects/benchmarks/cleanroom/bull-run41/pkt-a; head -c 3000 $PK/work/confirm-stalefail1.json\",\n  \"description\": \"View confirm output",
+    "{\n  \"chunk_id\": \"exec-13134-1\",\n  \"command\": \"PK=~/projects/benchmarks/cleanroom/bull-run41/pkt-a; PYTHONPATH=$PK/engine/src:$PK/engine/deps python3 -c \\\"\\nfrom specfence_engine.index."
+   ]
+  },
+  "bull/pkt-b": {
+   "fix": "6ccb8608a2",
+   "mode": "static",
+   "targets": [
+    "lib.job.$init.move",
+    "lib.job.$init.moveToCompleted",
+    "lib.job.$init.releaseLock",
+    "lib.job.$init.remove",
+    "lib.job.$init.remove$1",
+    "lib.job.$init.remove$1$2",
+    "lib.job.$init.renewLock",
+    "lib.job.$init.takeLock",
+    "lib.job.$init.takeLock$1",
+    "lib.queue.$init.processJob.handleCompleted",
+    "lib.queue.$init.processJob.handleFailed",
+    "lib.queue.$init.processJob.lockRenewer",
+    "lib.queue.$init.processJob.lockRenewer$1",
+    "lib.queue.Queue",
+    "lib.scripts.$init.isJobInList$1",
+    "lib.scripts.$init.move",
+    "lib.scripts.$init.move$2",
+    "lib.scripts.$init.moveToCompleted",
+    "lib.scripts.$init.releaseLock",
+    "lib.scripts.$init.releaseLock$1",
+    "lib.scripts.$init.takeLock"
+   ],
+   "proposals": 0,
+   "first_hit_rank": null,
+   "chosen": [],
+   "own": 3,
+   "skipped": 0,
+   "choice_records": 1,
+   "covered": [
+    "own:Queue.whenCurrentJobsFinished reads the active-job count, th",
+    "own:processJob lock renewer: TimerManager auto-clears a timer wh"
+   ],
+   "findings": [
+    {
+     "title": "PriorityQueue.run loop never stops after close()",
+     "status": "deterministic defect",
+     "subject": "lib/priority-queue.js run/close",
+     "property": "NoLoopAfterClose",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": "n/a",
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Local pause()/close() can hang: completion missed between count read and subscribe",
+     "status": "model-level finding",
+     "subject": "lib/queue.js whenCurrentJobsFinished",
+     "property": "NoMiss",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Lock-renewal timer re-armed after job finalizes leaks forever and resurrects the lock",
+     "status": "model-level finding",
+     "subject": "lib/queue.js processJob lockRenewer",
+     "property": "FinalNoArm",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [
+      "lib.queue.$init.processJob.lockRenewer"
+     ],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "confirmed": 1,
+    "mismatch": 1,
+    "uncertain": 2
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 13,
+   "tool_results": 112,
+   "tool_errors": 5,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-12811-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run41/pkt-b && ./engine/sv data_model_check '{\\\"root\\\": \\\"~/projects/benchmarks/cl",
+    "{\n  \"chunk_id\": \"exec-12832-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run41/pkt-b && ./engine/sv generate_skeleton '{\\\"root\\\": \\\"~/projects/benchmarks/c",
+    "{\n  \"chunk_id\": \"exec-12921-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run41/pkt-b && ./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanr",
+    "{\n  \"chunk_id\": \"exec-12943-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run41/pkt-b && ./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanr",
+    "{\n  \"chunk_id\": \"exec-12960-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run41/pkt-b && ./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanr"
+   ]
+  },
+  "bull/pkt-c": {
+   "fix": "c1b42a022f",
+   "mode": "static",
+   "targets": [
+    "lib.queue.$init.processJob",
+    "lib.queue.$init.processJob$1",
+    "lib.queue.$init.processJob$1$1",
+    "lib.queue.$init.processJob.handleCompleted",
+    "lib.queue.$init.processJob.handleFailed"
+   ],
+   "proposals": 0,
+   "first_hit_rank": null,
+   "chosen": [],
+   "own": 3,
+   "skipped": 0,
+   "choice_records": 2,
+   "covered": [
+    "own:CORRECTED (resurrection falsified: redlock extend fails on a",
+    "own:Stale-lock double processing with swallowed LockError (uncha",
+    "own:PriorityQueue resume double-run loop (unchanged)."
+   ],
+   "findings": [],
+   "confirmations": {
+    "mismatch": 4,
+    "uncertain": 1
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 13,
+   "tool_results": 81,
+   "tool_errors": 5,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-13174-1\",\n  \"command\": \"ROOT=\\\"~/projects/benchmarks/cleanroom/bull-run41/pkt-c/code\\\"; SV=\\\"~/projects/benchmarks/cleanroom/bull-run41/pkt-c/engi",
+    "{\n  \"chunk_id\": \"exec-13207-1\",\n  \"command\": \"ROOT=\\\"~/projects/benchmarks/cleanroom/bull-run41/pkt-c/code\\\"; SV=\\\"~/projects/benchmarks/cleanroom/bull-run41/pkt-c/engi",
+    "{\n  \"chunk_id\": \"exec-13215-1\",\n  \"command\": \"ROOT=\\\"~/projects/benchmarks/cleanroom/bull-run41/pkt-c/code\\\"; SV=\\\"~/projects/benchmarks/cleanroom/bull-run41/pkt-c/engi",
+    "{\n  \"chunk_id\": \"exec-13219-1\",\n  \"command\": \"ROOT=\\\"~/projects/benchmarks/cleanroom/bull-run41/pkt-c/code\\\"; SV=\\\"~/projects/benchmarks/cleanroom/bull-run41/pkt-c/engi",
+    "{\n  \"chunk_id\": \"exec-13338-1\",\n  \"command\": \"ROOT=\\\"~/projects/benchmarks/cleanroom/bull-run41/pkt-c/code\\\"; SV=\\\"~/projects/benchmarks/cleanroom/bull-run41/pkt-c/engi"
+   ]
+  },
+  "bull/pkt-d": {
+   "fix": "0c611de963",
+   "mode": "static",
+   "targets": [
+    "lib.queue.$init.processJob.handleCompleted"
+   ],
+   "proposals": 0,
+   "first_hit_rank": null,
+   "chosen": [],
+   "own": 3,
+   "skipped": 0,
+   "choice_records": 1,
+   "covered": [
+    "own:whenCurrentJobsFinished counts edge events against a level s"
+   ],
+   "findings": [
+    {
+     "title": "Delay timer re-arms after close()",
+     "status": "model-level finding",
+     "subject": "DelayRearm",
+     "property": "NoRearmAfterClose",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Missed completion hangs pause()/close() forever",
+     "status": "model-level finding",
+     "subject": "WaitCount",
+     "property": "NoMissedEvents",
+     "evidence": "model-level",
+     "confirmation_verdict": "mismatch",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [
+      "lib.queue.$init.processJob.handleCompleted"
+     ],
+     "withdrawn": null
+    },
+    {
+     "title": "Double-counted job resolves the active-wait early",
+     "status": "model-level finding",
+     "subject": "WaitCount",
+     "property": "NoEarlyResolve",
+     "evidence": "model-level",
+     "confirmation_verdict": "mismatch",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Local pause permanently kills the stalled-job sweeper",
+     "status": "model-level finding",
+     "subject": "SweeperAlive",
+     "property": "SweeperAliveProp",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "mismatch": 2,
+    "uncertain": 4
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 14,
+   "tool_results": 139,
+   "tool_errors": 5,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-13194-1\",\n  \"command\": \"./engine/sv generate_skeleton '{\\\"root\\\": \\\"~/projects/benchmarks/cleanroom/bull-run41/pkt-d/code\\\", \\\"bundle\\\": \\\"lib\\\", \\\"service\\\": \\\"b",
+    "{\n  \"chunk_id\": \"exec-13292-1\",\n  \"command\": \"./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanroom/bull-run41/pkt-d/code\\\", \\\"bundle\\\": \\\"lib\\\", \\\"module\\\": \\\"DelayRe",
+    "{\n  \"chunk_id\": \"exec-13328-1\",\n  \"command\": \"python3 -c \\\"\\nimport gzip, json\\nd=json.load(gzip.open('code/.specfence/cache/node-raw.json.gz'))['value']\\nfns=d['functions']\\nprint('nfns', len(fns))\\n",
+    "{\n  \"chunk_id\": \"exec-13383-1\",\n  \"command\": \"head -c 2000 work/check-WaitCount_Miss.json\",\n  \"description\": \"See Miss check output\",\n  \"exit_code\": 0,\n  \"terminal_status\": \"completed\",\n  \"output\": \"{",
+    "{\n  \"chunk_id\": \"exec-13410-1\",\n  \"command\": \"cd code/lib/.specfence && python3 -c \\\"\\nt = open('SweeperAlive.tla').read()\\nt = t.replace('---- MODULE SweeperAlive ----', '---- MODULE SweeperAliveCont"
+   ]
+  },
+  "async/pkt-a": {
+   "fix": "f5d804f068",
+   "mode": "static",
+   "targets": [
+    "lib.async.$init$1.queue.pause",
+    "lib.async.$init$1.queue.resume"
+   ],
+   "proposals": 0,
+   "first_hit_rank": null,
+   "chosen": [],
+   "own": 1,
+   "skipped": 0,
+   "choice_records": 1,
+   "covered": [
+    "own:async.queue pause/resume permanently loses concurrency slots"
+   ],
+   "findings": [
+    {
+     "title": "queue resume restarts one worker, permanently losing concurrency slots",
+     "status": "model-level finding",
+     "subject": "lib.async queue pause/resume",
+     "property": "ResumeRestoresConcurrency in code/lib/.specfence/QueueResume.tla: once resumed, whenever the queue is not paused and at least `concurrency` tasks wait, every slot runs a task",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [
+      "lib.async.$init$1.queue.pause",
+      "lib.async.$init$1.queue.resume"
+     ],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "uncertain": 1
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 9,
+   "tool_results": 63,
+   "tool_errors": 2,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-12888-1\",\n  \"command\": \"./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanroom/async-run41/pkt-a/code\\\", \\\"bundle\\\": \\\"lib\\\", \\\"module\\\": \\\"QueueR",
+    "{\n  \"chunk_id\": \"exec-12915-1\",\n  \"command\": \"python3 - <<'EOF'\\nfor p in ['code/lib/.specfence/QueueResume.tla', 'code/lib/.specfence/QueueResumeControl.tla']:\\n    s = open(p).read()\\n    old_claim "
+   ]
+  },
+  "async/pkt-b": {
+   "fix": "baf62a0a9b",
+   "mode": "static",
+   "targets": [
+    "lib.async.$init$1._queue.process"
+   ],
+   "proposals": 0,
+   "first_hit_rank": null,
+   "chosen": [],
+   "own": 2,
+   "skipped": 0,
+   "choice_records": 1,
+   "covered": [
+    "own:queue drain may fire while work is still pending: base _inse"
+   ],
+   "findings": [
+    {
+     "title": "queue drain fires while work is still pending",
+     "status": "model-level finding",
+     "subject": "queue drain",
+     "property": "NoSpuriousDrain / NoBusyDrain",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "auto double-callback corrupts counters, final callback fires early with partial results",
+     "status": "model-level finding",
+     "subject": "async.auto",
+     "property": "FinalAfterAll / RunningNonNeg",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "uncertain": 6
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 12,
+   "tool_results": 113,
+   "tool_errors": 6,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-12969-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/async-run41/pkt-b && ./engine/sv generate_skeleton '{\\\"root\\\": \\\"~/projects/benchmarks/",
+    "{\n  \"chunk_id\": \"exec-12971-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/async-run41/pkt-b && ./engine/sv generate_skeleton '{\\\"root\\\": \\\"~/projects/benchmarks/",
+    "{\n  \"chunk_id\": \"exec-12996-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/async-run41/pkt-b && ./engine/sv tla_check '{\\\"module\\\": \\\"code/lib/.specfence/QueueDrain.tla\\\", \\\"cfg\\",
+    "{\n  \"chunk_id\": \"exec-13016-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/async-run41/pkt-b/code/lib/.specforge && python3 - <<'PYEOF'\\np = 'QueueDrainControl.tla'\\ns = open(p).",
+    "{\n  \"chunk_id\": \"exec-13051-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/async-run41/pkt-b && head -c 2000 work/confirm-drain.json; echo; echo ===ERR===; head -c 1000 work/conf",
+    "{\n  \"chunk_id\": \"exec-13110-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/async-run41/pkt-b && ./engine/sv data_model_check '{\\\"root\\\": \\\"~/projects/benchmarks/c"
+   ]
+  },
+  "async/pkt-c": {
+   "fix": "2410077e26",
+   "mode": "static",
+   "targets": [
+    "lib.async.$init$1.auto$3"
+   ],
+   "proposals": 0,
+   "first_hit_rank": null,
+   "chosen": [],
+   "own": 1,
+   "skipped": 0,
+   "choice_records": 1,
+   "covered": [],
+   "findings": [
+    {
+     "title": "async.queue fires drain while tasks are queued or running after an empty push",
+     "status": "model-level finding",
+     "subject": "async.queue drain/idle invariant",
+     "property": "DrainNeverFiresWhileBusy (QueueDrain.tla): drain never fires while a task is queued or a worker running",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "uncertain": 2
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 13,
+   "tool_results": 74,
+   "tool_errors": 2,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-13252-1\",\n  \"command\": \"./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanroom/async-run41/pkt-c/code\\\", \\\"bundle\\\": \\\"lib\\\", \\\"module\\\": \\\"QueueD",
+    "{\n  \"chunk_id\": \"exec-13280-1\",\n  \"command\": \"./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanroom/async-run41/pkt-c/code\\\", \\\"bundle\\\": \\\"lib\\\", \\\"module\\\": \\\"QueueD"
+   ]
+  },
+  "ava/pkt-a": {
+   "fix": "d8349f5bc1",
+   "mode": "static",
+   "targets": [
+    "api.Api.run",
+    "api.Api.run$1",
+    "api.Api.run$3$2",
+    "lib.fork.$init.exports",
+    "profile.$init$1"
+   ],
+   "proposals": 13,
+   "first_hit_rank": null,
+   "first_hit_track": null,
+   "chosen": [],
+   "own": 1,
+   "skipped": 1,
+   "choice_records": 1,
+   "covered": [
+    "own:Watcher starts overlapping api.run executions: two stdin rer"
+   ],
+   "findings": [
+    {
+     "title": "Watch-mode rerun requests start overlapping test runs",
+     "status": "bug",
+     "subject": "lib.watcher.Watcher",
+     "property": "NoOverlappingRuns",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [
+      "api.Api.run"
+     ],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "confirmed": 1,
+    "mismatch": 1,
+    "uncertain": 1
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 11,
+   "tool_results": 89,
+   "tool_errors": 3,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-13337-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/ava-run41/pkt-a && ./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanro",
+    "{\n  \"chunk_id\": \"exec-13354-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/ava-run41/pkt-a/engine/src && grep -rln \\\"def report_finding\\\" specfence_engine/ && grep -n \\\"def repor",
+    "{\n  \"chunk_id\": \"exec-13388-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/ava-run41/pkt-a && ./engine/sv data_model_check '{\\\"root\\\": \\\"~/projects/benchmarks/cle"
+   ]
+  }
+ },
+ "label_matches": {
+  "async/pkt-a": {
+   "open": [],
+   "own": {
+    "findings": [
+     0
+    ],
+    "fix": "f5d804f068",
+    "is_concurrency": true,
+    "match": "exact",
+    "reason": "Fix calls q.process once per concurrency slot on resume instead of once; finding 0 describes resume restarting one worker and permanently losing concurrency slots, same cause and effect. Concurrency: manifests only with concurrency>1, violates the concurrency-level invariant."
+   }
+  },
+  "async/pkt-b": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "baf62a0a9b",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix adds a paused check inside the process() launch loop so pause stops worker launch with concurrency>1. Finding 0 is spurious drain while busy; finding 1 is async.auto double-callback; neither describes pause not pausing. Concurrency: pause vs worker-launch under concurrency."
+   }
+  },
+  "async/pkt-c": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "2410077e26",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix throws on missing/cyclic dependencies in async.auto to prevent dead-locks; the single finding is about async.queue drain firing while busy, different component and mechanism. The open baf pause fix also does not match the drain finding. Concurrency: task-graph deadlock."
+   }
+  },
+  "ava/pkt-a": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "d8349f5bc1",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix stops restarting the timeout timer on events from already-timed-out workers (stale-event timer race in api.js); the finding is watch-mode reruns overlapping in lib Watcher, different component and mechanism. Concurrency: timer vs async worker-event timing race."
+   }
+  },
+  "bull/pkt-a": {
+   "open": [],
+   "own": {
+    "findings": [
+     0
+    ],
+    "fix": "d42e60c9bc",
+    "is_concurrency": true,
+    "match": "exact",
+    "reason": "Fix re-acquires the job lock before moveToCompleted/moveToFailed; finding 0 describes a stale (lock-lost) worker corrupting a finished job (failed-after-completed), same cause (terminal move without holding lock) and effect (corrupt terminal state). Finding 1 is a pause/close wait hang, unrelated. Open 0c611 timer fix matches neither. Concurrency: distributed-lock race."
+   }
+  },
+  "bull/pkt-b": {
+   "open": [
+    {
+     "findings": [
+      2
+     ],
+     "fix": "c1b42a022f",
+     "match": "exact",
+     "reason": "Fix clears the lock-renewal timer before moveToCompleted/moveToFailed+release so an already-released lock is not renewed; finding 2 describes the timer re-arming after finalize, leaking forever and resurrecting the lock, same cause and effect."
+    }
+   ],
+   "own": {
+    "findings": [],
+    "fix": "6ccb8608a2",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix replaces token locks with redlock distributed locks; no finding describes distributed-lock unsafety. Finding 2 is timer lifecycle (re-arm after finalize), not lock-algorithm correctness; findings 0/1 are run-loop and pause-wait. Opens d42e (stale terminal move) and 0c61 (timer-vs-close) match no finding. Concurrency: distributed locking."
+   }
+  },
+  "bull/pkt-c": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "c1b42a022f",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "No findings reported, nothing to match. Fix itself stops renewing an already-released lock (timer vs release race). Concurrency: timer-vs-release race."
+   }
+  },
+  "bull/pkt-d": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "0c611de963",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix moves stopTimer() before the closed check in handleCompleted so the lock-renewal timer stops even when closed. Finding 0 is the delayTimer, a different timer/region; findings 1/2/3 are pause/close wait-count and sweeper issues, different mechanism. Concurrency: timer-vs-close race."
+   }
+  }
+ },
+ "recall_v22": {
+  "packets": 8,
+  "own": 2,
+  "own_or_open": 3,
+  "per_packet": {
+   "async/pkt-a": {
+    "own": true,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": true
+   },
+   "async/pkt-b": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   },
+   "async/pkt-c": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   },
+   "ava/pkt-a": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   },
+   "bull/pkt-a": {
+    "own": true,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": true
+   },
+   "bull/pkt-b": {
+    "own": false,
+    "open": true,
+    "open_fixes": [
+     "c1b42a022f"
+    ],
+    "own_or_open": true
+   },
+   "bull/pkt-c": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   },
+   "bull/pkt-d": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   }
+  }
+ },
+ "adjudication": {
+  "groups": 11,
+  "sub_claims": 14,
+  "real": 14,
+  "not_real": [],
+  "per_subclaim": {
+   "B9.1": {
+    "finding": "bull/pkt-a#1",
+    "tree": "R1",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B9.2": {
+    "finding": "bull/pkt-b#1",
+    "tree": "R2",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B9.3": {
+    "finding": "bull/pkt-d#1",
+    "tree": "R4",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B10.1": {
+    "finding": "bull/pkt-a#0",
+    "tree": "R1",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B11.1": {
+    "finding": "bull/pkt-b#0",
+    "tree": "R2",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B12.1": {
+    "finding": "bull/pkt-b#2",
+    "tree": "R2",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B13.1": {
+    "finding": "bull/pkt-d#0",
+    "tree": "R4",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B14.1": {
+    "finding": "bull/pkt-d#2",
+    "tree": "R4",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B15.1": {
+    "finding": "bull/pkt-d#3",
+    "tree": "R4",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "A1.1": {
+    "finding": "async/pkt-a#0",
+    "tree": "R5",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "A2.1": {
+    "finding": "async/pkt-b#0",
+    "tree": "R6",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "A2.2": {
+    "finding": "async/pkt-c#0",
+    "tree": "R7",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "A3.1": {
+    "finding": "async/pkt-b#1",
+    "tree": "R6",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "V1.1": {
+    "finding": "ava/pkt-a#0",
+    "tree": "R8",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   }
+  },
+  "dropped": [],
+  "confirm_mismatch_on_real": "11 mismatch verdicts on real claims across 5 packets: abstraction complaints, never absence claims; P3 counts refutations only",
+  "refutations_emitted": 0,
+  "gil_refutations": [],
+  "wrong_direction_records": [],
+  "R61_guard_fired": 0,
+  "race_labels_needing_no_preemption": 0
+ },
+ "predictions": {
+  "P4_own_or_open": {
+   "value": "3/8",
+   "threshold": ">= 1/8",
+   "verdict": "pass",
+   "note": "own exact: bull/pkt-a [0] stale-lock, async/pkt-a [0] resume-concurrency; open exact: bull/pkt-b [2] -> c1b42a022f"
+  },
+  "P4a_own": {
+   "value": "2/8",
+   "threshold": ">= 1/8",
+   "verdict": "pass"
+  },
+  "P1_recall@10": {
+   "value": "0/8",
+   "threshold": "= 0/8 (exact: ava's 13 proposals touch nothing)",
+   "verdict": "pass"
+  },
+  "P2_chosen_covers_own_or_open": {
+   "value": "7/8",
+   "threshold": ">= 1/8",
+   "verdict": "pass",
+   "note": "own: all but async/pkt-c; open: bull/pkt-d; only async/pkt-c uncovered"
+  },
+  "P3_wrong_direction": {
+   "value": 0,
+   "threshold": "= 0",
+   "verdict": "pass",
+   "note": "no refuted verdicts (18 uncertain, 11 mismatch, 3 confirmed across 32 confirmations)"
+  },
+  "P5_precision": {
+   "value": "14/14 sub-claims real (100 pct); 11/11 distinct claims",
+   "threshold": ">= 80%",
+   "verdict": "pass"
+  },
+  "P9_isolation": {
+   "value": 0,
+   "threshold": "= 0",
+   "verdict": "pass",
+   "note": "0 TRUE violations (5 workdir-metadata FPs on async/pkt-a: no out-of-packet I/O); fix-SHA leak check 0 hits; no deviations"
+  },
+  "P35_model_checks": {
+   "value": "8/8",
+   "threshold": ">= 6/8",
+   "verdict": "pass"
+  },
+  "P36_confirmed_packets": {
+   "value": "2/8",
+   "note": "bull/pkt-b (run-never-stops) and ava/pkt-a (overlapping watch runs); 2 confirmed in force"
+  },
+  "P37_structural_chosen": {
+   "value": "0/8",
+   "note": "no structural proposals anywhere to choose"
+  },
+  "P38_pattern_chosen": {
+   "value": "0/8",
+   "note": "no pattern proposals anywhere to choose"
+  },
+  "P39_usage_questions": {
+   "value": "2/8",
+   "note": "async/pkt-c and bull/pkt-d called and recorded (4/8 called)"
+  },
+  "P22_reproducibility": {
+   "value": "7/7 usable identical",
+   "threshold": "every usable call identical",
+   "verdict": "pass",
+   "note": "async/pkt-c unusable (edited-after-record; unnamed record)"
+  },
+  "P21_unlabelled": null
+ },
+ "costs": {
+  "wall_hours": {
+   "bull/pkt-a": 0.39,
+   "bull/pkt-b": 0.27,
+   "bull/pkt-c": 0.25,
+   "bull/pkt-d": 0.39,
+   "async/pkt-a": 0.14,
+   "async/pkt-b": 0.32,
+   "async/pkt-c": 0.16,
+   "ava/pkt-a": 0.3
+  },
+  "specs_tla": {
+   "bull/pkt-a": 4,
+   "bull/pkt-b": 6,
+   "bull/pkt-c": 4,
+   "bull/pkt-d": 6,
+   "async/pkt-a": 2,
+   "async/pkt-b": 4,
+   "async/pkt-c": 2,
+   "ava/pkt-a": 2
+  },
+  "check_calls": {
+   "bull/pkt-a": 20,
+   "bull/pkt-b": 28,
+   "bull/pkt-c": 14,
+   "bull/pkt-d": 30,
+   "async/pkt-a": 14,
+   "async/pkt-b": 26,
+   "async/pkt-c": 14,
+   "ava/pkt-a": 16
+  },
+  "tokens": "unavailable in this runtime (hand-backs carry no token report)",
+  "checker_cpu_seconds": "not instrumented"
+ },
+ "audit": "P9: 0 TRUE violations in 8 tester transcripts (63-157 tool calls each); 5 workdir-metadata FPs on async/pkt-a (file-tool paths all in-packet, relative paths resolve in-packet). Fix-SHA leak check 0 hits. No deviations.",
+ "reproducibility_P22": {
+  "usable": 7,
+  "identical": 7,
+  "note": "one confirm_counterexample re-run per usable packet in place; same ids and verdicts; async/pkt-c unusable"
+ }
+}

@@ -6,7 +6,7 @@ series: specfence
 date: 2026-11-11
 ---
 
-*Part 7 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). The series so far: [the gap]({% post_url 2026-11-09-what-tests-cannot-see %}), [the machinery]({% post_url 2026-11-10-how-it-works %}), [greenfield]({% post_url 2026-11-11-greenfield-pool %}), [a guarded feature]({% post_url 2026-11-12-feature-log4j %}), [a temporal catch]({% post_url 2026-11-13-temporal-stomp %}), [a structural catch]({% post_url 2026-11-14-structural-kombu %}). This post closes the loop: what happens when a change breaks a guarded property.*
+*Part 7 of 21 in a series on specfence. The series so far: [the gap]({% post_url 2026-11-09-what-tests-cannot-see %}), [the machinery]({% post_url 2026-11-10-how-it-works %}), [greenfield]({% post_url 2026-11-11-greenfield-pool %}), [a guarded feature]({% post_url 2026-11-12-feature-log4j %}), [a temporal catch]({% post_url 2026-11-13-temporal-stomp %}), [a structural catch]({% post_url 2026-11-14-structural-kombu %}). This post closes the loop: what happens when a change breaks a guarded property.*
 
 *Level L2 · Needs: parts 2 and 6 (goldens, the kombu model). Two gate firings.*
 
@@ -60,6 +60,6 @@ Two labels, kept visible:
 - **Both breaks are constructed.** The HikariCP probe was deliberate: it undid a real fix on the real tree, which is why the flip means something — though nobody's commit was actually caught. The kombu regression is hand-authored. What they demonstrate is the mechanism: held-before/fails-now produces a named, blocking verdict. The mechanism fires.
 - **The tool's own guard has never fired.** A post-commit hook runs the same review on the specfence repository itself: 283 guarded commits, zero `BLOCKING`. Either the codebase is clean of temporal and structural regressions in that window, or nothing tripped the pinned properties. (Three of the 283 runs errored instead of verdicting — counted, not hidden.) No accidental fire has been caught yet — and the series won't pretend otherwise.
 
-That closes the loop the series opened: tests sample instances; these models exhaust shapes and interleavings; findings reproduce on real code or they don't ship; and the models stand guard afterwards. One post remains: [the landscape]({% post_url 2026-11-16-landscape %}) — where this all fits among Specula, vericoding, Axiom Math, Imandra, Qodo, Intent Lab, &Truth, Petra, SDD, and the tradition they share.
+That closes the loop the series opened: tests sample instances; these models exhaust shapes and interleavings; findings are confirmed against the real code or they don't ship; and the models stand guard afterwards. One post remains: [the landscape]({% post_url 2026-11-16-landscape %}) — where this all fits among Specula, vericoding, Axiom Math, Imandra, Qodo, Intent Lab, &Truth, Petra, SDD, and the tradition they share.
 
 {% include series.html %}

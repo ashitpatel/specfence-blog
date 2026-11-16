@@ -6,7 +6,7 @@ series: specfence
 date: 2026-11-11
 ---
 
-*Part 12 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). The [landscape]({% post_url 2026-11-16-landscape %}) placed Harness² as kin with a fork. This is the finale: the fork, drawn all the way.*
+*Part 12 of 21 in a series on specfence. The [landscape]({% post_url 2026-11-16-landscape %}) placed Harness² as kin with a fork. This is the finale: the fork, drawn all the way.*
 
 *Level L2 · Needs: part 8. Who grades the grader.*
 
@@ -23,7 +23,7 @@ date: 2026-11-11
 
 ## Differences
 
-- **The judge.** Harness² judges by task performance: did the score go up. Specfence judges by checker verdict: does the property hold in every reachable state, and does the trace replay on real code. Scores can be gamed by the loop being measured — the paper itself names "no ground-truth verifiers" as a core open-world challenge (abstract); a counterexample either replays or it doesn't.
+- **The judge.** Harness² judges by task performance: did the score go up. Specfence judges by checker verdict: does the property hold in every reachable state, and does the trace fit the real code. Scores can be gamed by the loop being measured — the paper itself names "no ground-truth verifiers" as a core open-world challenge (abstract); a counterexample either fits the code or it doesn't.
 - **Self-modifying vs fixed guardrails.** This is the fork. Harness² rewrites its own guardrails per task — that is the product. Specfence's guardrails (refusals, done-gates, frozen verdicts) are deliberately not self-editable. Self-editing guardrails are the right shape for an optimizer — the harness should adapt to the task — but a verifier's bar has to live outside the thing being optimized, or passing stops meaning anything.
 - **General vs domain.** Harness² is task-agnostic scaffolding for any agent job. Specfence is a fixed harness for one job — temporal and structural verification — where "score" is a machine-checked verdict with named bounds.
 - **Failure mode.** When Harness² fails, the agent underperforms and the loop tries again. When specfence fails open, a bug ships as verified — so it fails *closed*: refusals, inconclusive verdicts, and owed debt instead of green paint.

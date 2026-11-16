@@ -1,6 +1,6 @@
 # specfence-blog
 
-A seventeen-part blog series on [specfence](https://github.com/ashitpatel/specfence): what it is, why exhaustive checking earns its keep next to testing, five worked examples, the landscape and trust point, three deep comparisons, the conversation — and an evidence arc (overview + sshd + celery deep-dives) with the file drawer open, plus one adversarial drawer (reactor-core). Written in the style of the author's [ai4sgfinder](https://ashitpatel.github.io/ai4sgfinder/) and [lesson-scaffold-builder](https://ashitpatel.github.io/lesson-scaffold-builder/) series.
+A 21-part blog series on specfence (its code repository is private for now): what it is, why exhaustive checking earns its keep next to testing, five worked examples, the landscape and trust point, three deep comparisons, the conversation — and an evidence arc (overview + sshd + celery deep-dives) with the file drawer open, plus one adversarial drawer (reactor-core). Written in the style of the author's [ai4sgfinder](https://ashitpatel.github.io/ai4sgfinder/) and [lesson-scaffold-builder](https://ashitpatel.github.io/lesson-scaffold-builder/) series.
 
 ## Layout
 

@@ -3,7 +3,9 @@ layout: page
 title: About
 ---
 
-[specfence](https://github.com/ashitpatel/specfence) is a tool that turns requirements or existing code into Alloy and TLA+ models, checks them exhaustively at small scope, reproduces what it finds on the real code, and then guards later changes against the models. It works on two kinds of defect: temporal (races, deadlocks, lost wake-ups, ordering violations) and structural (broken shape invariants in data and APIs).
+specfence is a tool that turns requirements or existing code into Alloy and TLA+ models, checks them exhaustively at small scope, confirms what it finds against the real code, and then guards later changes against the models. It works on two kinds of defect: temporal (races, deadlocks, lost wake-ups, ordering violations) and structural (broken shape invariants in data and APIs).
+
+The tool's code repository is private for now; the evidence each post cites is copied into [this blog's repository](https://github.com/ashitpatel/specfence-blog/tree/main/evidence). Ask the author for access to the code.
 
 Stage: proof of concept / pilot. The tool has not been deployed to any production system; the evidence in this series comes from benchmark runs on open-source code, a constructed greenfield run, and the tool guarding its own repository.
 

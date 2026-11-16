@@ -1,12 +1,12 @@
 ---
 title: "Specula vs specfence: the same loop, different answers to its critics"
-description: "A deep comparison with the closest neighbor: shared TLA+ core and reproduce-or-it-doesn't-count rule, and how each side handles circularity, composition, and what happens after the bug."
+description: "A deep comparison with the closest neighbor: shared TLA+ core, different bars for what counts as a bug, and how each side handles circularity, composition, and what happens after the bug."
 layout: post
 series: specfence
 date: 2026-11-11
 ---
 
-*Part 10 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). The [landscape]({% post_url 2026-11-16-landscape %}) named Specula the closest neighbor. This post earns that claim line by line.*
+*Part 10 of 21 in a series on specfence. The [landscape]({% post_url 2026-11-16-landscape %}) named Specula the closest neighbor. This post earns that claim line by line.*
 
 *Level L2 · Needs: part 8 or 9. The closest-neighbor comparison.*
 
@@ -17,7 +17,7 @@ date: 2026-11-11
 ## Capability overlap
 
 - **Same checker, same exhaustiveness.** Both bet that interleaving bugs live in state spaces small enough to exhaust, and both use TLA+/TLC to do it.
-- **Same reproduction rule.** Specula's timed integration tests are specfence's deterministic-scheduler replays under another name: a trace that can't be exhibited on real code doesn't ship.
+- **Same rule that a trace must fit the code.** A counterexample the real code can't follow doesn't ship, in either tool.
 - **Same feedback insight.** The reported gap — 62 bugs for the full loop, versus 2 for an unassisted frontier model and 3 for the model armed with only the standard TLA+ toolchain — matches specfence's founding bet: the advantage is the loop, not the model or the tool access.
 - **Same cost profile.** Tens of dollars in tokens per system, hours end to end. Both are cheap enough to run routinely, expensive enough to aim carefully (hence slicing).
 
@@ -26,6 +26,7 @@ date: 2026-11-11
 - **Where specs come from.** Specula derives specs from the code it checks — 87% of its invariants come from implementation and comments, per reviewer [Murat Demirbas](https://muratbuffalo.blogspot.com/2026/08/specula-scaling-formal-specifications.html). Specfence's greenfield door derives specs from prose plus interview, independent of any code. Its from-code door derives the same way Specula does, but adds falsification controls (mutants that must violate, controls that must pass) so a vacuous model can't survive.
 - **Composition.** Specula models one module at a time and mocks the interactions — Demirbas's sharpest objection, unanswered in the paper. Specfence composes through published, version-pinned interfaces with client re-checks when an interface changes.
 - **The second checker.** Specula is TLA+ only. Specfence pairs every temporal verdict with an Alloy structural model, and treats disagreement between the two as a finding about the models.
+- **The bar for a bug.** Specula ships a bug only with a timed integration test that reproduces it. Specfence ships one once the trace is confirmed statically against the code, with a test outline marked *not executed*; running it is the developer's call. Specula's bar is higher per bug; specfence's reaches code it cannot run, such as a complex deployment.
 - **After the bug.** Specula ends at the reproduced test. Specfence pins the restored property as a golden and guards every later change against it — the bug becomes a tripwire, not just a ticket.
 
 ## How to use each

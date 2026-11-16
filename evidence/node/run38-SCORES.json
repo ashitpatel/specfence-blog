@@ -1,0 +1,1156 @@
+{
+ "summary": {
+  "packets": 8,
+  "recall@10": 0,
+  "recall@3": 0,
+  "chosen_covers": 4,
+  "chosen_covers_open": 0,
+  "findings_parsed": 26,
+  "findings_after_dedup": 24,
+  "own_recall": 2,
+  "own_or_open_recall": 2,
+  "tool_errors": [
+   2,
+   5,
+   5,
+   6,
+   7,
+   7,
+   8,
+   9
+  ],
+  "reports": 8,
+  "median_tool_errors": 7,
+  "findings": 24,
+  "touching_findings": null,
+  "tool_errors_note": "transcript tool results mentioning error/refusal/traceback (2-9 per packet, median 7): headless elicitation refusals and quoted lint/skill diagnostics dominate; no packet blocked",
+  "real_unlabelled_findings": 21,
+  "distinct_claims_real": "18/18 groups (24/24 sub-claims) adjudicated real"
+ },
+ "packets": {
+  "socket.io/pkt-a": {
+   "fix": "5f0d2455d3",
+   "mode": "static",
+   "targets": [
+    "lib.transports.polling.$init.onData"
+   ],
+   "proposals": 0,
+   "first_hit_rank": null,
+   "chosen": [],
+   "own": 3,
+   "skipped": 0,
+   "choice_records": 1,
+   "covered": [
+    "own:Polling.pause never completes: it waits for a 'poll' event t"
+   ],
+   "findings": [
+    {
+     "title": "JSONP polling transport construction always throws ReferenceError",
+     "status": "deterministic defect",
+     "subject": "lib.transports.polling-jsonp.JSONPPolling",
+     "property": "ConstructSucceeds: the polling dispatch always yields a usable transport",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": "n/a",
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Polling.pause never completes: upgrade stalls and later sends are silently buffered forever",
+     "status": "model-level finding",
+     "subject": "lib.transports.polling.$init.pause",
+     "property": "PauseCompletes: a requested pause completes once the in-flight poll and write finish",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Socket.close while opening throws and while pausing silently skips closing the transport",
+     "status": "model-level finding",
+     "subject": "lib.socket.$init.close",
+     "property": "CloseCompletes: close always lands the transport closed and never throws",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "confirmed": 1,
+    "uncertain": 2
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 9,
+   "tool_results": 110,
+   "tool_errors": 5,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-10537-1\",\n  \"command\": \"SV=~/projects/benchmarks/cleanroom/socket.io-run38/pkt-a/engine/sv; R=~/projects/benchmarks/cleanroom/socket.io-run38/pkt-",
+    "{\n  \"chunk_id\": \"exec-10582-1\",\n  \"command\": \"SV=~/projects/benchmarks/cleanroom/socket.io-run38/pkt-a/engine/sv; R=~/projects/benchmarks/cleanroom/socket.io-run38/pkt-",
+    "{\n  \"chunk_id\": \"exec-10641-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/socket.io-run38/pkt-a && PYTHONPATH=~/projects/benchmarks/cleanroom/socket.io-run38/pkt",
+    "{\n  \"chunk_id\": \"exec-10697-1\",\n  \"command\": \"SV=~/projects/benchmarks/cleanroom/socket.io-run38/pkt-a/engine/sv; $SV module_check '{\\\"root\\\": \\\"~/projects/benchmarks/c",
+    "{\n  \"chunk_id\": \"exec-10776-1\",\n  \"command\": \"SV=~/projects/benchmarks/cleanroom/socket.io-run38/pkt-a/engine/sv; R=~/projects/benchmarks/cleanroom/socket.io-run38/pkt-"
+   ]
+  },
+  "socket.io/pkt-b": {
+   "fix": "191d68d85f",
+   "mode": "static",
+   "targets": [
+    "lib.transport.$init.unsubscribe"
+   ],
+   "proposals": 0,
+   "first_hit_rank": null,
+   "chosen": [],
+   "own": 1,
+   "skipped": 0,
+   "choice_records": 1,
+   "covered": [],
+   "findings": [
+    {
+     "title": "Duplicate heartbeat ping: re-arm orphans a pending interval timer",
+     "status": "model-level finding",
+     "subject": "TsHeartbeat",
+     "property": "NoOrphan",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "uncertain": 2
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 13,
+   "tool_results": 117,
+   "tool_errors": 2,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-10705-1\",\n  \"command\": \"./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanroom/socket.io-run38/pkt-b/code\\\", \\\"bundle\\\": \\\"lib\\\", \\\"module\\\": \\\"Ts",
+    "{\n  \"chunk_id\": \"exec-10774-1\",\n  \"command\": \"./engine/sv data_model_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanroom/socket.io-run38/pkt-b/code\\\"}' 2>&1 | head -c 1500\",\n  \"descrip"
+   ]
+  },
+  "socket.io/pkt-c": {
+   "fix": "357a9cb870",
+   "mode": "static",
+   "targets": [
+    "lib.transports.flashsocket.$init.init",
+    "lib.transports.flashsocket.$init.init$2"
+   ],
+   "proposals": 0,
+   "first_hit_rank": null,
+   "chosen": [],
+   "own": 3,
+   "skipped": 0,
+   "choice_records": 1,
+   "covered": [],
+   "findings": [
+    {
+     "title": "Async namespace authorization resurrects disconnected clients",
+     "status": "model-level finding",
+     "subject": "AuthResurrect",
+     "property": "NoResurrectEmit",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [
+      "lib.transports.flashsocket.$init.init"
+     ],
+     "withdrawn": null
+    },
+    {
+     "title": "Remote nodes never clean up disconnected clients (no global disconnect publish)",
+     "status": "model-level finding",
+     "subject": "RemoteCleanup",
+     "property": "RemoteClean",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [
+      "lib.transports.flashsocket.$init.init"
+     ],
+     "withdrawn": null
+    },
+    {
+     "title": "Client messages lost in the Redis subscribe-ack window",
+     "status": "model-level finding",
+     "subject": "SubAckLoss",
+     "property": "NoLoss",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [
+      "lib.transports.flashsocket.$init.init"
+     ],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "uncertain": 5
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 14,
+   "tool_results": 149,
+   "tool_errors": 7,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-10849-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/socket.io-run38/pkt-c && ./engine/sv ask_deployment_question '{\\\"root\\\": \\\"~/projects/b",
+    "{\n  \"chunk_id\": \"exec-10959-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/socket.io-run38/pkt-c && ./engine/sv generate_skeleton '{\\\"root\\\": \\\"~/projects/benchma",
+    "{\n  \"chunk_id\": \"exec-11036-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/socket.io-run38/pkt-c && grep -n \\\"NodeQueries\\\\|is_node_tree\\\\|language\\\" engine/src/specfence_engine/",
+    "{\n  \"chunk_id\": \"exec-11050-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/socket.io-run38/pkt-c && python3 -c \\\"\\nimport gzip, json\\nd = json.load(gzip.open('code/.specfence/cac",
+    "{\n  \"chunk_id\": \"exec-11078-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/socket.io-run38/pkt-c && ./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/c",
+    "{\n  \"chunk_id\": \"exec-11114-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/socket.io-run38/pkt-c && ./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/c",
+    "{\n  \"chunk_id\": \"exec-11199-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/socket.io-run38/pkt-c && ./engine/sv data_model_check '{\\\"root\\\": \\\"~/projects/benchmar"
+   ]
+  },
+  "socket.io/pkt-d": {
+   "fix": "d1d35263b1",
+   "mode": "static",
+   "targets": [
+    "lib.socket.$init.ping",
+    "lib.socket.$init.ping$1"
+   ],
+   "proposals": 0,
+   "first_hit_rank": null,
+   "chosen": [],
+   "own": 3,
+   "skipped": 0,
+   "choice_records": 1,
+   "covered": [
+    "own:Stale sid dereference in onWebSocket: verify() checks the si"
+   ],
+   "findings": [
+    {
+     "title": "Abandoned upgrade transports are never closed: the upgrade-timeout guard checks a readyState no transport ever has",
+     "status": "deterministic defect",
+     "subject": "lib.socket.$init.maybeUpgrade",
+     "property": "TimeoutCloses: an abandoned upgrade does not linger in opening",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": "n/a",
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Stale sid dereference in onWebSocket after the websocket-handshake gap",
+     "status": "model-level finding",
+     "subject": "lib.server.$init.onWebSocket",
+     "property": "NoCrash: every sid dereferenced in onWebSocket still names a live client",
+     "evidence": "model-level",
+     "confirmation_verdict": "mismatch",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Handshake close-cleanup registered after the connection emit leaks clients entries",
+     "status": "model-level finding",
+     "subject": "lib.server.$init.handshake",
+     "property": "ClosedCleaned: a closed sockets server entry is gone and the count decremented",
+     "evidence": "model-level",
+     "confirmation_verdict": "mismatch",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "confirmed": 1,
+    "mismatch": 2
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 12,
+   "tool_results": 94,
+   "tool_errors": 8,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-10902-1\",\n  \"command\": \"P=~/projects/benchmarks/cleanroom/socket.io-run38/pkt-d; R=$P/code; $P/engine/sv ask_deployment_question '{\\\"root\\\": \\\"'$R'\\\", \\\"service\\\"",
+    "{\n  \"chunk_id\": \"exec-11013-1\",\n  \"command\": \"P=~/projects/benchmarks/cleanroom/socket.io-run38/pkt-d; $P/engine/sv module_check '{\\\"root\\\": \\\"'$P/code'\\\", \\\"bundle\\\": \\\"lib\\\", \\\"modul",
+    "{\n  \"chunk_id\": \"exec-11051-1\",\n  \"command\": \"P=~/projects/benchmarks/cleanroom/socket.io-run38/pkt-d; cd $P && PYTHONPATH=$P/engine/src:$P/engine/deps python3 -c \\\"\\nfrom specfence_en",
+    "{\n  \"chunk_id\": \"exec-11099-1\",\n  \"command\": \"D=~/projects/benchmarks/cleanroom/socket.io-run38/pkt-d/code/lib/.specforge; python3 - <<'EOF'\\np = 'StaleSid.tla'\\nt = open(p).read()\\nad",
+    "{\n  \"chunk_id\": \"exec-11102-1\",\n  \"command\": \"P=~/projects/benchmarks/cleanroom/socket.io-run38/pkt-d; $P/engine/sv module_check '{\\\"root\\\": \\\"'$P/code'\\\", \\\"bundle\\\": \\\"lib\\\", \\\"modul",
+    "{\n  \"chunk_id\": \"exec-11105-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/socket.io-run38/pkt-d/code/lib/.specforge && python3 - <<'PYEOF'\\nimport re\\np = 'StaleSid.tla'\\nt = op",
+    "{\n  \"chunk_id\": \"exec-11129-1\",\n  \"command\": \"D=~/projects/benchmarks/cleanroom/socket.io-run38/pkt-d/code/lib/.specforge; sed 's/MODULE StaleSid/MODULE StaleSidControl/; s/STRUCTURAL ",
+    "{\n  \"chunk_id\": \"exec-11133-1\",\n  \"command\": \"P=~/projects/benchmarks/cleanroom/socket.io-run38/pkt-d; $P/engine/sv module_check '{\\\"root\\\": \\\"'$P/code'\\\", \\\"bundle\\\": \\\"lib\\\", \\\"modul"
+   ]
+  },
+  "bull/pkt-a": {
+   "fix": "c8e8ceeef0",
+   "mode": "static",
+   "targets": [
+    "lib.job.$init.moveToCompleted",
+    "lib.scripts.$init.moveToCompleted"
+   ],
+   "proposals": 0,
+   "first_hit_rank": null,
+   "chosen": [],
+   "own": 3,
+   "skipped": 0,
+   "choice_records": 1,
+   "covered": [],
+   "findings": [
+    {
+     "title": "NOSCRIPT retry re-sends the error object as the script arguments",
+     "status": "model-level finding",
+     "subject": "lib.scripts.execScript",
+     "property": "RetryPreservesArgs",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "whenCurrentJobsFinished can miss a completion and never resolve",
+     "status": "model-level finding",
+     "subject": "lib.queue.whenCurrentJobsFinished",
+     "property": "NoMiss",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Each bclient error permanently adds another set of processing loops",
+     "status": "model-level finding",
+     "subject": "lib.queue.process",
+     "property": "LoopBound",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "uncertain": 4
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 13,
+   "tool_results": 119,
+   "tool_errors": 5,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-10569-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-a && ./engine/sv generate_skeleton '{\\\"root\\\": \\\"~/projects/benchmarks/c",
+    "{\n  \"chunk_id\": \"exec-10616-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-a && ./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanr",
+    "{\n  \"chunk_id\": \"exec-10674-1\",\n  \"command\": \"sed -n '1250,1360p' ~/projects/benchmarks/cleanroom/bull-run38/pkt-a/engine/src/specforge_engine/mcp/server.py\",\n  \"description\": \"Read re",
+    "{\n  \"chunk_id\": \"exec-10691-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-a && python3 -c \\\"\\nimport sys, json\\nsys.path.insert(0, 'engine/src')\\nfrom specfence_e",
+    "{\n  \"chunk_id\": \"exec-10801-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-a && python3 -c \\\"\\nimport json\\nd=json.load(open('work/firstlook.json'))\\nprint(json.du"
+   ]
+  },
+  "bull/pkt-b": {
+   "fix": "c056cb2a00",
+   "mode": "static",
+   "targets": [
+    "lib.queue.$init.close",
+    "lib.queue.$init.processJob",
+    "lib.queue.$init.processJob$1",
+    "lib.queue.$init.processJob.lockRenewer",
+    "lib.queue.$init.updateDelayTimer",
+    "lib.queue.$init.updateDelayTimer$1",
+    "lib.queue.Queue"
+   ],
+   "proposals": 0,
+   "first_hit_rank": null,
+   "chosen": [],
+   "own": 3,
+   "skipped": 0,
+   "choice_records": 1,
+   "covered": [
+    "own:Queue.process stacks reconnect handlers: every bclient error"
+   ],
+   "findings": [
+    {
+     "title": "PriorityQueue runs overlapping poll loops after pause/resume",
+     "status": "model-level finding",
+     "subject": "lib.priority-queue run/pause/resume loop liveness",
+     "property": "AtMostOneLoop",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Queue reconnect permanently multiplies processing loops",
+     "status": "model-level finding",
+     "subject": "lib.queue process/run reconnect loop liveness",
+     "property": "LoopsBounded",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [
+      "lib.queue.Queue"
+     ],
+     "withdrawn": null
+    },
+    {
+     "title": "PriorityQueue visits queues low-first every other pass",
+     "status": "model-level finding",
+     "subject": "lib.priority-queue run pass order",
+     "property": "FirstIsCritical",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "PriorityQueue gives critical the smallest job budget on odd passes",
+     "status": "model-level finding",
+     "subject": "lib.priority-queue run strategy budgets",
+     "property": "CritBudgetTop",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "uncertain": 4
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 18,
+   "tool_results": 58,
+   "tool_errors": 7,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-10530-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-b && ./engine/sv ask_deployment_question '{\\\"root\\\": \\\"~/projects/benchm",
+    "{\n  \"chunk_id\": \"exec-10548-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-b && wc -l code/lib/*.js code/index.js code/gulpfile.js && echo === && cat code/index.js",
+    "{\n  \"chunk_id\": \"exec-10555-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-b && ./engine/sv generate_skeleton '{\\\"root\\\": \\\"~/projects/benchmarks/c",
+    "{\n  \"chunk_id\": \"exec-10652-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-b && python3 - <<'PYEOF'\\nimport json, subprocess\\nR=\\\"~/projects/benchm",
+    "{\n  \"chunk_id\": \"exec-10680-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-b/code/lib/.specforge && cat > ReconnectLoops.tla <<'TLAEOF'\\n---- MODULE ReconnectLoops",
+    "{\n  \"chunk_id\": \"exec-10684-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-b/code/lib/.specforge && python3 - <<'PYEOF'\\nimport re\\n# ReconnectLoops: error happens",
+    "{\n  \"chunk_id\": \"exec-10693-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-b/code/lib/.specforge && python3 - <<'PYEOF'\\n# Control 1: PrioLoops with guarded run() "
+   ]
+  },
+  "bull/pkt-c": {
+   "fix": "8212cdde5f",
+   "mode": "static",
+   "targets": [
+    "gulpfile.$init$1",
+    "lib.queue.$init.close",
+    "lib.queue.$init.disconnect$1",
+    "lib.queue.$init.processJob",
+    "lib.queue.$init.processJob$1",
+    "lib.queue.$init.processJob.lockRenewer",
+    "lib.queue.$init.updateDelayTimer",
+    "lib.queue.$init.updateDelayTimer$1",
+    "lib.queue.Queue",
+    "lib.timer-manager.$init.clear",
+    "lib.timer-manager.$init.set",
+    "lib.timer-manager.$init.whenIdle",
+    "lib.timer-manager.TimerManager"
+   ],
+   "proposals": 0,
+   "first_hit_rank": null,
+   "chosen": [],
+   "own": 3,
+   "skipped": 0,
+   "choice_records": 1,
+   "covered": [
+    "own:Concurrent jobs share one 'lockRenewer' timer name: job A fi",
+    "own:The delayTimer fire callback clears 'delayTimer' (declaring ",
+    "own:PriorityQueue.resume() starts a second run loop while an old"
+   ],
+   "findings": [
+    {
+     "title": "Concurrent jobs cancel each other's lock renewal (shared 'lockRenewer' timer name)",
+     "status": "model-level finding",
+     "subject": "lib.queue.Queue.processJob lock renewal",
+     "property": "RenewerArmed",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [
+      "lib.queue.$init.processJob",
+      "lib.queue.$init.processJob.lockRenewer",
+      "lib.queue.Queue"
+     ],
+     "withdrawn": null
+    },
+    {
+     "title": "Orphaned lock-renewer timeout renews a finished job's lock and re-arms itself",
+     "status": "model-level finding",
+     "subject": "lib.timer-manager.TimerManager.set overwrite without clearTimeout",
+     "property": "NoRenewAfterDone",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [
+      "lib.queue.$init.processJob",
+      "lib.queue.$init.processJob.lockRenewer",
+      "lib.timer-manager.$init.set",
+      "lib.timer-manager.TimerManager"
+     ],
+     "withdrawn": null
+    },
+    {
+     "title": "close() disconnects while the fired delay timer's redis work is still in flight",
+     "status": "model-level finding",
+     "subject": "lib.queue.Queue.close vs updateDelayTimer",
+     "property": "CloseAfterWork",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [
+      "lib.queue.$init.close",
+      "lib.queue.$init.updateDelayTimer",
+      "lib.queue.Queue"
+     ],
+     "withdrawn": null
+    },
+    {
+     "title": "pause() then resume() leaves two priority-queue processing loops running",
+     "status": "model-level finding",
+     "subject": "lib.priority-queue.PriorityQueue.run loop",
+     "property": "MaxOneLoop",
+     "evidence": "model-level",
+     "confirmation_verdict": "uncertain",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "uncertain": 5
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 9,
+   "tool_results": 123,
+   "tool_errors": 6,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-10854-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-c && wc -l code/lib/*.js code/index.js code/gulpfile.js; echo ===; ./engine/sv coverage ",
+    "{\n  \"chunk_id\": \"exec-10881-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-c && ./engine/sv generate_skeleton '{\\\"root\\\": \\\"~/projects/benchmarks/c",
+    "{\n  \"chunk_id\": \"exec-10896-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-c && PYTHONPATH=\\\"$PWD/engine/deps:$PWD/engine/src\\\" /opt/homebrew/bin/python3 -c \\\"\\nfr",
+    "{\n  \"chunk_id\": \"exec-10899-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-c && PYTHONPATH=\\\"$PWD/engine/deps:$PWD/engine/src\\\" /opt/homebrew/bin/python3 -c \\\"\\nfr",
+    "{\n  \"chunk_id\": \"exec-10945-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-c/engine/src/specforge_engine && sed -n '60,115p' gates.py; grep -n \\\"def lint_static\\\" ",
+    "{\n  \"chunk_id\": \"exec-11011-1\",\n  \"command\": \"cd ~/projects/benchmarks/cleanroom/bull-run38/pkt-c && ./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanr"
+   ]
+  },
+  "bull/pkt-d": {
+   "fix": "456b13d1b9",
+   "mode": "static",
+   "targets": [
+    "lib.queue.$init.processJob.lockRenewer$1",
+    "lib.scripts.$init.takeLock"
+   ],
+   "proposals": 0,
+   "first_hit_rank": null,
+   "chosen": [],
+   "own": 3,
+   "skipped": 0,
+   "choice_records": 1,
+   "covered": [],
+   "findings": [
+    {
+     "title": "NOSCRIPT retry drops the scripts original arguments",
+     "status": "deterministic defect",
+     "subject": "RetryArgs",
+     "property": "RetryPreservesArgs",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": "n/a",
+     "touches": [],
+     "withdrawn": {
+      "reason": "superseded by finding 3: NOSCRIPT retry drops the scripts original arguments",
+      "superseded_by": 3
+     }
+    },
+    {
+     "title": "whenCurrentJobsFinished can miss completions and hang pause and close",
+     "status": "model-level finding",
+     "subject": "PauseWakeup",
+     "property": "NoLostWakeup",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Promote, retry, stalled-recovery and delayed-maturation bypass global pause",
+     "status": "model-level finding",
+     "subject": "PauseBypass",
+     "property": "PausedNoFetch",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "NOSCRIPT retry drops the scripts original arguments",
+     "status": "deterministic defect",
+     "subject": "RetryArgs",
+     "property": "RetryPreservesArgs",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": "n/a",
+     "touches": [],
+     "withdrawn": {
+      "reason": "superseded by finding 4: NOSCRIPT retry drops the original script arguments",
+      "superseded_by": 4
+     }
+    },
+    {
+     "title": "NOSCRIPT retry drops the original script arguments",
+     "status": "deterministic defect",
+     "subject": "RetryArgs",
+     "property": "RetryPreservesArgs",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": "n/a",
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "confirmed": 1,
+    "mismatch": 2
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 11,
+   "tool_results": 120,
+   "tool_errors": 9,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-10916-1\",\n  \"command\": \"PYTHONPATH=engine/src:engine/deps python3 -c \\\"\\nfrom specfence_engine.index.node import extract\\nraw = extract('code')\\nfor q in sorted(raw['functions'])",
+    "{\n  \"chunk_id\": \"exec-11063-1\",\n  \"command\": \"grep -rln \\\"lint_tags\\\\|TAG-AT-UNRESOLVED\\\" engine/src/specfence_engine/ --include=*.py | grep -v lints | head; echo ===; grep -n \\\"Finding\\\\|refus\\\\|lint",
+    "{\n  \"chunk_id\": \"exec-11073-1\",\n  \"command\": \"./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanroom/bull-run38/pkt-d/code\\\", \\\"bundle\\\": \\\"lib\\\", \\\"module\\\": \\\"PauseWa",
+    "{\n  \"chunk_id\": \"exec-11076-1\",\n  \"command\": \"./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanroom/bull-run38/pkt-d/code\\\", \\\"bundle\\\": \\\"lib\\\", \\\"module\\\": \\\"PauseWa",
+    "{\n  \"chunk_id\": \"exec-11119-1\",\n  \"command\": \"./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanroom/bull-run38/pkt-d/code\\\", \\\"bundle\\\": \\\"lib\\\", \\\"module\\\": \\\"RetryAr",
+    "{\n  \"chunk_id\": \"exec-11157-1\",\n  \"command\": \"./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanroom/bull-run38/pkt-d/code\\\", \\\"bundle\\\": \\\"lib\\\", \\\"module\\\": \\\"PauseBy",
+    "{\n  \"chunk_id\": \"exec-11162-1\",\n  \"command\": \"./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanroom/bull-run38/pkt-d/code\\\", \\\"bundle\\\": \\\"lib\\\", \\\"module\\\": \\\"PauseBy",
+    "{\n  \"chunk_id\": \"exec-11176-1\",\n  \"command\": \"./engine/sv module_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanroom/bull-run38/pkt-d/code\\\", \\\"bundle\\\": \\\"lib\\\", \\\"module\\\": \\\"PauseBy",
+    "{\n  \"chunk_id\": \"exec-11185-1\",\n  \"command\": \"./engine/sv data_model_check '{\\\"root\\\": \\\"~/projects/benchmarks/cleanroom/bull-run38/pkt-d/code\\\"}' 2>&1 | head -n 40\",\n  \"description\": "
+   ]
+  }
+ },
+ "label_matches": {
+  "bull/pkt-a": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "c8e8ceeef0",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix changes moveToCompleted to require lock ownership (else -1) and adds atomic removeOnComplete; findings cover execScript NOSCRIPT-retry args, whenCurrentJobsFinished lost wakeup, and bclient-error loop growth -- different code regions and causes."
+   }
+  },
+  "bull/pkt-b": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "c056cb2a00",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix defers close() until TimerManager idle (close/disconnect split, timers tracked) to stop close-vs-timer hangs; findings cover pause/resume and reconnect processing-loop multiplication plus priority pass order/budgets -- different mechanisms and regions."
+   }
+  },
+  "bull/pkt-c": {
+   "open": [],
+   "own": {
+    "findings": [
+     0,
+     1
+    ],
+    "fix": "8212cdde5f",
+    "is_concurrency": true,
+    "match": "exact",
+    "reason": "Finding 0 is exact: same shared-'lockRenewer'-timer-name collision across concurrent jobs with the same effect (renewals overwrite/cancel each other), which the fix addresses with per-timer uuid ids. Finding 1 is partial: same TimerManager.set overwrite-without-clearTimeout flaw, but a different effect (orphaned timeout renews a finished job's lock and re-arms). Findings 2 (close vs in-flight delay-timer redis work -- flaw persists post-fix, different mechanism) and 3 (pause/resume loops) do not match."
+   }
+  },
+  "bull/pkt-d": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "456b13d1b9",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix adds ensureActive to takeLock so a worker cannot lock/process a job no longer in active (double-processing race); findings cover whenCurrentJobsFinished lost wakeup, global-pause bypass, and NOSCRIPT-retry arg loss -- different code and causes."
+   }
+  },
+  "socket.io/pkt-a": {
+   "open": [],
+   "own": {
+    "findings": [
+     1
+    ],
+    "fix": "5f0d2455d3",
+    "is_concurrency": true,
+    "match": "partial",
+    "reason": "Same polling-transport poll/pause/upgrade coordination region (lib/transports/polling.js; the commit's pause-then-upgrade sequence), but different effect and mechanism: fix is poll emitted before onPacket causing lost packets on pause/upgrade, finding is pause never completing with upgrade stall and sends buffered forever. Findings 0 (JSONP constructor ReferenceError) and 2 (Socket.close) are different code."
+   }
+  },
+  "socket.io/pkt-b": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "191d68d85f",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix removes the subscribed guard in Transport.unsubscribe so the store client is always paused (subscribe/unsubscribe race workaround); the finding is a heartbeat ping re-arm orphaning an interval timer -- different code, cause, and effect. Open fix 357a9cb870 (flashsocket policy server) is likewise unrelated to the heartbeat finding."
+   }
+  },
+  "socket.io/pkt-c": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "357a9cb870",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix addresses the flashsocket policy-server module-global scoping bug and port-change close/recreate ordering; findings cover async namespace-auth resurrection, missing remote disconnect cleanup, and Redis subscribe-ack message loss -- different code regions and causes."
+   }
+  },
+  "socket.io/pkt-d": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "d1d35263b1",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix makes Socket.ping idempotent (clear interval timer on entry, clear timeout timer before re-arm) to stop spurious ping-timeout closes; findings cover the maybeUpgrade readyState guard, onWebSocket stale-sid dereference, and handshake close-cleanup ordering -- different regions and mechanisms."
+   }
+  }
+ },
+ "recall_v22": {
+  "packets": 8,
+  "own": 2,
+  "own_or_open": 2,
+  "per_packet": {
+   "bull/pkt-a": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   },
+   "bull/pkt-b": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   },
+   "bull/pkt-c": {
+    "own": true,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": true
+   },
+   "bull/pkt-d": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   },
+   "socket.io/pkt-a": {
+    "own": true,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": true
+   },
+   "socket.io/pkt-b": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   },
+   "socket.io/pkt-c": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   },
+   "socket.io/pkt-d": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   }
+  }
+ },
+ "adjudication": {
+  "groups": 18,
+  "sub_claims": 24,
+  "real": 24,
+  "not_real": [],
+  "per_subclaim": {
+   "B1.1": {
+    "finding": "bull/pkt-a#0",
+    "tree": "R5",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B1.2": {
+    "finding": "bull/pkt-d#4",
+    "tree": "R8",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B2.1": {
+    "finding": "bull/pkt-a#1",
+    "tree": "R5",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B2.2": {
+    "finding": "bull/pkt-d#1",
+    "tree": "R8",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B3.1": {
+    "finding": "bull/pkt-a#2",
+    "tree": "R5",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B3.2": {
+    "finding": "bull/pkt-b#1",
+    "tree": "R6",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B4.1": {
+    "finding": "bull/pkt-b#0",
+    "tree": "R6",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B4.2": {
+    "finding": "bull/pkt-c#3",
+    "tree": "R7",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B5.1": {
+    "finding": "bull/pkt-b#2",
+    "tree": "R6",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B5.2": {
+    "finding": "bull/pkt-b#3",
+    "tree": "R6",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B6.1": {
+    "finding": "bull/pkt-c#0",
+    "tree": "R7",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B6.2": {
+    "finding": "bull/pkt-c#1",
+    "tree": "R7",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B7.1": {
+    "finding": "bull/pkt-c#2",
+    "tree": "R7",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "B8.1": {
+    "finding": "bull/pkt-d#2",
+    "tree": "R8",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "S1.1": {
+    "finding": "socket.io/pkt-a#0",
+    "tree": "R1",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "S2.1": {
+    "finding": "socket.io/pkt-a#1",
+    "tree": "R1",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "S3.1": {
+    "finding": "socket.io/pkt-a#2",
+    "tree": "R1",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "S4.1": {
+    "finding": "socket.io/pkt-b#0",
+    "tree": "R2",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "S5.1": {
+    "finding": "socket.io/pkt-c#0",
+    "tree": "R3",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "S6.1": {
+    "finding": "socket.io/pkt-c#1",
+    "tree": "R3",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "S7.1": {
+    "finding": "socket.io/pkt-c#2",
+    "tree": "R3",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "S8.1": {
+    "finding": "socket.io/pkt-d#0",
+    "tree": "R4",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "S9.1": {
+    "finding": "socket.io/pkt-d#1",
+    "tree": "R4",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "S10.1": {
+    "finding": "socket.io/pkt-d#2",
+    "tree": "R4",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   }
+  },
+  "dropped": [
+   "bull/pkt-d#0",
+   "bull/pkt-d#3"
+  ],
+  "confirm_mismatch_on_real": "5 mismatch verdicts on real claims (socket.io/pkt-d x3, bull/pkt-d x2): abstraction complaints about unrecorded calls/state, never absence claims; P3 counts refutations only",
+  "refutations_emitted": 0,
+  "gil_refutations": [],
+  "wrong_direction_records": [],
+  "R61_guard_fired": 0,
+  "race_labels_needing_no_preemption": 0
+ },
+ "predictions": {
+  "P4_own_or_open": {
+   "value": "2/8",
+   "threshold": ">= 1/8",
+   "verdict": "pass",
+   "note": "bull/pkt-c exact (B6.1+B6.2 lockRenewer), socket.io/pkt-a partial (S2.1 PollPause); no open matches"
+  },
+  "P4a_own": {
+   "value": "2/8",
+   "threshold": ">= 1/8",
+   "verdict": "pass"
+  },
+  "P1_recall@10": {
+   "value": "0/8",
+   "threshold": "= 0/8 (exact: no proposals anywhere)",
+   "verdict": "pass"
+  },
+  "P2_chosen_covers_own_or_open": {
+   "value": "4/8",
+   "threshold": ">= 1/8",
+   "verdict": "pass",
+   "note": "covered own: socket.io/pkt-a, socket.io/pkt-d, bull/pkt-b, bull/pkt-c; open: none"
+  },
+  "P3_wrong_direction": {
+   "value": 0,
+   "threshold": "= 0",
+   "verdict": "pass",
+   "note": "no refuted verdicts; 5 mismatch verdicts on real claims are abstraction complaints, not refutations"
+  },
+  "P5_precision": {
+   "value": "24/24 sub-claims real (100 pct); 18/18 distinct claims",
+   "threshold": ">= 80%",
+   "verdict": "pass"
+  },
+  "P9_isolation": {
+   "value": 0,
+   "threshold": "= 0",
+   "verdict": "pass",
+   "note": "0 violations in 8 transcripts; fix-SHA leak check 0 hits; no deviations"
+  },
+  "P35_model_checks": {
+   "value": "8/8",
+   "threshold": ">= 6/8",
+   "verdict": "pass"
+  },
+  "P36_confirmed_packets": {
+   "value": "3/8",
+   "note": "socket.io/pkt-a, socket.io/pkt-d, bull/pkt-d have >=1 statically confirmed defect (3 total)"
+  },
+  "P37_structural_chosen": {
+   "value": "0/8",
+   "note": "no structural proposals anywhere to choose"
+  },
+  "P38_pattern_chosen": {
+   "value": "0/8",
+   "note": "no pattern proposals anywhere to choose"
+  },
+  "P39_usage_questions": {
+   "value": "2/8",
+   "note": "bull/pkt-c and bull/pkt-d called it and wrote the questions into the report (5/8 called)"
+  },
+  "P22_reproducibility": {
+   "value": "7/7 usable identical",
+   "threshold": "every usable call identical",
+   "verdict": "pass",
+   "note": "bull/pkt-b has no usable call (invoked via ./engine/sv inside python)"
+  },
+  "P21_unlabelled": null
+ },
+ "costs": {
+  "wall_hours": {
+   "socket.io/pkt-a": 0.27,
+   "socket.io/pkt-b": 0.25,
+   "socket.io/pkt-c": 0.37,
+   "socket.io/pkt-d": 0.3,
+   "bull/pkt-a": 0.29,
+   "bull/pkt-b": 0.22,
+   "bull/pkt-c": 0.3,
+   "bull/pkt-d": 0.35
+  },
+  "specs_tla": {
+   "socket.io/pkt-a": 6,
+   "socket.io/pkt-b": 2,
+   "socket.io/pkt-c": 6,
+   "socket.io/pkt-d": 6,
+   "bull/pkt-a": 6,
+   "bull/pkt-b": 7,
+   "bull/pkt-c": 6,
+   "bull/pkt-d": 6
+  },
+  "check_calls": {
+   "socket.io/pkt-a": 10,
+   "socket.io/pkt-b": 10,
+   "socket.io/pkt-c": 20,
+   "socket.io/pkt-d": 24,
+   "bull/pkt-a": 18,
+   "bull/pkt-b": 24,
+   "bull/pkt-c": 30,
+   "bull/pkt-d": 30
+  },
+  "tokens": "unavailable in this runtime (hand-backs carry no token report)",
+  "checker_cpu_seconds": "not instrumented"
+ },
+ "audit": "P9: 0 TRUE violations in 8 tester transcripts (58-149 tool calls each); no network, no out-of-packet reads. Fix-SHA leak check 0 hits. No deviations.",
+ "reproducibility_P22": {
+  "usable": 7,
+  "identical": 7,
+  "note": "one confirm_counterexample re-run per usable packet in place; same ids and verdicts; bull/pkt-b unusable (./engine/sv-in-python invocation)"
+ }
+}

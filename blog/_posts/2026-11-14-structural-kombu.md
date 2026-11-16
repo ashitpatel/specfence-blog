@@ -6,7 +6,7 @@ series: specfence
 date: 2026-11-11
 ---
 
-*Part 6 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). [Part 5]({% post_url 2026-11-13-temporal-stomp %}) traced a race through time. This post reads one as a snapshot. Evidence: [`evidence/kombu/Resource-full.als`](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/kombu/Resource-full.als) and its [run log](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/kombu/Resource-full.run.log).*
+*Part 6 of 21 in a series on specfence. [Part 5]({% post_url 2026-11-13-temporal-stomp %}) traced a race through time. This post reads one as a snapshot. Evidence: [`evidence/kombu/Resource-full.als`](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/kombu/Resource-full.als) and its [run log](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/kombu/Resource-full.run.log).*
 
 *Level L2 · Needs: part 5 or equal comfort with code. Snapshots, not traces.*
 

@@ -6,7 +6,7 @@ series: specfence
 date: 2026-11-11
 ---
 
-*Part 8 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). The previous seven posts built the case from the inside: [the gap]({% post_url 2026-11-09-what-tests-cannot-see %}), [the machinery]({% post_url 2026-11-10-how-it-works %}), and five worked examples. This one steps outside and places the tool among its neighbors — all characterizations as of November 2026, from the linked sources.*
+*Part 8 of 21 in a series on specfence. The previous seven posts built the case from the inside: [the gap]({% post_url 2026-11-09-what-tests-cannot-see %}), [the machinery]({% post_url 2026-11-10-how-it-works %}), and five worked examples. This one steps outside and places the tool among its neighbors — all characterizations as of November 2026, from the linked sources.*
 
 *Level L2 · Needs: parts 1–2. Thirteen neighbors, one map.*
 
@@ -26,7 +26,7 @@ Where specfence stands, then: a Turing-side engine, Church-side discipline (spec
 
 [Specula](https://www.aiinsiders.net/article/speculas-bug-hunting-agent-impresses-a-reviewer-but-not) (August 2026) is the nearest thing to specfence's from-code door: an agentic system that writes TLA+ specifications from code, validates them against observed traces, model-checks for concurrency bugs, and reproduces every confirmed bug as a timed integration test. Applied to slices of 48 concurrent and distributed systems — MongoDB, etcd, SONiC, libgomp among them — it surfaced 249 bugs, 207 previously unknown, across seven languages, at a median $57 in tokens per system.
 
-Same core loop, same checker, same reproduce-or-it-doesn't-count rule. The informative part is where the two designs diverge, because reviewer Murat Demirbas's [objections to Specula](https://muratbuffalo.blogspot.com/2026/08/specula-scaling-formal-specifications.html) — on his Metadata blog — read like specfence's requirements list:
+Same core loop, same checker, and the same rule that a counterexample must fit the real code — though Specula demands a reproducing test, and specfence a static confirmation. The informative part is where the two designs diverge, because reviewer Murat Demirbas's [objections to Specula](https://muratbuffalo.blogspot.com/2026/08/specula-scaling-formal-specifications.html) — on his Metadata blog — read like specfence's requirements list:
 
 - *Circularity.* 87% of Specula's invariants come from the implementation code and its comments, risking encoding an existing bug as intended behavior. Specfence's greenfield door answers by deriving specs from prose plus interview — independent of any code — and its from-code door adds falsification controls (mutants that must violate, controls that must pass) so a vacuous model can't survive.
 - *Composition.* Specula builds one model per module and mocks the interactions rather than reasoning about the whole system. Specfence composes module specs through published, version-pinned interfaces, re-checking clients when an interface changes.
@@ -79,7 +79,7 @@ be formalized. EGM asks *can a stranger build from this?*; specfence asks *does 
 
 Specfence had the Elephant's problem without the Goldfish. In its requirements mode, the agent that runs the interview
 writes the requirements document and also the spec built from it, so an assumption it never wrote down reaches both,
-and no checker can see it. Round [EG1](https://github.com/ashitpatel/specfence/blob/main/docs/project/rounds/2026-11-14-EG1.md)
+and no checker can see it. Round [EG1](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/rounds/2026-11-14-EG1.md)
 borrows the Goldfish, with the checker kept as referee. Two fresh agents each write the requirements as Alloy facts
 from the document alone, and Alloy compares their readings with the drafting agent's model, one requirement at a
 time. On "the approver of an expense is not its owner", the drafting agent's model took the approvers and the owner as
@@ -88,9 +88,9 @@ them, an owner who is one of three approvers, and that became a question for the
 start from an EGM design doc and write its checked constraints back for EGM's reviewers.
 
 A fresh reader is only fresh if nobody can hand you a reading it didn't write. An audit of specfence's own gates
-([EH1](https://github.com/ashitpatel/specfence/blob/main/docs/project/rounds/2026-11-15-EH1-results.md)) found
+([EH1](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/rounds/2026-11-15-EH1-results.md)) found
 exactly that hole: the drafting agent could restate its own model as "a reading", and the gate cleared. The fix
-([FR3](https://github.com/ashitpatel/specfence/blob/main/docs/project/rounds/2026-11-15-FR3.md)) moves the readers
+([FR3](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/rounds/2026-11-15-FR3.md)) moves the readers
 out of the agent's hands. When the person names a reader command, such as `claude -p`, `codex exec` or `gemini -p`,
 specfence starts each reader itself in an empty folder with nothing but its instructions, and counts only those
 readings. Without one, the readings still count, labelled "recorded, not proven fresh". On the approver example above,
@@ -98,7 +98,7 @@ two `claude -p` readers found the same difference in 22 seconds. That is one see
 still not measured on seeded defects.
 
 We also tried EGM's own review on specfence's agent instructions, where agent trials had already found two defects
-([EG2](https://github.com/ashitpatel/specfence/blob/main/docs/project/rounds/2026-11-15-EG2-egm-trial.md)). It found
+([EG2](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/rounds/2026-11-15-EG2-egm-trial.md)). It found
 real problems of form, such as undefined terms and contradicting limits, but missed both defects. That was expected:
 EGM is built to review designs, not to predict what an agent will skip.
 
@@ -120,7 +120,7 @@ Neither documents model checking or a dedicated concurrency analysis. Both use r
 
 This is the complementary layer, not a competitor. AI review judges what reviewers judge — standards, coverage, blast radius, suspicious patterns — at machine speed. Exhausting interleavings isn't its job — review judges the change, it doesn't enumerate schedules; no reviewer, human or artificial, can eyeball whether a freed slot reaches the longest waiter under every schedule. The honest stack is both: an AI reviewer on every PR for the things judgment covers, specfence-style exhaustive checking for the properties judgment can't see. Part 4's Log4j story is the boundary case: a review agent might flag the escaping stream, but only the model says which interleavings break.
 
-The two layers also meet in the middle. When a reviewer writes "this races with logout", that sentence is a claim about interleavings. It is exactly what specfence's confirm path settles: model the slice, check it, replay the trace against the code. And they guard against the same thing: Claude Code Review reads its rules only from the base branch, for the same reason specfence's bot-team mode will not count answers the dev bot could have written. What judges a change must not be editable by the change. Specfence's own change review does not yet hold to that: it still reads the answers and screen records in the tree under review. The fix is planned ([RV1](https://github.com/ashitpatel/specfence/blob/main/docs/project/rounds/2026-11-13-RV1-plan.md)), borrowed from Claude Code Review's protected-branch rule.
+The two layers also meet in the middle. When a reviewer writes "this races with logout", that sentence is a claim about interleavings. It is exactly what specfence's confirm path settles: model the slice, check it, confirm the trace against the code. And they guard against the same thing: Claude Code Review reads its rules only from the base branch, for the same reason specfence's bot-team mode will not count answers the dev bot could have written. What judges a change must not be editable by the change. Specfence's own change review does not yet hold to that: it still reads the answers and screen records in the tree under review. The fix is planned ([RV1](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/rounds/2026-11-13-RV1-plan.md)), borrowed from Claude Code Review's protected-branch rule.
 
 ## Intent Lab: fellow TLA+ travelers
 
@@ -179,7 +179,7 @@ One picture for the whole landscape. The rows are what each neighbor contributes
 | Bedrock AR (neurosymbolic) | output/policy compliance | NL policies | valid/invalid |
 | **specfence (model checking + neurosymbolic loop)** | temporal + structural | prose *or* code | demonstrated bugs + tripwires |
 
-The last row is this series' claim to a seat: a tool that starts from plain prose or from existing code alike, demonstrates its findings on real code, and then stands guard over later changes to what it modeled. The neighbors each do something it doesn't; it does something none of them do. By bloodline: the deductive half proves functions; the model-checking half exhausts behaviors; the neurosymbolic entries — Imandra, Petra, Bedrock, Harness², and this tool — all pair a proposer with a judge.
+The last row is this series' claim to a seat: a tool that starts from plain prose or from existing code alike, confirms its findings against the real code, and then stands guard over later changes to what it modeled. The neighbors each do something it doesn't; it does something none of them do. By bloodline: the deductive half proves functions; the model-checking half exhausts behaviors; the neurosymbolic entries — Imandra, Petra, Bedrock, Harness², and this tool — all pair a proposer with a judge.
 
 One post remains: [slices]({% post_url 2026-11-17-slices %}) — what gets checked, what might not, and how to watch the gaps.
 

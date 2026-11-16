@@ -6,7 +6,7 @@ series: specfence
 date: 2026-11-11
 ---
 
-*Part 11 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). The [landscape]({% post_url 2026-11-16-landscape %}) called Imandra the neurosymbolic kin. This post draws the fork precisely.*
+*Part 11 of 21 in a series on specfence. The [landscape]({% post_url 2026-11-16-landscape %}) called Imandra the neurosymbolic kin. This post draws the fork precisely.*
 
 *Level L2 · Needs: part 8. Answers versus verdicts.*
 
@@ -23,7 +23,7 @@ date: 2026-11-11
 
 ## Differences
 
-- **Answers vs verdicts.** CodeLogician answers semantic questions ("what does this code do at this boundary?"). Specfence returns verdicts: bug / deterministic defect / model-level finding, each with its reproduction and evidence bar — and then pins goldens that block future changes. Consultation versus tripwire.
+- **Answers vs verdicts.** CodeLogician answers semantic questions ("what does this code do at this boundary?"). Specfence returns verdicts: bug / deterministic defect / model-level finding, each with its confirmation and evidence bar — and then pins goldens that block future changes. Consultation versus tripwire.
 - **Breadth vs specialization.** Imandra reasons about program logic broadly — types, states, relations, control flow. Specfence specializes in two defect families (temporal, structural) and goes deep: fairness conditions, GIL switch windows, composition interfaces.
 - **Question-asking vs gatekeeping.** Imandra's loop centers on the model answering well; specfence's loop centers on the model being *falsifiable* — mutants must violate, controls must pass, unrefuted properties ship nothing.
 - **After the answer.** A CodeLogician session ends with understanding. A specfence run ends with artifacts that keep working: pinned properties, change guards, scenario digests. Understanding is the input; enforcement is the output.
@@ -31,7 +31,7 @@ date: 2026-11-11
 ## How to use each
 
 - *Imandra:* sign up for Imandra Universe (their platform, at [universe.imandra.ai](https://universe.imandra.ai/)), point CodeLogician at a codebase, and ask semantic questions — what this function does at edge inputs, where a decision boundary lies, whether two regions overlap. Best for: understanding complex logic before changing it.
-- *specfence:* install the wheel, open an agent session, and run verify-then-guard: model the slice, reproduce the finding, pin the property. Best for in a pilot: checking a property holds and keeping it held.
+- *specfence:* install the wheel, open an agent session, and run verify-then-guard: model the slice, confirm the finding against the code, pin the property. Best for in a pilot: checking a property holds and keeping it held.
 
 Use Imandra before the change ("what does this actually do?") and specfence across it ("check it still holds, then guard it").
 

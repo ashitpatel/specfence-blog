@@ -2,7 +2,7 @@
 layout: home
 ---
 
-A series on [specfence](https://github.com/ashitpatel/specfence): what it is, why exhaustive checking might earn its keep next to testing, and five worked examples — a system specified before it exists, a feature guarded at introduction, a lost wake-up, an overfilled pool, and two change guards that fire. Every example links to its evidence in this repository.
+A series on specfence: what it is, why exhaustive checking might earn its keep next to testing, and five worked examples — a system specified before it exists, a feature guarded at introduction, a lost wake-up, an overfilled pool, and two change guards that fire. Every example links to its evidence in this repository. The tool's own code repository is private for now; ask the author for access.
 
 Two ways to read it:
 

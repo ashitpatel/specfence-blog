@@ -6,7 +6,7 @@ series: specfence
 date: 2026-11-11
 ---
 
-*Part 20 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). [Part 14]({% post_url 2026-11-22-evidence-overview %}) opened the file drawer. This post reads the Node drawer all the way through: the first project in a fourth language. Evidence: [`evidence/node/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/node).*
+*Part 20 of 21 in a series on specfence. [Part 14]({% post_url 2026-11-22-evidence-overview %}) opened the file drawer. This post reads the Node drawer all the way through: the first project in a fourth language. Evidence: [`evidence/node/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/node).*
 
 *Level L2 · Needs: comfort reading short JavaScript excerpts. One project, file by file.*
 
@@ -79,4 +79,4 @@ Five bull packets missed their labels, all the same way: the tester filed real b
 
 ## Numbers
 
-Eight packets, 25 findings filed (2 withdrawn), 23 live subclaims in 15 groups, 23 judged real — 14 races, 9 deterministic. Three label matches (2 own exact, 1 open exact), all blind-matcher verdicts ([MATCHES](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/node/MATCHES-bull.json)). Zero wrong-direction verdicts, zero isolation violations. Wall time 0.22–0.39 h per packet. Frozen scores: run38 [`9388ddbb…`](https://github.com/ashitpatel/specfence/blob/main/evals/cleanroom/run38/SCORES.json), run41 [`44b16beb…`](https://github.com/ashitpatel/specfence/blob/main/evals/cleanroom/run41/SCORES.json).
+Eight packets, 25 findings filed (2 withdrawn), 23 live subclaims in 15 groups, 23 judged real — 14 races, 9 deterministic. Three label matches (2 own exact, 1 open exact), all blind-matcher verdicts ([MATCHES](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/node/MATCHES-bull.json)). Zero wrong-direction verdicts, zero isolation violations. Wall time 0.22–0.39 h per packet. Frozen scores: run38 [`9388ddbb…`](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/node/run38-SCORES.json), run41 [`44b16beb…`](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/node/run41-SCORES.json).

@@ -1,12 +1,12 @@
 ---
 title: "How it works: two checkers and the loop around them"
-description: "Specfence's capabilities in one tour: three doors in, an Alloy model for shapes and a TLA+ model for interleavings, a reproduce-or-it-isn't-a-bug rule, and change guards that put the models to work."
+description: "Specfence's capabilities in one tour: three doors in, an Alloy model for shapes and a TLA+ model for interleavings, a confirmed-against-the-code-or-it-isn't-a-bug rule, and change guards that put the models to work."
 layout: post
 series: specfence
 date: 2026-11-10
 ---
 
-*Part 2 of 21 in a series on [specfence](https://github.com/ashitpatel/specfence). [Part 1]({% post_url 2026-11-09-what-tests-cannot-see %}) named the gap: tests sample instances, while concurrency and structure bugs hide in interleavings and shapes no test constructs.*
+*Part 2 of 21 in a series on specfence. [Part 1]({% post_url 2026-11-09-what-tests-cannot-see %}) named the gap: tests sample instances, while concurrency and structure bugs hide in interleavings and shapes no test constructs.*
 
 *Level L1 · Needs: part 1 (or nothing, at a skim). The machinery tour.*
 
@@ -35,15 +35,15 @@ And size itself is not ignored: the 32-boundary the TLA+ model can't afford is c
 
 ## The loop: falsify first
 
-A model-level finding is not a bug. It is a hypothesis, and the tool treats it as one. The loop around the checkers exists to falsify hypotheses:
+A model-level finding is not a bug on its own. It is a hypothesis, and the tool treats it as one. The loop around the checkers exists to falsify hypotheses:
 
 1. **Propose.** Static analysis ranks slices of the system by risk — shared state, lock shapes, history — and the riskiest get modeled first.
 2. **Model.** Skeleton generators draft the spec's structure from the code (or the prose); the judgment — what the operations mean, what must hold — is authored, then checked.
 3. **Check.** The solvers run. A violation comes back with its counterexample; a clean comes back with the bound it held under.
-4. **Confirm.** A temporal counterexample is replayed against the real code under a deterministic scheduler that forces the exact interleaving — while a *control* interleaving (threads run one after another) must pass. If the code can't be made to exhibit the trace, the finding stays model-level. If the control fails too, the harness is wrong, not the code.
-5. **Record.** Confirmed findings are recorded with their reproduction; unrefuted properties — claims the checkers couldn't break but nothing demonstrated either — don't ship as bugs.
+4. **Confirm.** The counterexample is checked against the real code statically, without running anything: the checker's trace is walked step by step through the source. Every thread switch must fall where the runtime can actually switch, the locks held must match, and each step's writes must be in the code. A trace the code can't follow stays model-level. One stated gap: the branch conditions along the trace are not checked. Where the person allows running code, the trace can also be replayed under a deterministic scheduler that forces the exact interleaving, while a *control* interleaving (threads run one after another) must pass.
+5. **Record.** A confirmed counterexample is recorded as a bug, with a test outline in the project's own language — the schedule, setup and assertions taken from the trace — marked *not executed*. Running it is the developer's call. Unrefuted properties — claims the checkers couldn't break but nothing demonstrated either — don't ship as bugs.
 
-That fourth step is the one that matters most. Demonstrated-or-it-didn't-happen is what separates this from a linter with opinions: [the lost wake-up]({% post_url 2026-11-13-temporal-stomp %}) hung a real sender ten times in three thousand unforced trials.
+That fourth step is the one that matters most. Confirmed-against-the-code is what separates this from a linter with opinions. Since 13 November 2026 static confirmation is the bar for a bug: running tests against a complex deployment is outside the tool's scope, and replay stays a local aid. Some findings in this series went further and were demonstrated on running code: [the lost wake-up]({% post_url 2026-11-13-temporal-stomp %}) hung a real sender ten times in three thousand unforced trials.
 
 ## The guard: specs that keep working
 
