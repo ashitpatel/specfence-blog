@@ -88,7 +88,7 @@ Beyond the cleanroom, 13 more projects:
 | [commons-pool](https://github.com/apache/commons-pool) | directed Java end-to-end (J3a) | confirmed |
 | [curator](https://github.com/apache/curator) | directed Java end-to-end (J3b) | uncertain |
 | [resilience4j](https://github.com/resilience4j/resilience4j) | directed Java end-to-end (J3c) | confirmed |
-| [HikariCP](https://github.com/brettwoolridge/HikariCP) | directed Java end-to-end + golden gate (H) | fix #591 pinned; removal probe blocked |
+| [HikariCP](https://github.com/brettwooldridge/HikariCP) | directed Java end-to-end + golden gate (H) | fix #591 pinned; removal probe blocked |
 | [bbolt](https://github.com/etcd-io/bbolt) | directed Go end-to-end (G3c) | uncertain (library sharing) |
 | [grpc-go](https://github.com/grpc/grpc-go) | directed Go end-to-end (G3c) | confirmed (data race) |
 | [etcd](https://github.com/etcd-io/etcd) | directed Go end-to-end (G3c+G3d) | refuted ×2 |
