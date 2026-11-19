@@ -1,0 +1,1307 @@
+{
+ "summary": {
+  "packets": 8,
+  "recall@10": 1,
+  "recall@3": 1,
+  "chosen_covers": 1,
+  "chosen_covers_open": 0,
+  "findings_parsed": 31,
+  "findings_after_dedup": 31,
+  "own_recall": 0,
+  "own_or_open_recall": 1,
+  "tool_errors": [
+   2,
+   3,
+   5,
+   5,
+   6,
+   6,
+   9,
+   20
+  ],
+  "distinct_claims_real": "15/15 groups (30/31 sub-claims) adjudicated real; H4.1 not real",
+  "findings": 31,
+  "median_tool_errors": 6,
+  "real_unlabelled_findings": 29,
+  "reports": 8,
+  "tool_errors_note": "transcript tool results mentioning error/refusal/traceback (2-20 per packet, median 6): headless elicitation refusals and quoted TLC/Alloy diagnostics dominate; no packet blocked",
+  "touching_findings": 1
+ },
+ "packets": {
+  "healthchecks/pkt-a": {
+   "fix": "6375b0aac4",
+   "mode": "static",
+   "targets": [
+    "hc.api.views.delete_check"
+   ],
+   "proposals": 49,
+   "first_hit_rank": null,
+   "first_hit_track": null,
+   "chosen": [
+    "sl-b39bba9e64",
+    "sl-9b1edd1d8f",
+    "sl-ec23035ca8",
+    "sl-34f165b46f",
+    "sl-c96569b4b2",
+    "sl-60a141fcb4",
+    "sl-c088fa839e"
+   ],
+   "own": 1,
+   "skipped": 26,
+   "choice_records": 1,
+   "covered": [],
+   "findings": [
+    {
+     "title": "Concurrent single-use TOTP codes accepted twice (TokenBucket lost update)",
+     "status": "bug",
+     "subject": "hc.api.models.TokenBucket.authorize",
+     "property": "AtMostOneAccept",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Concurrent pauses record duplicate flips, breaking the status chain",
+     "status": "bug",
+     "subject": "hc.front.views.pause",
+     "property": "FlipsChain",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "API update writes back stale last_ping over a concurrent ping",
+     "status": "bug",
+     "subject": "hc.api.views._update",
+     "property": "LastPingIsLatest",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Concurrent pings can share one Ping.n via the refresh race",
+     "status": "bug",
+     "subject": "hc.api.models.Check.ping",
+     "property": "PingNUnique",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Pause writes back stale n_pings over a concurrent ping increment",
+     "status": "bug",
+     "subject": "hc.front.views.pause",
+     "property": "PingCountKept",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Notification send overwrites a concurrent delivery-failure disable with a stale flag",
+     "status": "model-level finding",
+     "subject": "hc.api.models.Channel.notify",
+     "property": "DisabledCorrect",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "confirmed": 10,
+    "mismatch": 1,
+    "uncertain": 1
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 19,
+   "tool_results": 212,
+   "tool_errors": 20,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-2372-1\",\n  \"command\": \"/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-a/engine/sv ask_deployment_question '{\\\"root\\\": \\\"/Users/ashitpatel/projects/benchma",
+    "{\n  \"chunk_id\": \"exec-2452-1\",\n  \"command\": \"cd /Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-a/code && sed -n '186,260p' hc/api/views.py; echo ===UPDATETIMEOUT===; grep -n 'd",
+    "{\n  \"chunk_id\": \"exec-2533-1\",\n  \"command\": \"/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-a/engine/sv module_check '{\\\"root\\\": \\\"/Users/ashitpatel/projects/benchmarks/cleanro",
+    "{\n  \"chunk_id\": \"exec-2611-1\",\n  \"command\": \"cd /Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-a/code && sed -n '1,60p' hc/api/views.py; echo ===UPDATE_CHECK===; sed -n '295,33",
+    "{\n  \"chunk_id\": \"exec-2637-1\",\n  \"command\": \"/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-a/engine/sv module_check '{\\\"root\\\": \\\"/Users/ashitpatel/projects/benchmarks/cleanro",
+    "{\n  \"chunk_id\": \"exec-2641-1\",\n  \"command\": \"/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-a/engine/sv module_check '{\\\"root\\\": \\\"/Users/ashitpatel/projects/benchmarks/cleanro",
+    "{\n  \"chunk_id\": \"exec-2644-1\",\n  \"command\": \"/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-a/engine/sv module_check '{\\\"root\\\": \\\"/Users/ashitpatel/projects/benchmarks/cleanro",
+    "{\n  \"chunk_id\": \"exec-2677-1\",\n  \"command\": \"/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-a/engine/sv module_check '{\\\"root\\\": \\\"/Users/ashitpatel/projects/benchmarks/cleanro",
+    "{\n  \"chunk_id\": \"exec-2681-1\",\n  \"command\": \"/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-a/engine/sv module_check '{\\\"root\\\": \\\"/Users/ashitpatel/projects/benchmarks/cleanro",
+    "{\n  \"chunk_id\": \"exec-2687-1\",\n  \"command\": \"/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-a/engine/sv tla_check '{\\\"module\\\": \\\"/Users/ashitpatel/projects/benchmarks/cleanroo",
+    "{\n  \"chunk_id\": \"exec-2710-1\",\n  \"command\": \"cd /Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-a/code/hc/accounts/.specfence && python3 - <<'EOF'\\nfor fn in ['CheckPing.tla', '",
+    "{\n  \"chunk_id\": \"exec-2718-1\",\n  \"command\": \"/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-a/engine/sv module_check '{\\\"root\\\": \\\"/Users/ashitpatel/projects/benchmarks/cleanro"
+   ]
+  },
+  "healthchecks/pkt-b": {
+   "fix": "311f7064dc",
+   "mode": "static",
+   "targets": [
+    "hc.api.models.Check.ping"
+   ],
+   "proposals": 49,
+   "first_hit_rank": 2,
+   "first_hit_track": "scored",
+   "chosen": [
+    "sl-ec71ac17ac",
+    "sl-b39bba9e64",
+    "sl-ec23035ca8",
+    "sl-705e43b4ca"
+   ],
+   "own": 0,
+   "skipped": 10,
+   "choice_records": 1,
+   "covered": [
+    "sl-b39bba9e64",
+    "sl-ec23035ca8"
+   ],
+   "findings": [
+    {
+     "title": "Concurrent plan changes orphan a billed Braintree subscription",
+     "status": "bug",
+     "subject": "hc.payments.models.Subscription",
+     "property": "NoOrphan: when concurrent plan-change requests finish, the database row and Braintree agree",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "A stale in-flight ping silently undoes a pause",
+     "status": "bug",
+     "subject": "hc.api.models.Check",
+     "property": "NoStaleUnpause: a ping frozen before a pause never leaves the check unpaused",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [
+      "hc.api.models.Check.ping"
+     ],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "confirmed": 4,
+    "mismatch": 1,
+    "uncertain": 1
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 13,
+   "tool_results": 186,
+   "tool_errors": 9,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-2357-1\",\n  \"command\": \"/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-b/engine/sv ask_deployment_question '{\\\"root\\\": \\\"/Users/ashitpatel/projects/benchma",
+    "{\n  \"chunk_id\": \"exec-2358-1\",\n  \"command\": \"SV=/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-b/engine/sv; R=/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43",
+    "{\n  \"chunk_id\": \"exec-2364-1\",\n  \"command\": \"SV=/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-b/engine/sv; R=/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43",
+    "Read text file `/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-b/code/hc/api/views.py`.\n(159 line(s) above)\n160|    if \"name\" in spec and check.name != spec[\"name\"]:\n161|      ",
+    "{\n  \"chunk_id\": \"exec-2503-1\",\n  \"command\": \"SV=/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-b/engine/sv; R=/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43",
+    "{\n  \"chunk_id\": \"exec-2543-1\",\n  \"command\": \"SV=/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-b/engine/sv; R=/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43",
+    "{\n  \"chunk_id\": \"exec-2663-1\",\n  \"command\": \"SV=/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-b/engine/sv; R=/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43",
+    "{\n  \"chunk_id\": \"exec-2666-1\",\n  \"command\": \"D=/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-b/code/hc/accounts/.specfence\\nsed -i '' 's/ |-> / -> /g' $D/CheckAlertAfter.cfg\\n",
+    "{\n  \"chunk_id\": \"exec-2684-1\",\n  \"command\": \"C=/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-b/code\\nsed -n '1,60p' $C/hc/api/decorators.py\\necho === notification_status ===\\n"
+   ]
+  },
+  "healthchecks/pkt-c": {
+   "fix": "438c94efb7",
+   "mode": "static",
+   "targets": [
+    "hc.accounts.views.check_token"
+   ],
+   "proposals": 41,
+   "first_hit_rank": null,
+   "first_hit_track": null,
+   "chosen": [
+    "sl-13ef79321d",
+    "sl-34f165b46f",
+    "sl-735e3bb51f",
+    "sl-745d1b2657",
+    "sl-05a7f4167e",
+    "sl-705e43b4ca",
+    "sl-4980e80bf1",
+    "sl-b9516a50c5"
+   ],
+   "own": 0,
+   "skipped": 12,
+   "choice_records": 3,
+   "covered": [],
+   "findings": [
+    {
+     "title": "Concurrent pings record duplicate Flip rows",
+     "status": "bug",
+     "subject": "hc.api.models.Check.ping",
+     "property": "FlipChain",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Ping save clobbers the sendalerts status flip",
+     "status": "bug",
+     "subject": "hc.api.models.Check.ping",
+     "property": "StatusMatchesLast",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Stale ping save drops a committed start event",
+     "status": "bug",
+     "subject": "hc.api.models.Check.ping",
+     "property": "StartNotLost",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Config edit save wipes a concurrent ping status flip",
+     "status": "bug",
+     "subject": "hc.api.views._update",
+     "property": "PingFlipSurvivesEdit",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Ping save wipes a concurrent config edit",
+     "status": "bug",
+     "subject": "hc.api.models.Check.ping",
+     "property": "EditSurvivesPing",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Stale config edit replaces a ping alert_after recompute",
+     "status": "bug",
+     "subject": "hc.api.views._update",
+     "property": "AlertReflectsLatestPing",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Concurrent subscription setups orphan a billable Braintree subscription",
+     "status": "bug",
+     "subject": "hc.payments.models.Subscription.setup",
+     "property": "NoOrphanedSub",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "confirmed": 8,
+    "uncertain": 1
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 14,
+   "tool_results": 150,
+   "tool_errors": 3,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-2413-1\",\n  \"command\": \"sed -n '100,230p' code/hc/api/views.py\",\n  \"description\": \"Read update view code\",\n  \"exit_code\": 0,\n  \"terminal_status\": \"completed\",\n  \"output\": \"       ",
+    "{\n  \"chunk_id\": \"exec-2568-1\",\n  \"command\": \"./engine/sv module_check '{\\\"root\\\": \\\"/Users/ashitpatel/projects/benchmarks/cleanroom/healthchecks-run43/pkt-c/code\\\", \\\"bundle\\\": \\\"hc.accounts+hc.api\\\",",
+    "{\n  \"chunk_id\": \"exec-2654-1\",\n  \"command\": \"cd code && sed -n '211,230p;268,320p' hc/api/views.py\",\n  \"description\": \"Read create and update check views\",\n  \"exit_code\": 0,\n  \"terminal_status\": \"comp"
+   ]
+  },
+  "saleor/pkt-a": {
+   "fix": "1763643eab",
+   "mode": "static",
+   "targets": [
+    "saleor.checkout.utils.create_order"
+   ],
+   "proposals": 579,
+   "first_hit_rank": 120,
+   "first_hit_track": "scored",
+   "chosen": [
+    "sl-8ea17c856f",
+    "sl-32846ef08d",
+    "sl-f0c42aef84"
+   ],
+   "own": 0,
+   "skipped": 141,
+   "choice_records": 1,
+   "covered": [],
+   "findings": [
+    {
+     "title": "Site cache KeyError: new_get_current indexes an entry cleared after its check",
+     "status": "bug",
+     "subject": "saleor.site.patch_sites.new_get_current",
+     "property": "NoKeyError",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Download counter loses counts under concurrent downloads",
+     "status": "model-level finding",
+     "subject": "saleor.product.utils.digital_products.increment_download_count",
+     "property": "NoLostCount",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Download cap bypassed: downloads served past max_downloads",
+     "status": "model-level finding",
+     "subject": "saleor.product.utils.digital_products.increment_download_count",
+     "property": "LimitRespected",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Checkout completes with a shipping method invalidated after validation",
+     "status": "bug",
+     "subject": "saleor.checkout.utils.clean_checkout",
+     "property": "CompletedCurrent",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "confirmed": 2,
+    "mismatch": 2
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 10,
+   "tool_results": 138,
+   "tool_errors": 5,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-2850-1\",\n  \"command\": \"P=\\\"/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-a\\\"; R=\\\"$P/code\\\"; echo \\\"=== ask_deployment_question ===\\\"; \\\"$P/engine/sv\\\" ask_dep",
+    "{\n  \"chunk_id\": \"exec-3075-1\",\n  \"command\": \"P=\\\"/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-a\\\"; R=\\\"$P/code\\\"; \\\"$P/engine/sv\\\" module_check \\\"{\\\\\\\"root\\\\\\\": \\\\\\\"$R\\\\\\\", \\\\\\\"bun",
+    "{\n  \"chunk_id\": \"exec-3110-1\",\n  \"command\": \"P=\\\"/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-a\\\"; R=\\\"$P/code\\\"; python3 - <<'EOF'\\nP='/Users/ashitpatel/projects/benchmarks/cleanr",
+    "{\n  \"chunk_id\": \"exec-3114-1\",\n  \"command\": \"P=\\\"/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-a\\\"; R=\\\"$P/code\\\"; \\\"$P/engine/sv\\\" tla_check \\\"{\\\\\\\"module\\\\\\\": \\\\\\\"$R/saleor/site/.",
+    "{\n  \"chunk_id\": \"exec-3222-1\",\n  \"command\": \"P=\\\"/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-a\\\"; R=\\\"$P/code\\\"; \\\"$P/engine/sv\\\" module_check \\\"{\\\\\\\"root\\\\\\\": \\\\\\\"$R\\\\\\\", \\\\\\\"bun"
+   ]
+  },
+  "saleor/pkt-b": {
+   "fix": "d9c6325792",
+   "mode": "static",
+   "targets": [
+    "saleor.payment.gateways.adyen.webhooks.get_checkout",
+    "saleor.payment.gateways.adyen.webhooks.get_payment",
+    "saleor.payment.gateways.adyen.webhooks.handle_additional_actions",
+    "saleor.payment.gateways.adyen.webhooks.handle_api_response",
+    "saleor.payment.gateways.adyen.webhooks.handle_authorization",
+    "saleor.payment.gateways.adyen.webhooks.handle_capture"
+   ],
+   "proposals": 1292,
+   "first_hit_rank": 173,
+   "first_hit_track": "scored",
+   "chosen": [
+    "sl-8ea17c856f",
+    "sl-32846ef08d",
+    "sl-ef33e037c9"
+   ],
+   "own": 0,
+   "skipped": 292,
+   "choice_records": 1,
+   "covered": [],
+   "findings": [
+    {
+     "title": "Site cache clear races get_current return read (KeyError)",
+     "status": "bug",
+     "subject": "saleor.site.patch_sites.THREADED_SITE_CACHE",
+     "property": "NoKeyError",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Concurrent downloads over-serve past max_downloads (lost increment)",
+     "status": "bug",
+     "subject": "saleor.product.models.DigitalContentUrl.download_num",
+     "property": "NoOverServe",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Deferred stock callbacks all fire for the last stock (late binding)",
+     "status": "deterministic defect",
+     "subject": "saleor.graphql.product.bulk_mutations.product_variant_stocks_update.ProductVariantStocksUpdate.update_or_create_variant_stocks",
+     "property": "OwnStock",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": "n/a",
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "confirmed": 4,
+    "uncertain": 1
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 11,
+   "tool_results": 158,
+   "tool_errors": 2,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-3376-1\",\n  \"command\": \"python3 -c \\\"\\nimport json\\nd=json.load(open('/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-b/work/f1.json'))\\nprint('F1 count:', d['cou",
+    "{\n  \"chunk_id\": \"exec-3405-1\",\n  \"command\": \"cat /Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-b/work/confirm_deploy.json; echo; echo =====ERR; cat /Users/ashitpatel/projects/benchm"
+   ]
+  },
+  "saleor/pkt-c": {
+   "fix": "6eb11d58ad",
+   "mode": "static",
+   "targets": [
+    "saleor.graphql.attribute.mutations.AttributeValueUpdate.post_save_action"
+   ],
+   "proposals": 1253,
+   "first_hit_rank": null,
+   "first_hit_track": null,
+   "chosen": [
+    "sl-8ea17c856f",
+    "sl-515a81d8bf",
+    "sl-32846ef08d"
+   ],
+   "own": 0,
+   "skipped": 332,
+   "choice_records": 1,
+   "covered": [],
+   "findings": [
+    {
+     "title": "Site cache read races with clear and raises KeyError",
+     "status": "bug",
+     "subject": "saleor.site.patch_sites.THREADED_SITE_CACHE",
+     "property": "NoFailedReads",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Variant stock webhooks fire repeatedly for the last stock (late-binding closure)",
+     "status": "deterministic defect",
+     "subject": "saleor.graphql.product.bulk_mutations.products.ProductVariantStocksUpdate.update_or_create_variant_stocks",
+     "property": "EachCallbackSeesItsOwnStock",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": "n/a",
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Concurrent downloads lose download-count increments",
+     "status": "bug",
+     "subject": "saleor.product.models.DigitalContentUrl.download_num",
+     "property": "NoLostDownloads",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "confirmed": 3,
+    "uncertain": 1
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 14,
+   "tool_results": 198,
+   "tool_errors": 6,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-2867-1\",\n  \"command\": \"python3 -c \\\"\\nimport json, collections\\nd=json.load(open('code/.specfence/slices/proposals.json'))\\nsp=d['scored_proposals']\\nprint('total scored:', len(s",
+    "{\n  \"chunk_id\": \"exec-2996-1\",\n  \"command\": \"python3 -c \\\"\\nimport json\\nd=json.load(open('code/.specfence/slices/proposals.json'))\\nsp=sorted(d['scored_proposals'], key=lambda p: p.get('track_rank',9",
+    "{\n  \"chunk_id\": \"exec-3087-1\",\n  \"command\": \"./engine/sv ask_deployment_question '{\\\"root\\\": \\\"/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-c/code\\\", \\\"service\\\": \\\"saleor\\\", \\\"pro",
+    "{\n  \"chunk_id\": \"exec-3142-1\",\n  \"command\": \"python3 work/make_choice.py\",\n  \"description\": \"Generate choice payload\",\n  \"exit_code\": 1,\n  \"terminal_status\": \"failed\",\n  \"terminal_reason\": \"process ex",
+    "{\n  \"chunk_id\": \"exec-3275-1\",\n  \"command\": \"PYTHONPATH=engine/src python3 -c \\\"\\nfrom specfence_engine.index.python import CodeIndex\\nix = CodeIndex('/Users/ashitpatel/projects/benchmarks/cleanroom/s",
+    "Read text file `/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-c/work/check_dc.json`.\n1|{\n2| \"refused\": \"SpecError\",\n3| \"reason\": \"TLC could not check DownloadCount: Parsing or seman"
+   ]
+  },
+  "saleor/pkt-d": {
+   "fix": "4e1d404170",
+   "mode": "static",
+   "targets": [
+    "saleor.order.actions.create_fulfillments"
+   ],
+   "proposals": 860,
+   "first_hit_rank": null,
+   "first_hit_track": null,
+   "chosen": [
+    "sl-8ea17c856f",
+    "sl-32846ef08d",
+    "sl-d140b66ddf"
+   ],
+   "own": 0,
+   "skipped": 146,
+   "choice_records": 1,
+   "covered": [],
+   "findings": [
+    {
+     "title": "Concurrent downloads exceed max_downloads (lost download counts)",
+     "status": "bug",
+     "subject": "saleor.product.views.digital_product + saleor.product.utils.digital_products.increment_download_count",
+     "property": "NoOverDownload: the shop never serves more downloads than the row's configured maximum allows",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Concurrent order-discount edits lose total updates",
+     "status": "bug",
+     "subject": "saleor.order.utils.create_order_discount_for_order + remove_order_discount_from_order + update_order_discount_for_order/recalculate_order",
+     "property": "NoLostOrderUpdate: when all edits finish, the stored total reflects every edit (fetched total + removed amount - created discount)",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Site cache clear can crash a concurrent reader with KeyError (free-threaded Python only)",
+     "status": "model-level finding",
+     "subject": "saleor.site.patch_sites.new_get_current + new_clear_cache",
+     "property": "NoKeyError: a reader never raises KeyError on a cache entry that was present at its own check",
+     "evidence": "model-level",
+     "confirmation_verdict": null,
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Concurrent downloads lose download-count increments",
+     "status": "bug",
+     "subject": "saleor.product.utils.digital_products.increment_download_count",
+     "property": "NoLostIncrement: when all callers finish, the stored count equals the number of increments",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "confirmed": 3,
+    "mismatch": 2,
+    "uncertain": 1
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 11,
+   "tool_results": 142,
+   "tool_errors": 6,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-3132-1\",\n  \"command\": \"PKT=/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-d; $PKT/engine/sv module_check \\\"{\\\\\\\"root\\\\\\\": \\\\\\\"$PKT/code\\\\\\\", \\\\\\\"bundle\\\\\\\": \\\\\\",
+    "{\n  \"chunk_id\": \"exec-3212-1\",\n  \"command\": \"PKT=/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-d; sed -n '1,120p' $PKT/engine/src/specfence_engine/compose/composition.py\",\n  \"descri",
+    "{\n  \"chunk_id\": \"exec-3250-1\",\n  \"command\": \"PKT=/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-d; BIG='saleor.account+saleor.app+saleor.attribute.models+saleor.checkout+saleor.core+",
+    "{\n  \"chunk_id\": \"exec-3297-1\",\n  \"command\": \"PKT=/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-d; head -c 2000 $PKT/work/mcc2.json\",\n  \"description\": \"Show control check output\",\n  ",
+    "{\n  \"chunk_id\": \"exec-3313-1\",\n  \"command\": \"PKT=/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-d; head -c 1500 $PKT/work/mcc1.json\",\n  \"description\": \"Show site control result\",\n  \"",
+    "{\n  \"chunk_id\": \"exec-3315-1\",\n  \"command\": \"PKT=/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-d; head -c 1200 $PKT/work/mcc1.json\",\n  \"description\": \"Show site control error\",\n  \"e"
+   ]
+  },
+  "saleor/pkt-e": {
+   "fix": "4ffb8edd75",
+   "mode": "static",
+   "targets": [
+    "saleor.core.utils.get_country_by_ip"
+   ],
+   "proposals": 14,
+   "first_hit_rank": null,
+   "first_hit_track": null,
+   "chosen": [
+    "sl-8447d35fef",
+    "sl-492f8d56a7"
+   ],
+   "own": 0,
+   "skipped": 1,
+   "choice_records": 1,
+   "covered": [],
+   "findings": [
+    {
+     "title": "Concurrent ProductImage saves for one product can share an order value",
+     "status": "bug",
+     "subject": "saleor.product.models.images.ProductImage.save",
+     "property": "UniqueOrders: two images saved for one product never share an order value",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    },
+    {
+     "title": "Concurrent conflicting Order status changes can leave history tail disagreeing with current status",
+     "status": "bug",
+     "subject": "saleor.order.models.Order.change_status",
+     "property": "HistoryMatchesStatus: the order's current status is always its latest history entry",
+     "evidence": "statically confirmed",
+     "confirmation_verdict": "confirmed",
+     "reproduction": null,
+     "gil_reachable": null,
+     "touches": [],
+     "withdrawn": null
+    }
+   ],
+   "confirmations": {
+    "confirmed": 2,
+    "mismatch": 1
+   },
+   "reproductions": {
+    "total": 0,
+    "reproduced": 0,
+    "deterministic": 0
+   },
+   "report": true,
+   "friction_lines": 16,
+   "tool_results": 102,
+   "tool_errors": 5,
+   "tool_error_samples": [
+    "{\n  \"chunk_id\": \"exec-2481-1\",\n  \"command\": \"PKT=\\\"/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-e\\\"; ROOT=\\\"$PKT/code\\\"; \\\"$PKT/engine/sv\\\" module_check \\\"{\\\\\\\"root\\\\\\\": \\\\\\\"$ROOT\\",
+    "{\n  \"chunk_id\": \"exec-2520-1\",\n  \"command\": \"PKT=\\\"/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-e\\\"; PYTHONPATH=\\\"$PKT/engine/src\\\" SF_GO_EXTRACT=\\\"$PKT/engine/sf-go-extract\\\" /opt",
+    "{\n  \"chunk_id\": \"exec-2524-1\",\n  \"command\": \"PKT=\\\"/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-e\\\"; sed -n '7590,7630p' \\\"$PKT/engine/src/specfence_engine/confirm.py\\\"\",\n  \"descri",
+    "{\n  \"chunk_id\": \"exec-2548-1\",\n  \"command\": \"PKT=\\\"/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-e\\\"; cat > \\\"$PKT/code/saleor/order/.specfence/OrderStatus.tla\\\" <<'EOF'\\n---- MODUL",
+    "{\n  \"chunk_id\": \"exec-2551-1\",\n  \"command\": \"PKT=\\\"/Users/ashitpatel/projects/benchmarks/cleanroom/saleor-run43/pkt-e\\\"; python3 - \\\"$PKT/code/saleor/order/.specfence/OrderStatus.tla\\\" <<'EOF'\\nimport"
+   ]
+  }
+ },
+ "label_matches": {
+  "healthchecks/pkt-a": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "6375b0aac4",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix wraps delete_check in transaction.atomic with a select_for_update re-read: the bug is a concurrent ping failing an in-progress delete. Findings 0-4 (TOTP double-accept, duplicate flips, stale last_ping/n_pings write-backs, shared Ping.n) and 5 (notify overwriting a delivery-failure disable) are all ping/flip/notify lost updates in other code; none touches deletion. No later selected fix, so no open list."
+   }
+  },
+  "healthchecks/pkt-b": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "311f7064dc",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix puts Check.ping's Check save and Ping creation in one transaction (S3 upload outside): the bug is sendalerts seeing the updated Check before the Ping row exists, a visibility gap. Finding 1 (stale in-flight ping undoes a pause) touches Check.ping but is a different mechanism (lost status update vs missing-row visibility), confirmed over pause/status state, not over Ping creation. Finding 0 is a billing race. Open fix 6375b0aac4 (ping-during-delete) matches neither finding."
+   }
+  },
+  "healthchecks/pkt-c": {
+   "open": [
+    {
+     "findings": [
+      1
+     ],
+     "fix": "311f7064dc",
+     "match": "partial",
+     "reason": "Adopted from label-matcher L (curator initially none): fix bug is a Check.ping-save vs sendalerts race on Check state (sendalerts sees the updated Check before the Ping row exists). Finding 1 (ping save clobbers the sendalerts status flip) is the same code region with the same counterpart (ping's Check save vs sendalerts status) but a different mechanism (stale write-back clobber vs non-atomic publication) and effect \u2014 partial per the same-region rule."
+    }
+   ],
+   "own": {
+    "findings": [],
+    "fix": "438c94efb7",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix re-checks email availability before finalizing a change-email verification: a TOCTOU on User.email in hc.accounts.views.check_token. All 7 findings are ping/flip/config-edit/billing lost updates; none touches the change-email flow. Open fixes 311f7064dc (Ping-creation visibility) and 6375b0aac4 (ping-during-delete) match no finding: the closest, finding 1 (ping save clobbers the sendalerts status flip) and finding 2 (dropped start event), are status/last_start lost updates, not the Ping-row visibility gap or the delete race."
+   }
+  },
+  "saleor/pkt-a": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "1763643eab",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix defers Celery .delay calls in create_order with transaction.on_commit: the bug is task-before-commit (worker runs before the order row commits). Findings are a site-cache KeyError race (0), download lost-counts/cap-bypass (1, 2, model-level) and a checkout shipping-method invalidation race (3); none touches order-confirmation task timing. Open fixes 4e1d404170 (fulfillment on_commit), 6eb11d58ad (attribute lock order) and d9c6325792 (adyen lock order) match no finding."
+   }
+  },
+  "saleor/pkt-b": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "d9c6325792",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix locks the checkout before the payment in adyen webhook handlers (same order as checkoutComplete): the bug is a payment/checkout lock-order deadlock. Findings are a site-cache KeyError race (0), download over-serve (1) and late-binding deferred stock callbacks (2); none touches adyen webhooks or checkout/payment lock order. No later selected fix, so no open list."
+   }
+  },
+  "saleor/pkt-c": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "6eb11d58ad",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix wraps AttributeValueUpdate.post_save_action in atomic with order_by(pk) select_for_update: the bug is inconsistent Product-row lock order across concurrent updates. Findings are a site-cache KeyError race (0), late-binding variant-stock webhooks (1) and download lost increments (2); none touches attribute mutations or product lock order. Open fix d9c6325792 (adyen lock order) matches no finding."
+   }
+  },
+  "saleor/pkt-d": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "4e1d404170",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix defers order_fulfilled notification with transaction.on_commit (and makes it atomic): the bug is notify-before-commit in create_fulfillments. Findings are download over-serve/lost-counts (0, 3), order-discount lost totals (1) and a site-cache KeyError (2, model-level, free-threaded-only); none touches fulfillment notification timing. Open fixes 6eb11d58ad (attribute lock order) and d9c6325792 (adyen lock order) match no finding."
+   }
+  },
+  "saleor/pkt-e": {
+   "open": [],
+   "own": {
+    "findings": [],
+    "fix": "4ffb8edd75",
+    "is_concurrency": true,
+    "match": "none",
+    "reason": "Fix hoists geolite2.reader() to module level in get_country_by_ip: the bug is one thread closing the shared reader while another uses it. Findings are concurrent ProductImage order sharing (0) and Order history tail disagreeing with status (1); neither touches geolocation. Open fixes 1763643eab, 4e1d404170, 6eb11d58ad and d9c6325792 (on_commit timing, lock orders) match no finding."
+   }
+  }
+ },
+ "recall_v22": {
+  "packets": 8,
+  "own": 0,
+  "own_or_open": 1,
+  "per_packet": {
+   "healthchecks/pkt-a": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   },
+   "healthchecks/pkt-b": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   },
+   "healthchecks/pkt-c": {
+    "own": false,
+    "open": true,
+    "open_fixes": [
+     "311f7064dc"
+    ],
+    "own_or_open": true
+   },
+   "saleor/pkt-a": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   },
+   "saleor/pkt-b": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   },
+   "saleor/pkt-c": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   },
+   "saleor/pkt-d": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   },
+   "saleor/pkt-e": {
+    "own": false,
+    "open": false,
+    "open_fixes": [],
+    "own_or_open": false
+   }
+  }
+ },
+ "adjudication": {
+  "groups": 15,
+  "sub_claims": 31,
+  "real": 30,
+  "not_real": [
+   "H4.1"
+  ],
+  "per_subclaim": {
+   "H1.1": {
+    "finding": "healthchecks/pkt-a#0",
+    "tree": "R1",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "H2.1": {
+    "finding": "healthchecks/pkt-a#1",
+    "tree": "R1",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "H2.2": {
+    "finding": "healthchecks/pkt-c#0",
+    "tree": "R3",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "H3.1": {
+    "finding": "healthchecks/pkt-a#2",
+    "tree": "R1",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "H3.2": {
+    "finding": "healthchecks/pkt-c#3",
+    "tree": "R3",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "H3.3": {
+    "finding": "healthchecks/pkt-c#4",
+    "tree": "R3",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "H3.4": {
+    "finding": "healthchecks/pkt-c#5",
+    "tree": "R3",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "H4.1": {
+    "finding": "healthchecks/pkt-a#3",
+    "tree": "R1",
+    "verdict": "not real",
+    "kind": "n/a",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "H4.2": {
+    "finding": "healthchecks/pkt-c#2",
+    "tree": "R3",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "H5.1": {
+    "finding": "healthchecks/pkt-a#4",
+    "tree": "R1",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "H5.2": {
+    "finding": "healthchecks/pkt-b#1",
+    "tree": "R2",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "H6.1": {
+    "finding": "healthchecks/pkt-c#1",
+    "tree": "R3",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "H7.1": {
+    "finding": "healthchecks/pkt-a#5",
+    "tree": "R1",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "H8.1": {
+    "finding": "healthchecks/pkt-b#0",
+    "tree": "R2",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "H8.2": {
+    "finding": "healthchecks/pkt-c#6",
+    "tree": "R3",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "S1.1": {
+    "finding": "saleor/pkt-a#0",
+    "tree": "R4",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "S1.2": {
+    "finding": "saleor/pkt-b#0",
+    "tree": "R5",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "S1.3": {
+    "finding": "saleor/pkt-c#0",
+    "tree": "R6",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "S1.4": {
+    "finding": "saleor/pkt-d#2",
+    "tree": "R7",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "S2.1": {
+    "finding": "saleor/pkt-a#1",
+    "tree": "R4",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "S2.2": {
+    "finding": "saleor/pkt-a#2",
+    "tree": "R4",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "S2.3": {
+    "finding": "saleor/pkt-b#1",
+    "tree": "R5",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "S2.4": {
+    "finding": "saleor/pkt-c#2",
+    "tree": "R6",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "S2.5": {
+    "finding": "saleor/pkt-d#0",
+    "tree": "R7",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "S2.6": {
+    "finding": "saleor/pkt-d#3",
+    "tree": "R7",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "S3.1": {
+    "finding": "saleor/pkt-b#2",
+    "tree": "R5",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "S3.2": {
+    "finding": "saleor/pkt-c#1",
+    "tree": "R6",
+    "verdict": "real",
+    "kind": "deterministic",
+    "gil": "n/a",
+    "demonstrated": false
+   },
+   "S4.1": {
+    "finding": "saleor/pkt-a#3",
+    "tree": "R4",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "S5.1": {
+    "finding": "saleor/pkt-d#1",
+    "tree": "R7",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "S6.1": {
+    "finding": "saleor/pkt-e#0",
+    "tree": "R8",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   },
+   "S7.1": {
+    "finding": "saleor/pkt-e#1",
+    "tree": "R8",
+    "verdict": "real",
+    "kind": "race",
+    "gil": "reachable",
+    "demonstrated": false
+   }
+  },
+  "dropped": [],
+  "confirm_not_real_detail": "H4.1 (healthchecks/pkt-a finding 3, shared Ping.n via the refresh race): tester-confirmed bug, adjudicated not real \u2014 Check.ping's counter UPDATE, re-read and Ping INSERT all sit in one transaction.atomic block, so the row lock serializes concurrent pings and the two refreshes return consecutive values. The confirmation missed the atomic block.",
+  "wrong_direction_records": [
+   "H4.1 confirmed bug but adjudicated not real (atomic-block row lock missed by the confirmation)"
+  ],
+  "refutations_emitted": 0,
+  "gil_refutations": [],
+  "R61_guard_fired": 0,
+  "race_labels_needing_no_preemption": 0
+ },
+ "predictions": {
+  "P1_recall@10": {
+   "threshold": "= 1/8 (exact: healthchecks pkt-b only)",
+   "value": "1/8",
+   "verdict": "pass"
+  },
+  "P21_real_unlabelled": {
+   "note": "30 adjudicated-real subclaims minus H6.1, which partially matches open fix 311f7064dc",
+   "value": 29,
+   "verdict": "reported"
+  },
+  "P22_reproducibility": {
+   "note": "one confirm_counterexample re-run per packet in place (x2 each); saleor/pkt-c unusable (results name no record id)",
+   "threshold": "every usable call identical",
+   "value": "7/7 usable identical",
+   "verdict": "pass"
+  },
+  "P2_chosen_covers_own_or_open": {
+   "note": "own: healthchecks/pkt-b (2 chosen slices hit Check.ping); open: none",
+   "threshold": ">= 1/8",
+   "value": "1/8",
+   "verdict": "pass"
+  },
+  "P35_model_check_to_verdict": {
+   "note": "all 8 packets ran module_check (9-34 calls) and recorded confirmations with verdicts; every kept spec with a finding has a violated TLC trace",
+   "threshold": ">= 6/8",
+   "value": "8/8",
+   "verdict": "pass"
+  },
+  "P36_confirmed_finding": {
+   "value": "8/8 packets with >=1 statically confirmed finding",
+   "verdict": "reported"
+  },
+  "P40_non_library_profile": {
+   "note": "all 8 testers called propose_deployment_model (1-3 calls) and all stored models read profile default; profile name does not discriminate compose presence (pre-reg caveat stands)",
+   "threshold": ">= 7/8",
+   "value": "8/8",
+   "verdict": "pass"
+  },
+  "P41_skeleton_platform_instance": {
+   "note": "curator 4.2 count was 4/8 (whole-bundle top proposals); testers per-slice skeletons instantiate Db_ReadCommitted in 8/8 kept spec sets. Pass: the pre-reg anticipates testers exceeding the mechanical baseline",
+   "threshold": "= 4/8 (mechanical baseline)",
+   "value": "8/8",
+   "verdict": "pass"
+  },
+  "P42_verdict_spec_keeps_platform_ops": {
+   "note": "every packet keeps INSTANCE Db_ReadCommitted specs calling DbRead/DbWrite that reached TLC verdicts (findings with traces); only platform module instantiated anywhere",
+   "threshold": ">= 2/8",
+   "value": "8/8",
+   "verdict": "pass"
+  },
+  "P42a_module_changed_verdict": {
+   "value": 0,
+   "verdict": "reported"
+  },
+  "P3_wrong_direction": {
+   "note": "H4.1 confirmed but not real (atomic block missed); no refuted verdicts (36 confirmed, 6 uncertain, 7 mismatch across 49 confirmations)",
+   "threshold": "= 0",
+   "value": 1,
+   "verdict": "fail"
+  },
+  "P43_replica_or_queue_module": {
+   "note": "only Db_ReadCommitted instantiated in any kept spec (33 platform INSTANCE lines); no Db_AsyncReplicaRead, Queue_* anywhere; platform_modules() [] on all Saleor packets, [Db_ReadCommitted] on HC",
+   "threshold": "= 0/8",
+   "value": "0/8",
+   "verdict": "pass"
+  },
+  "P44_publish_interface": {
+   "note": "no real calls (saleor/pkt-d ran --help only, counted then discarded)",
+   "threshold": "<= 1/8",
+   "value": "0/8",
+   "verdict": "pass"
+  },
+  "P44a_refinement_or_composition_verdict": {
+   "threshold": "= 0/8",
+   "value": "0/8",
+   "verdict": "pass"
+  },
+  "P45_data_model_runs": {
+   "note": "data_model_check ran on 8/8 (1 call each); alloy_check 0 calls anywhere",
+   "threshold": ">= 4/8",
+   "value": "8/8",
+   "verdict": "pass"
+  },
+  "P45a_assert_kept_verdict": {
+   "note": "zero candidate asserts exist on any packet tree, so none could reach a verdict",
+   "threshold": ">= 1/8",
+   "value": "0/8",
+   "verdict": "fail"
+  },
+  "P46_cross_app_counterexample": {
+   "note": "3 confirmed counterexamples cite locations in 2 Django apps (hc-a x2, hc-b x1; hc.api+hc.front pairs); model-level traces not scanned",
+   "value": 3,
+   "verdict": "reported"
+  },
+  "P47_guard_trips": {
+   "note": "no tester set a memory guard; no location or tester trip observed",
+   "threshold": "= 0/5",
+   "value": "0/5",
+   "verdict": "pass"
+  },
+  "P4_own_or_open": {
+   "note": "own: none; open partial: healthchecks/pkt-c finding 1 -> 311f7064dc (adopted from label-matcher L over curator initial none; same ping-vs-sendalerts region, different mechanism)",
+   "threshold": ">= 1/8",
+   "value": "1/8",
+   "verdict": "pass"
+  },
+  "P4a_own": {
+   "threshold": ">= 1/8",
+   "value": "0/8",
+   "verdict": "fail"
+  },
+  "P5_precision": {
+   "threshold": ">= 80%",
+   "value": "30/31 sub-claims real (97 pct); 15/15 distinct claims",
+   "verdict": "pass"
+  },
+  "P9_isolation": {
+   "note": "0 TRUE violations (4 curl-identifier permitted FPs; 8 Agent-spawn permitted FPs with verified orientation); fix-SHA leak check 0 hits",
+   "threshold": "= 0",
+   "value": 0,
+   "verdict": "pass"
+  }
+ },
+ "audit": "P9: 0 TRUE violations in 8 tester transcripts (102-212 tool calls each); 4 network-regex permitted FPs on the identifier hc.lib.curl; 8 Agent-spawn permitted FPs (saleor/pkt-b screening subagents, full boundary orientation verified in-transcript, read-only tasking; third-level session logs are not persisted by this runtime). Fix-SHA leak check 0 hits. No deviations.",
+ "reproducibility_P22": {
+  "identical": 7,
+  "note": "one confirm_counterexample re-run per packet in place (x2 each); same ids and verdicts on all 7 usable; saleor/pkt-c has no usable call (its 3 confirm results name no record id)",
+  "usable": 7
+ }
+}
