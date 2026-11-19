@@ -1,6 +1,6 @@
 ---
 title: "How it works: two checkers and the loop around them"
-description: "Specfence's capabilities in one tour: three doors in, an Alloy model for shapes and a TLA+ model for interleavings, a confirmed-against-the-code-or-it-isn't-a-bug rule, and change guards that put the models to work."
+description: "Specfence's capabilities in one tour: four doors into one workflow, an Alloy model for shapes and a TLA+ model for interleavings, a confirmed-against-the-code-or-it-isn't-a-bug rule, and change guards that put the models to work."
 layout: post
 series: specfence
 date: 2026-11-10
@@ -10,15 +10,16 @@ date: 2026-11-10
 
 *Level L1 · Needs: part 1 (or nothing, at a skim). The machinery tour.*
 
-## Three doors in
+## Four doors into one workflow
 
-The tool meets you where you are. There are three ways to start, and the question is asked once per project:
+The tool meets you where you are. There are four ways to start, one question asked once per project ("What are we doing?"), and every door opens onto the same workflow: requirements and specs, a hand-off the coding agent sees, a drift check, resolution with you, and a golden copy of curated properties that guards every later change.
 
-1. **A new system.** You describe what you want in plain prose — five lines is enough to start — and the tool interviews you about what the prose leaves open, then builds the specs. The worked example is [part 3]({% post_url 2026-11-11-greenfield-pool %}): a connection pool specified before a line of it exists.
-2. **A new capability.** You describe a feature for an existing codebase. The tool models the feature's slice of the system and guards the change: the new behavior gets checked, and the old guardrails get re-checked. [Part 4]({% post_url 2026-11-12-feature-log4j %}) runs a real feature commit through this guard.
-3. **Existing code.** You point the tool at a codebase and it hunts latent defects: proposing the riskiest slices, modeling them, and confirming what it finds. [Part 5]({% post_url 2026-11-13-temporal-stomp %}) and [part 6]({% post_url 2026-11-14-structural-kombu %}) are two catches from this door.
+1. **A new system (E1).** You describe what you want in plain prose — five lines is enough to start — and the tool interviews you about what the prose leaves open, then builds the specs. The worked example is [part 3]({% post_url 2026-11-11-greenfield-pool %}): a connection pool specified before a line of it exists.
+2. **A change with stated intent (E2).** A bug report, a capability, a feature for an existing codebase. The tool grounds the delta — the report becomes a requirement and a property — then runs the same stages as a new system. [Part 4]({% post_url 2026-11-12-feature-log4j %}) runs a real feature commit through this guard.
+3. **Existing code, first use (E0).** You point the tool at a codebase and it hunts latent defects: proposing the riskiest slices, modeling them, and confirming what it finds. [Part 5]({% post_url 2026-11-13-temporal-stomp %}) and [part 6]({% post_url 2026-11-14-structural-kombu %}) are two catches from this door. The confirmed findings bootstrap the first golden copy.
+4. **A check-in (E3).** A commit, a PR, a self-check. The tool reviews the diff against the golden copy — on request, or automatically after every commit through an advisory hook. [Part 7]({% post_url 2026-11-15-drift-kombu-hikari %}) shows a guard firing on a real change.
 
-In all three, the specs stay behind the scenes by default. Your goal is the implementation; the Alloy and TLA+ models are guardrails around the coding, reviewable whenever you want. A guided tutorial mode walks through a spec section by section, mapping each variable back to the code it constrains.
+In all four, the specs stay behind the scenes by default and the experience is the same shape. Your goal is the implementation; the Alloy and TLA+ models are guardrails around the coding, reviewable whenever you want — a guided tutorial mode walks through a spec section by section, mapping each variable back to the code it constrains. Every finding names its evidence; every decision that disposes something — accepting a property, waiving one, dropping a recovered requirement — waits for your yes, and an agent's say-so is refused. Nothing lands silently: the hook reports and never gates, and the golden copy updates only through your explicit step. One router picks the door from your goal, one skill set walks the stages, one store holds the goldens: learn one door and you know the moves behind the other three.
 
 ## The two checkers
 
@@ -68,5 +69,7 @@ Each benchmark run keeps its preregistration, its match table, and its per-claim
 The boundary from part 1, sharpened: bounded scope, two defect families, a human in the loop. Add one more: the tool needs something to check against. For existing code it needs the code; for a new system it needs your answers — the interview in part 3 is not ceremony, it's where the spec's content comes from. A vague requirement gets a question, not a guess presented as fact. If you opt in, fresh agents that never saw the interview read the requirements too, and a checker shows where their reading differs from the drafting agent's: an idea borrowed from Google's [Elephant-Goldfish Model](https://github.com/google/elephant-goldfish-model), told in [part 8]({% post_url 2026-11-16-landscape %}). (Where the tool does draft a guess, it labels it one and asks for approval.)
 
 Enough machinery. [Part 3]({% post_url 2026-11-11-greenfield-pool %}) starts from five lines of prose and ends with a checked spec.
+
+*Series note (2026-11-19): the opening section above now reads "Four doors into one workflow". As first published it read "Three doors in" (new system, new capability, existing code); the check-in door and the shared-stages framing landed with the single-workflow release, which also records the per-gate person decisions and the advisory-only hook.*
 
 {% include series.html %}
