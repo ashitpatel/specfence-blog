@@ -6,7 +6,7 @@ series: specfence
 date: 2026-11-11
 ---
 
-*Part 15 of 21 in a series on specfence. [Part 14]({% post_url 2026-11-22-evidence-overview %}) opened the file drawer. This post reads one drawer all the way through: the Java half. Evidence: [`evidence/sshd/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/sshd).*
+*Part 15 of 21 in a series on specfence. [Part 14]({% post_url 2026-11-20-evidence-overview %}) opened the file drawer. This post reads one drawer all the way through: the Java half. Evidence: [`evidence/sshd/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/sshd).*
 
 *Level L2 · Needs: comfort reading short Java excerpts. One project, file by file.*
 
@@ -116,6 +116,6 @@ No Alloy model caught a defect on sshd, and the post will not manufacture one. W
 
 The same twelve packets missed plenty, on the record. Neither of the other two FR2 sshd fixes matched anywhere: the never-closed IoSession registration and the close-state ordering drew a blank in all eight packets. FR3's stale-future fix went 0 for 4 at depth — even though the static layer covers its location (a two-fix recall benchmark the team keeps as a regression anchor: the stale-future case went from uncovered to covered when the stale-install detector shipped, and the detector fires exactly where the fix lands — two sites on the parent tree, only the Nio2 transport's site remaining after the fix added its recheck, zero on 39 other trees). Covered is not found: the oldest gap in the file drawer, measured again. And six FR2 packets sat on trees where their own labelled fix touched nothing modelled — including pkt-g, which then matched a different fix exactly.
 
-sshd carried FR2's fix-matching entirely (all three matches; celery none) and lost it in FR3 (one partial; celery three exacts). [Part 16]({% post_url 2026-11-24-celery-deep-dive %}) is the mirror: the flush defect the tool found seven times before it was a label.
+sshd carried FR2's fix-matching entirely (all three matches; celery none) and lost it in FR3 (one partial; celery three exacts). [Part 16]({% post_url 2026-11-20-celery-deep-dive %}) is the mirror: the flush defect the tool found seven times before it was a label.
 
 {% include series.html %}

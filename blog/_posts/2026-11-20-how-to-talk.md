@@ -49,7 +49,7 @@ The same rule applies when the one answering is a bot. In a bot team, a driver b
 A disclosure: the envelope's first version checked signatures only on the tool path. Two forgeries got through it: appending acceptance lines to the scenario record, and hand-writing the other decision records. We found both while planning the first bot-team run, before any run, and pinning the key closed both. In that run, the pinned engine stopped all six scripted forgeries ([results](https://github.com/ashitpatel/specfence-blog/blob/main/evidence/rounds/2026-11-11-BT1-results.md)).
 
 Signatures stop forgery. They don't stop shortcuts that need no lie, such as an agent deleting a requirement it
-couldn't model. [Part 19]({% post_url 2026-11-27-gate-audit %}) audits every gate for those shortcuts and closes four.
+couldn't model. [Part 19]({% post_url 2026-11-20-gate-audit %}) audits every gate for those shortcuts and closes four.
 
 The general version, worth memorizing: an `@req` gap means a requirement is modeled nowhere — point at its behavior. A `breaks:` verdict means read the counterexample before touching code. Owed debt is named, not hidden. And "no open questions" is a gate, not a suggestion — skipped questions return, they don't evaporate.
 
@@ -57,6 +57,6 @@ The general version, worth memorizing: an `@req` gap means a requirement is mode
 
 Twelve posts showed the machinery, the examples, the neighbors, and the trust point. This one showed the conversation. The whole series reduces to a loop you can pilot Monday morning — a pilot, with a pilot's rough edges: describe the system badly, answer short rounds honestly, override defaults freely, push back on the interaction, read the scenarios before signing, and let the models stand guard afterwards. Don't trust it. Check it. Corrections welcome as issues — this post's own fixes started exactly that way.
 
-The series continues past its finale into evidence: [the overview]({% post_url 2026-11-22-evidence-overview %}) calibrates every claim against its run, and the [sshd]({% post_url 2026-11-23-sshd-deep-dive %}) and [celery]({% post_url 2026-11-24-celery-deep-dive %}) deep-dives read two projects file by file — fixed matches, live potentials, and misses, with the code beside them.
+The series continues past its finale into evidence: [the overview]({% post_url 2026-11-20-evidence-overview %}) calibrates every claim against its run, and the [sshd]({% post_url 2026-11-20-sshd-deep-dive %}) and [celery]({% post_url 2026-11-20-celery-deep-dive %}) deep-dives read two projects file by file — fixed matches, live potentials, and misses, with the code beside them.
 
 {% include series.html %}

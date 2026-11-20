@@ -6,7 +6,7 @@ series: specfence
 date: 2026-11-19
 ---
 
-*Part 22 of a series on specfence. The [previous post]({% post_url 2026-11-29-code-mode-closes %}) closed the gate audit. This one reopens the evidence drawer for the first run on services instead of libraries. Evidence: [`evidence/run43/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/run43).*
+*Part 22 of a series on specfence. The [previous post]({% post_url 2026-11-20-code-mode-closes %}) closed the gate audit. This one reopens the evidence drawer for the first run on services instead of libraries. Evidence: [`evidence/run43/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/run43).*
 
 *Level L2 · Needs: comfort reading short Python excerpts. Two projects, file by file.*
 

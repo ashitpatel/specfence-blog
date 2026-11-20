@@ -6,7 +6,7 @@ series: specfence
 date: 2026-11-11
 ---
 
-*Part 18 of 21 in a series on specfence. [Part 14]({% post_url 2026-11-22-evidence-overview %}) opened the file drawer. This post reads the Go drawer all the way through: the first project in a third language. Evidence: [`evidence/go/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/go).*
+*Part 18 of 21 in a series on specfence. [Part 14]({% post_url 2026-11-20-evidence-overview %}) opened the file drawer. This post reads the Go drawer all the way through: the first project in a third language. Evidence: [`evidence/go/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/go).*
 
 *Level L2 · Needs: comfort reading short Go excerpts. One project, file by file.*
 
@@ -65,6 +65,6 @@ A mutation landing mid-iteration is a concurrent map iteration and map write —
 
 Two labelled fixes drew a blank, on the record. Pkt-b's own fix (don't persist the parsed browse template, `e8ae80adca`) sat at scored rank 250; pkt-c's (the round-robin atomic, `ce5a0934a8`) at rank 140 — both far below the top-50 screen no tester looks past. The proposer saw the admin fix's targets at rank 7–12 and the logger fix's at rank 15, and depth converted all of those; it buried the other two where depth never goes. Coverage is not finding, and on caddy the split is exact: everything the screen surfaced, depth judged; everything it buried, depth missed.
 
-Caddy carried four of run 35's seven fix-matching pairs (nats-server the other three) with zero wrong-direction verdicts across the run. The Go drawer holds four more projects — nats-server's fatal map races, badger's memtable wars, go-redis's pool deadlocks, sarama's channel protocols — in the frozen scores behind [part 14]({% post_url 2026-11-22-evidence-overview %}).
+Caddy carried four of run 35's seven fix-matching pairs (nats-server the other three) with zero wrong-direction verdicts across the run. The Go drawer holds four more projects — nats-server's fatal map races, badger's memtable wars, go-redis's pool deadlocks, sarama's channel protocols — in the frozen scores behind [part 14]({% post_url 2026-11-20-evidence-overview %}).
 
 {% include series.html %}

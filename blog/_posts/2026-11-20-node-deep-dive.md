@@ -6,7 +6,7 @@ series: specfence
 date: 2026-11-11
 ---
 
-*Part 20 of 21 in a series on specfence. [Part 14]({% post_url 2026-11-22-evidence-overview %}) opened the file drawer. This post reads the Node drawer all the way through: the first project in a fourth language. Evidence: [`evidence/node/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/node).*
+*Part 20 of 21 in a series on specfence. [Part 14]({% post_url 2026-11-20-evidence-overview %}) opened the file drawer. This post reads the Node drawer all the way through: the first project in a fourth language. Evidence: [`evidence/node/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/node).*
 
 *Level L2 · Needs: comfort reading short JavaScript excerpts. One project, file by file.*
 

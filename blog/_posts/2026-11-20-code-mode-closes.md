@@ -6,9 +6,9 @@ series: specfence
 date: 2026-11-11
 ---
 
-*Part 21 of 21 in a series on specfence. [Part 19]({% post_url 2026-11-27-gate-audit %}) audited the requirements mode's gates and closed four routes an agent could take alone. This post asks the same question of the code mode, where the stakes are bugs in someone's existing code. Evidence: the round records linked below, in the specfence repository.*
+*Part 21 of 21 in a series on specfence. [Part 19]({% post_url 2026-11-20-gate-audit %}) audited the requirements mode's gates and closed four routes an agent could take alone. This post asks the same question of the code mode, where the stakes are bugs in someone's existing code. Evidence: the round records linked below, in the specfence repository.*
 
-*Level L2 · Needs: the code mode from [part 2]({% post_url 2026-11-10-how-it-works %}) and the gate audit in [part 19]({% post_url 2026-11-27-gate-audit %}). No formal methods.*
+*Level L2 · Needs: the code mode from [part 2]({% post_url 2026-11-10-how-it-works %}) and the gate audit in [part 19]({% post_url 2026-11-20-gate-audit %}). No formal methods.*
 
 ## The question, again
 
@@ -73,7 +73,7 @@ The test suite and the seeded bugs found five things in the code around the clos
 
 ## What this does not show
 
-The closes are tested by seeded bugs, not by agents. No trial has shown agents taking these routes less, or the person catching more. The state files the engine writes, such as the findings log or the freeze record, can still be hand-edited. Like part 19, the audit set that aside as forgery, which the signed driver envelope from [part 13]({% post_url 2026-11-21-how-to-talk %}) guards against. In a bot-driven run, a bug cannot be withdrawn and a guard property cannot be dropped at all, because the envelope has no place for those answers yet. That fails safe, but it is a gap.
+The closes are tested by seeded bugs, not by agents. No trial has shown agents taking these routes less, or the person catching more. The state files the engine writes, such as the findings log or the freeze record, can still be hand-edited. Like part 19, the audit set that aside as forgery, which the signed driver envelope from [part 13]({% post_url 2026-11-20-how-to-talk %}) guards against. In a bot-driven run, a bug cannot be withdrawn and a guard property cannot be dropped at all, because the envelope has no place for those answers yet. That fails safe, but it is a gap.
 
 And the closing point of part 19 still holds. More of these gates now hold until the person says yes. Each question quotes what the person is agreeing to: the bug and the reason, the property's claim, the narrower scan. Reading it is still the person's job.
 

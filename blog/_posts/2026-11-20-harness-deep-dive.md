@@ -41,6 +41,6 @@ The exhibit both sides share comes from Specula's runs (see [part 10]({% post_ur
 
 That outside-the-optimization check is what specfence's architecture is built around. Its falsification gates — this mutant must violate, this control must pass, this property must be shown able to fail — are not proposals the loop can trade away for a greener board; they are refusals the loop cannot override. Where Harness² asks "what harness scores highest?", specfence asks "what verdict survives every attempt to break it?" — and the Kudu-Raft guard is the parable for why both questions need different machinery.
 
-That covers the three closest neighbors. One post remains: [how to talk to the tool]({% post_url 2026-11-21-how-to-talk %}) — the conversation behind the verdicts, reconstructed from the pool run's real record.
+That covers the three closest neighbors. One post remains: [how to talk to the tool]({% post_url 2026-11-20-how-to-talk %}) — the conversation behind the verdicts, reconstructed from the pool run's real record.
 
 {% include series.html %}
