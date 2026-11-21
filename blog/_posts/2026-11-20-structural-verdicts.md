@@ -3,10 +3,11 @@ title: "Structural verdicts: the Alloy track, measured end to end"
 description: "Six rounds take structural verification from model-level advisories to confirmed defects: a static confirmation ladder, a calibration that fires its own stop rule at 2/21, fences, verified extraction — and the honest misses."
 layout: post
 series: specfence
+part: 23
 date: 2026-11-20
 ---
 
-*Part 23 of a series on specfence. The [previous post]({% post_url 2026-11-20-services-first-run %}) ran the first service eval. This one closes the Alloy side: every structural verdict can now travel from proposal to a confirmed defect — and every step was measured first. Evidence: the ST1–ST6 preregs and results in [`evidence/rounds/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/rounds), the frozen labels and scores in [`evidence/structural/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/structural).*
+*Part 23 of 23 in a series on specfence. The [previous post]({% post_url 2026-11-20-services-first-run %}) ran the first service eval. This one closes the Alloy side: every structural verdict can now travel from proposal to a confirmed defect — and every step was measured first. Evidence: the ST1–ST6 preregs and results in [`evidence/rounds/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/rounds), the frozen labels and scores in [`evidence/structural/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/structural).*
 
 *Level L2 · Needs: comfort reading short Alloy and Python excerpts. Six rounds, file by file.*
 

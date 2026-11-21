@@ -3,10 +3,11 @@ title: "bull, examined: a shared timer name matched to its fix, and the same wai
 description: "Eight blind first-looks at the bull job queue in Node.js: a shared lock-renewal timer matched exactly to its own upstream fix, a count-then-listen wait gap found independently on three trees, two fixes that live in Lua where no JS tool can see them — and the misses."
 layout: post
 series: specfence
+part: 20
 date: 2026-11-11
 ---
 
-*Part 20 of 21 in a series on specfence. [Part 14]({% post_url 2026-11-20-evidence-overview %}) opened the file drawer. This post reads the Node drawer all the way through: the first project in a fourth language. Evidence: [`evidence/node/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/node).*
+*Part 20 of 23 in a series on specfence. [Part 14]({% post_url 2026-11-20-evidence-overview %}) opened the file drawer. This post reads the Node drawer all the way through: the first project in a fourth language. Evidence: [`evidence/node/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/node).*
 
 *Level L2 · Needs: comfort reading short JavaScript excerpts. One project, file by file.*
 

@@ -3,10 +3,11 @@ title: "Specula vs specfence: the same loop, different answers to its critics"
 description: "A deep comparison with the closest neighbor: shared TLA+ core, different bars for what counts as a bug, and how each side handles circularity, composition, and what happens after the bug."
 layout: post
 series: specfence
+part: 10
 date: 2026-11-11
 ---
 
-*Part 10 of 21 in a series on specfence. The [landscape]({% post_url 2026-11-16-landscape %}) named Specula the closest neighbor. This post earns that claim line by line.*
+*Part 10 of 23 in a series on specfence. The [landscape]({% post_url 2026-11-16-landscape %}) named Specula the closest neighbor. This post earns that claim line by line.*
 
 *Level L2 · Needs: part 8 or 9. The closest-neighbor comparison.*
 

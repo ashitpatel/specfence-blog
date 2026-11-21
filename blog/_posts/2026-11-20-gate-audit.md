@@ -3,10 +3,11 @@ title: "Gates, not words: what stopped an agent skipping a step"
 description: "Four agent runs read an instruction and skipped it. Three cheap checks of the text could not have warned us; a gate that holds 'done' changed what agents did. So we audited every gate for what the agent alone can do to open it, and found four ways."
 layout: post
 series: specfence
+part: 19
 date: 2026-11-11
 ---
 
-*Part 19 of 21 in a series on specfence. [Part 13]({% post_url 2026-11-20-how-to-talk %}) showed the conversation that produces a verdict. This post asks what happens when the agent in that conversation skips a step, and what can stop it. Evidence: the round records linked below, in the specfence repository.*
+*Part 19 of 23 in a series on specfence. [Part 13]({% post_url 2026-11-20-how-to-talk %}) showed the conversation that produces a verdict. This post asks what happens when the agent in that conversation skips a step, and what can stop it. Evidence: the round records linked below, in the specfence repository.*
 
 *Level L2 · Needs: the requirements mode from [part 3]({% post_url 2026-11-11-greenfield-pool %}). No formal methods.*
 

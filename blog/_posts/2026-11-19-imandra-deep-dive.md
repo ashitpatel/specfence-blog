@@ -3,10 +3,11 @@ title: "Imandra vs specfence: ask the logician, or set the tripwire"
 description: "A deep comparison with the neurosymbolic kin: shared LLM-proposes-solver-judges shape, and the fork between answering semantic questions and shipping blocking verdicts."
 layout: post
 series: specfence
+part: 11
 date: 2026-11-11
 ---
 
-*Part 11 of 21 in a series on specfence. The [landscape]({% post_url 2026-11-16-landscape %}) called Imandra the neurosymbolic kin. This post draws the fork precisely.*
+*Part 11 of 23 in a series on specfence. The [landscape]({% post_url 2026-11-16-landscape %}) called Imandra the neurosymbolic kin. This post draws the fork precisely.*
 
 *Level L2 · Needs: part 8. Answers versus verdicts.*
 

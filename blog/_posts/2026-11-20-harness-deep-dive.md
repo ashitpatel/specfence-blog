@@ -3,10 +3,11 @@ title: "Harness² vs specfence: improve the agent, or check the work"
 description: "A deep comparison with Google's self-improving harness: shared loop shape and enforcement instinct, and the fork between rewriting your own guardrails and refusing to."
 layout: post
 series: specfence
+part: 12
 date: 2026-11-11
 ---
 
-*Part 12 of 21 in a series on specfence. The [landscape]({% post_url 2026-11-16-landscape %}) placed Harness² as kin with a fork. This is the finale: the fork, drawn all the way.*
+*Part 12 of 23 in a series on specfence. The [landscape]({% post_url 2026-11-16-landscape %}) placed Harness² as kin with a fork. This is the finale: the fork, drawn all the way.*
 
 *Level L2 · Needs: part 8. Who grades the grader.*
 

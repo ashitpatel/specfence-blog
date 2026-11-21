@@ -17,15 +17,19 @@ def fail(msg):
     print(f"FAIL: {msg}")
 
 
+parts = {}
 for p in POSTS:
     t = p.read_text()
     if not t.startswith("---"):
         fail(f"{p.name}: missing front matter")
         continue
     fm = t.split("---")[1]
-    for k in ("title:", "description:", "layout: post", "series: specfence", "date:"):
+    for k in ("title:", "description:", "layout: post", "series: specfence", "date:", "part:"):
         if k not in fm:
             fail(f"{p.name}: front matter lacks {k}")
+    m = re.search(r"^part:\s*(\d+)\s*$", fm, re.M)
+    if m:
+        parts[int(m.group(1))] = p
     if "{% include series.html %}" not in t:
         fail(f"{p.name}: missing series nav include")
 
@@ -35,14 +39,15 @@ for p in POSTS:
         if ref not in names:
             fail(f"{p.name}: post_url {ref} resolves to nothing")
 
-for i, p in enumerate(POSTS, start=1):
-    if f"Part {i} of {len(POSTS)}" not in p.read_text():
-        fail(f"{p.name}: header is not 'Part {i} of {len(POSTS)}' for its filename order")
+if sorted(parts) != list(range(1, len(POSTS) + 1)):
+    fail(f"part numbers are not 1..{len(POSTS)}: {sorted(parts)}")
+for n, p in parts.items():
+    if f"Part {n} of {len(POSTS)}" not in p.read_text():
+        fail(f"{p.name}: header is not 'Part {n} of {len(POSTS)}' for part {n}")
 
 nav = (ROOT / "blog" / "_includes" / "series.html").read_text()
-if 'sort: "path"' not in nav:
-    fail("series.html: nav must sort by path (front-matter dates are backdated,"
-         " so date order is not series order)")
+if 'sort: "part"' not in nav:
+    fail('series.html: nav must sort by "part" (filenames share dates, so path order is not series order)')
 
 for p in POSTS:
     for m in re.findall(r"specfence-blog/(?:tree|blob)/main/([^)]*)", p.read_text()):

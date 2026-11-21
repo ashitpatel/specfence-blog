@@ -3,10 +3,11 @@ title: "What tests cannot see"
 description: "Tests check instances: this run, this interleaving, this input. Concurrency and structure bugs live in the interleavings and shapes no test constructs. A series on checking those exhaustively instead."
 layout: post
 series: specfence
+part: 1
 date: 2026-11-09
 ---
 
-*Part 1 of 21 in a series on specfence, a tool that turns requirements or code into checkable Alloy and TLA+ guardrails. Every example links to its evidence.*
+*Part 1 of 23 in a series on specfence, a tool that turns requirements or code into checkable Alloy and TLA+ guardrails. Every example links to its evidence.*
 
 *Level L1 · Needs: nothing. The idea in plain words.*
 

@@ -3,10 +3,11 @@ title: "The landscape: where specfence fits"
 description: "Specfence against its neighbors: Specula's bug-hunting agents, vericoding's proven code, Axiom Math's Lean proofs, Imandra's neurosymbolic reasoning, Google's Elephant-Goldfish Model, AI code review (Qodo, CodeRabbit, Claude Code Review), and more."
 layout: post
 series: specfence
+part: 8
 date: 2026-11-11
 ---
 
-*Part 8 of 21 in a series on specfence. The previous seven posts built the case from the inside: [the gap]({% post_url 2026-11-09-what-tests-cannot-see %}), [the machinery]({% post_url 2026-11-10-how-it-works %}), and five worked examples. This one steps outside and places the tool among its neighbors — all characterizations as of November 2026, from the linked sources.*
+*Part 8 of 23 in a series on specfence. The previous seven posts built the case from the inside: [the gap]({% post_url 2026-11-09-what-tests-cannot-see %}), [the machinery]({% post_url 2026-11-10-how-it-works %}), and five worked examples. This one steps outside and places the tool among its neighbors — all characterizations as of November 2026, from the linked sources.*
 
 *Level L2 · Needs: parts 1–2. Thirteen neighbors, one map.*
 

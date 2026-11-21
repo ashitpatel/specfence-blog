@@ -3,10 +3,11 @@ title: "celery, examined: the flush defect, found unlabelled, then matched"
 description: "Twelve blind first-looks at celery: an event-loss race found by ten testers across two runs, matched exactly to its upstream fix, plus a timer race and a structural LimitedSet catch still present at HEAD."
 layout: post
 series: specfence
+part: 16
 date: 2026-11-11
 ---
 
-*Part 16 of 21 in a series on specfence. [Part 15]({% post_url 2026-11-20-sshd-deep-dive %}) read the Java drawer. This post reads the Python one — and closes the series. Evidence: [`evidence/celery/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/celery).*
+*Part 16 of 23 in a series on specfence. [Part 15]({% post_url 2026-11-20-sshd-deep-dive %}) read the Java drawer. This post reads the Python one — and closes the series. Evidence: [`evidence/celery/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/celery).*
 
 *Level L2 · Needs: comfort reading short Python excerpts. One project, file by file.*
 

@@ -3,10 +3,11 @@ title: "A pool, specified before it exists"
 description: "The greenfield run end to end: five lines of prose about a Java connection pool, six elicitation rounds, a TLA+ model checked over 31,332 states, an Alloy capacity proof, and nine acceptance scenarios."
 layout: post
 series: specfence
+part: 3
 date: 2026-11-11
 ---
 
-*Part 3 of 21 in a series on specfence. [Part 2]({% post_url 2026-11-10-how-it-works %}) toured the machinery. This post runs it from scratch. Evidence: [`evidence/pool/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/pool).*
+*Part 3 of 23 in a series on specfence. [Part 2]({% post_url 2026-11-10-how-it-works %}) toured the machinery. This post runs it from scratch. Evidence: [`evidence/pool/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/pool).*
 
 *Level L1 · Needs: part 1. A story with explained excerpts.*
 

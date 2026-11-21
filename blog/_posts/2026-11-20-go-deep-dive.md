@@ -3,10 +3,11 @@ title: "caddy, examined: a logger race matched to its fix, and a fatal race upst
 description: "Four blind first-looks at the Caddy web server in Go: a passive-logger race matched exactly to its own upstream fix, an admin-server family found three times but stuck below confirmation, a fatal session-ticket race upstream fixed years later — and the two fixes depth never reached."
 layout: post
 series: specfence
+part: 18
 date: 2026-11-11
 ---
 
-*Part 18 of 21 in a series on specfence. [Part 14]({% post_url 2026-11-20-evidence-overview %}) opened the file drawer. This post reads the Go drawer all the way through: the first project in a third language. Evidence: [`evidence/go/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/go).*
+*Part 18 of 23 in a series on specfence. [Part 14]({% post_url 2026-11-20-evidence-overview %}) opened the file drawer. This post reads the Go drawer all the way through: the first project in a third language. Evidence: [`evidence/go/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/go).*
 
 *Level L2 · Needs: comfort reading short Go excerpts. One project, file by file.*
 
