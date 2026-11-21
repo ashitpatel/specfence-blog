@@ -114,4 +114,6 @@ Two instrument experiments on the same sshd/celery trees: prompt+gate authoring 
 
 Parts 15, 16 and 17 are the deep-dives: one Java project, one Python project, one reactive-Java project, each with a fixed issue the tool matched, potential issues it flagged with code, and the misses on the same trees. Part 18 does the same for the first Go project. Read them as exhibits for this post's three sentences — precise at depth, noisy at the surface, demonstrated at the core — with the file drawer open beside them.
 
+*Series note: the drawer run has since grown by [Part 20]({% post_url 2026-11-20-node-deep-dive %}) (Node) and [Part 22]({% post_url 2026-11-20-services-first-run %}) (services). Read them in the same way; the three sentences still hold.*
+
 {% include series.html %}

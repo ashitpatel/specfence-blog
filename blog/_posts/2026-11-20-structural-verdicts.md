@@ -6,7 +6,7 @@ series: specfence
 date: 2026-11-20
 ---
 
-*Part 23 of a series on specfence. The [previous post]({% post_url 2026-11-20-services-first-run %}) ran the first service eval. This one closes the Alloy side: every structural verdict can now travel from proposal to a confirmed defect — and every step was measured first. Evidence: the [ST1–ST6 round records](https://github.com/ashitpatel/specfence/tree/main/docs/project/rounds) and [`evals/structural/`](https://github.com/ashitpatel/specfence/tree/main/evals/structural) in the specfence repository.*
+*Part 23 of a series on specfence. The [previous post]({% post_url 2026-11-20-services-first-run %}) ran the first service eval. This one closes the Alloy side: every structural verdict can now travel from proposal to a confirmed defect — and every step was measured first. Evidence: the ST1–ST6 preregs and results in [`evidence/rounds/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/rounds), the frozen labels and scores in [`evidence/structural/`](https://github.com/ashitpatel/specfence-blog/tree/main/evidence/structural).*
 
 *Level L2 · Needs: comfort reading short Alloy and Python excerpts. Six rounds, file by file.*
 

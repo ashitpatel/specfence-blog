@@ -77,4 +77,6 @@ The closes are tested by seeded bugs, not by agents. No trial has shown agents t
 
 And the closing point of part 19 still holds. More of these gates now hold until the person says yes. Each question quotes what the person is agreeing to: the bug and the reason, the property's claim, the narrower scan. Reading it is still the person's job.
 
+*Series note: the series has since continued with [Part 22]({% post_url 2026-11-20-services-first-run %}), which reopens the evidence drawer for services, and [Part 23]({% post_url 2026-11-20-structural-verdicts %}), which closes the Alloy side.*
+
 {% include series.html %}
